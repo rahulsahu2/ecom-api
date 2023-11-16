@@ -25,8 +25,9 @@
                             <thead>
                                 <tr>
                                     <th width="5%">{{__('admin.SN')}}</th>
+                                    <th width="10%">{{__('admin.Category')}}</th>
                                     <th width="20%">{{__('admin.Question')}}</th>
-                                    <th width="55%">{{__('admin.Answer')}}</th>
+                                    <th width="45%">{{__('admin.Answer')}}</th>
                                     <th width="10%">{{__('admin.Status')}}</th>
                                     <th width="10%">{{__('admin.Action')}}</th>
                                   </tr>
@@ -35,6 +36,7 @@
                                 @foreach ($faqs as $index => $faq)
                                     <tr>
                                         <td>{{ ++$index }}</td>
+                                        <td>{{ $faq->category }}</td>
                                         <td>{{ $faq->question }}</td>
                                         <td>{!! clean($faq->answer) !!}</td>
                                         <td>

@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\WEB\Admin\ShopByConcernController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -426,6 +427,15 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::delete('delete-product-image/{id}', [ProductGalleryController::class,'destroy'])->name('delete-product-image');
     Route::put('product-gallery-status/{id}', [ProductGalleryController::class,'changeStatus'])->name('product-gallery.status');
 
+    Route::get('shop-by-concern', [ShopByConcernController::class,'index'])->name('shop-by-concern.index');
+    Route::get('create-shop-by-concern', [ShopByConcernController::class,'create'])->name('create-shop-by-concern');
+    Route::get('create-shop-by-concern/{id}', [ShopByConcernController::class,'show'])->name('show-shop-by-concern');
+    Route::post('store-shop-by-concern', [ShopByConcernController::class,'store'])->name('shop-by-concern.store');
+    Route::post('update-shop-by-concern/{id}', [ShopByConcernController::class,'update'])->name('shop-by-concern.update');
+    Route::delete('delete-shop-by-concern/{id}', [ShopByConcernController::class,'destroy'])->name('shop-by-concern.delete');
+    Route::put('shop-by-concern-status/{id}', [ShopByConcernController::class,'changeStatus'])->name('shop-by-concern.status');
+    Route::put('shop-by-concern-main/{id}', [ShopByConcernController::class,'changeMain'])->name('shop-by-concern.main');
+
     Route::resource('service', ServiceController::class);
     Route::put('service-status/{id}', [ServiceController::class,'changeStatus'])->name('service.status');
 
@@ -689,6 +699,8 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::get('featured-brands', [HomePageController::class, 'featuredBrands'])->name('featured-brands');
     Route::post('store-featured-brands', [HomePageController::class, 'storeFeaturedBrands'])->name('store-featured-brands');
     Route::delete('destroy-featured-brands/{id}', [HomePageController::class, 'destroyFeaturedBrands'])->name('destroy-featured-brands');
+
+
 
     Route::get('homepage-section-title', [HomePageController::class, 'homepage_section_content'])->name('homepage-section-title');
     Route::post('update-homepage-section-title', [HomePageController::class, 'update_homepage_section_content'])->name('update-homepage-section-title');

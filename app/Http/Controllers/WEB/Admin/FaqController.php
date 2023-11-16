@@ -29,17 +29,20 @@ class FaqController extends Controller
     {
         $rules = [
             'question'=>'required|unique:faqs',
+            'category'=>'required',
             'answer'=>'required',
             'status'=>'required',
         ];
         $customMessages = [
             'question.required' => trans('admin_validation.Question is required'),
+            'category.required' => trans('admin_validation.Category is required'),
             'question.unique' => trans('admin_validation.Question already exist'),
             'answer.required' => trans('admin_validation.Answer is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $faq = new Faq();
+        $faq->category = $request->category;
         $faq->question = $request->question;
         $faq->answer = $request->answer;
         $faq->status = $request->status;
@@ -67,17 +70,20 @@ class FaqController extends Controller
         $faq = Faq::find($id);
         $rules = [
             'question'=>'required|unique:faqs,question,'.$faq->id,
+            'category'=>'required',
             'answer'=>'required',
             'status'=>'required',
         ];
         $customMessages = [
             'question.required' => trans('admin_validation.Question is required'),
+            'category.required' => trans('admin_validation.Category is required'),
             'question.unique' => trans('admin_validation.Question already exist'),
             'answer.required' => trans('admin_validation.Answer is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $faq->question = $request->question;
+        $faq->category = $request->category;
         $faq->answer = $request->answer;
         $faq->status = $request->status;
         $faq->save();

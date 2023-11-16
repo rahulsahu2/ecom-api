@@ -139,6 +139,8 @@ Route::group([], function () {
 
     Route::get('/track-order-response/{id}', [HomeController::class, 'trackOrderResponse'])->name('track-order-response');
     Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
+    Route::get('/faq-category', [HomeController::class, 'faq_category'])->name('faq');
+    Route::get('/faq-details/{slug}', [HomeController::class, 'faq_details'])->name('faq-details');
     Route::get('/page', [HomeController::class, 'allCustomPage'])->name('custom-page');
     Route::get('/page/{slug}', [HomeController::class, 'customPage'])->name('page');
     Route::get('/terms-and-conditions', [HomeController::class, 'termsAndCondition'])->name('terms-and-conditions');

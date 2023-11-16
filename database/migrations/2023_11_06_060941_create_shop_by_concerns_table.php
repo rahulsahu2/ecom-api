@@ -15,7 +15,11 @@ class CreateShopByConcernsTable extends Migration
     {
         Schema::create('shop_by_concerns', function (Blueprint $table) {
             $table->id();
-            
+            $table->string('image');
+            $table->string('title');
+            $table->string('link');
+            $table->integer('isactive');
+            $table->integer('ismain');
             $table->timestamps();
         });
     }

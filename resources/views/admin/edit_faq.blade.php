@@ -26,6 +26,19 @@
                             @method('PUT')
                             <div class="row">
                                 <div class="form-group col-12">
+                                    <label>{{__('admin.Category')}} <span class="text-danger">*</span></label>
+                                    <select name="category" class="form-control">
+                                      <option disabled="">Select Category</option>
+                                      <option {{ $faq->category == 'Order Related' ? 'selected' : '' }} value="Order Related">Order Related</option>
+                                      <option {{ $faq->category == 'Shopping' ? 'selected' : '' }} value="Shopping">Shopping</option>
+                                      <option {{ $faq->category == 'My Account' ? 'selected' : '' }} value="My Account">My Account</option>
+                                      <option {{ $faq->category == 'Payments' ? 'selected' : '' }} value="Payments">Payments</option>
+                                      <option {{ $faq->category == 'Sell On WinningKart' ? 'selected' : '' }} value="Sell On WinningKart">Sell On WinningKart</option>
+                                      <option {{ $faq->category == 'Other' ? 'selected' : '' }} value="Other">Other</option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group col-12">
                                     <label>{{__('admin.Question')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="question" class="form-control"  name="question" value="{{ $faq->question }}">
                                 </div>

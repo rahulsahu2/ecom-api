@@ -15,6 +15,10 @@ class CreateBestDiscountProductsTable extends Migration
     {
         Schema::create('best_discount_products', function (Blueprint $table) {
             $table->id();
+            $table->string('image');
+            $table->string('title');
+            $table->string('link');
+            $table->integer('isactive');
             $table->timestamps();
         });
     }

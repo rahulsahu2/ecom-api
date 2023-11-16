@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\ShopByConcern;
 use Illuminate\Http\Request;
 
 use App\Models\HomePageOneVisibility;
@@ -381,24 +382,16 @@ class HomeController extends Controller
 
 
     public function index()
-
     {
-
-
-
         $sliderVisibilty = HomePageOneVisibility::find(1);
 
         $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty->qty);
 
         $sliderVisibilty = $sliderVisibilty->status == 1 ? true : false;
 
-
-
         $sliderBannerOne = BannerImage::select('id','product_slug','image','banner_location','title_one','title_two','badge','status')->find(16);
 
         $sliderBannerTwo = BannerImage::select('id','product_slug','image','banner_location','title_one','title_two','badge','status')->find(17);
-
-
 
         $serviceVisibilty = HomePageOneVisibility::find(2);
 
@@ -430,6 +423,8 @@ class HomeController extends Controller
             }
 
         }
+
+        $shopbyConcern = ShopByConcern::get();
 
         $featuredBrands = $featuredBrandlist;
         $additionalCategory = $featuredBrandlist->unique('category_id');
@@ -556,6 +551,8 @@ class HomeController extends Controller
             'sliderVisibilty' => $sliderVisibilty,
 
             'sliders' => $sliders,
+
+            'shopbyconcern'=> $shopbyConcern,
 
             'sliderBannerOne' => $sliderBannerOne,
 
@@ -866,6 +863,17 @@ class HomeController extends Controller
 
         return response()->json(['faqs' => $faqs]);
 
+    }
+
+    public function faq_category(){
+        $faqs = FAQ::select('category')->groupBy('category')->get();
+        return response()->json(['faqs' => $faqs]);
+    }
+
+    public function faq_details($slug){
+        $slug = str_replace('-', ' ', $slug);
+        $faqs = FAQ::orderBy('id','desc')->where('status',1)->where('category',$slug)->get();
+        return response()->json(['faqs' => $faqs]);
     }
 
 

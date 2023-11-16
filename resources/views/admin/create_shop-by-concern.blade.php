@@ -1,39 +1,29 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('admin.Product Category')}}</title>
+<title>{{__('admin.Blog Category')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('admin.Create Product Category')}}</h1>
+            <h1>{{__('Create Shop By Concern')}}</h1>
             <div class="section-header-breadcrumb">
-              <div class="breadcrumb-item active"><a href="{{ route('admin.product-category.index') }}">{{__('admin.Product Category')}}</a></div>
-              <div class="breadcrumb-item">{{__('admin.Create Product Category')}}</div>
+              <div class="breadcrumb-item active"><a href="{{ route('admin.blog-category.index') }}">{{__('Admin')}}</a></div>
+              <div class="breadcrumb-item active"><a href="{{ route('admin.blog.index') }}">{{__('Shop by Concern')}}</a></div>
+              <div class="breadcrumb-item">{{__('admin.Create')}}</div>
             </div>
           </div>
 
           <div class="section-body">
-            <a href="{{ route('admin.product-category.index') }}" class="btn btn-primary"><i class="fas fa-list"></i> {{__('admin.Product Category')}}</a>
+            <a href="{{ route('admin.blog-category.index') }}" class="btn btn-primary"><i class="fas fa-list"></i> {{__('Shop By Concern')}}</a>
             <div class="row mt-4">
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.product-category.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.blog-category.store') }}" method="POST">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-12">
-                                    <label>{{__('admin.Image')}} <span class="text-danger">*</span></label>
-                                    <input type="file" class="form-control"  name="image">
-                                </div>
-
-                                <div class="form-group col-12">
-                                    <label hidden>{{__('admin.Icon')}} <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control custom-icon-picker" value="fa fa-ba"  name="icon" hidden>
-                                </div>
-
-
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Name')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="name" class="form-control"  name="name">
@@ -46,7 +36,7 @@
                                     <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                     <select name="status" class="form-control">
                                         <option value="1">{{__('admin.Active')}}</option>
-                                        <option value="0">{{__('admin.InActive')}}</option>
+                                        <option value="0">{{__('admin.Inactive')}}</option>
                                     </select>
                                 </div>
                             </div>

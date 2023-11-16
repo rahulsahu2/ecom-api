@@ -28,6 +28,8 @@ class AboutUsController extends Controller
         ];
         $customMessages = [
             'description.required' => trans('admin_validation.Description is required'),
+            'leftdescription.required' => trans('admin_validation.Description is required'),
+            'rightdescription.required' => trans('admin_validation.Description is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -46,7 +48,23 @@ class AboutUsController extends Controller
             }
         }
 
+        if($request->sidebanner_image){
+            $exist_banner = $aboutUs->sidebanner_image;
+            $extention = $request->sidebanner_image->getClientOriginalExtension();
+            $banner_name = 'career'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $banner_name = 'uploads/custom-images/'.$banner_name;
+            Image::make($request->sidebanner_image)
+                ->save(public_path().'/'.$banner_name);
+            $aboutUs->sidebanner_image = $banner_name;
+            $aboutUs->save();
+            if($exist_banner){
+                if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
+            }
+        }
+
         $aboutUs->description = $request->description;
+        $aboutUs->leftdescription = $request->leftdescription;
+        $aboutUs->rightdescription = $request->rightdescription;
         $aboutUs->save();
 
         $notification = trans('admin_validation.Updated Successfully');
@@ -57,10 +75,15 @@ class AboutUsController extends Controller
     public function store(Request $request){
         $rules = [
             'description' => 'required',
+            'leftdescription' => 'required',
+            'rightdescription' => 'required',
         ];
         $customMessages = [
             'banner_image.required' => trans('admin_validation.Banner is required'),
+            'sidebanner_image.required' => trans('admin_validation.Banner is required'),
             'description.required' => trans('admin_validation.Description is required'),
+            'leftdescription.required' => trans('admin_validation.Description is required'),
+            'rightdescription.required' => trans('admin_validation.Description is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -73,7 +96,17 @@ class AboutUsController extends Controller
                 ->save(public_path().'/'.$banner_name);
             $aboutUs->banner_image = $banner_name;
         }
+        if($request->sidebanner_image){
+            $extention = $request->sidebanner_image->getClientOriginalExtension();
+            $banner_name = 'career'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $banner_name = 'uploads/custom-images/'.$banner_name;
+            Image::make($request->sidebanner_image)
+                ->save(public_path().'/'.$banner_name);
+            $aboutUs->sidebanner_image = $banner_name;
+        }
         $aboutUs->description = $request->description;
+        $aboutUs->leftdescription = $request->leftdescription;
+        $aboutUs->rightdescription = $request->rightdescription;
         $aboutUs->save();
 
         $notification = trans('admin_validation.Created Successfully');

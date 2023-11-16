@@ -15,6 +15,8 @@ class CreateTopCategoriesProductsTable extends Migration
     {
         Schema::create('top_categories_products', function (Blueprint $table) {
             $table->id();
+            $table->integer('product_id');
+            $table->integer('isactive');
             $table->timestamps();
         });
     }

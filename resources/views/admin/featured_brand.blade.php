@@ -37,8 +37,8 @@
                                         <tbody>
                                             @foreach ($featuredBrands as $index => $category)
                                                 <tr>
-                                                    <td>{{ $category->category->name }}</td>
-                                                    <td>{{ $category->brands->name }}</td>
+                                                    <td>{{ $category->category->name ?? '' }}</td>
+                                                    <td>{{ $category->brands->name ?? '' }}</td>
                                                     <td>
                                                         <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $category->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                                     </td>

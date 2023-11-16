@@ -25,6 +25,19 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-12">
+                                    <label>{{__('admin.Category')}} <span class="text-danger">*</span></label>
+                                    <select name="category" class="form-control">
+                                      <option disabled="" selected="">Select Category</option>
+                                      <option value="Order Related">Order Related</option>
+                                      <option value="Shopping">Shopping</option>
+                                      <option value="My Account">My Account</option>
+                                      <option value="Payments">Payments</option>
+                                      <option value="Sell On WinningKart">Sell On WinningKart</option>
+                                      <option value="Other">Other</option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group col-12">
                                     <label>{{__('admin.Question')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="question" class="form-control"  name="question" value="{{ old('question') }}">
                                 </div>

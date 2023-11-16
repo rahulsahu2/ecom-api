@@ -24,22 +24,44 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
-                                    <div class="form-group col-12">
-                                        <label for="">{{__('admin.Existing Image')}}</label>
+                                    <div class="form-group col-6">
+                                        <label for="">{{__('Banner Image')}}</label>
                                         <div>
                                             <img class="w_300" src="{{ asset($aboutUs->banner_image) }}" alt="">
                                         </div>
                                     </div>
 ​
-                                    <div class="form-group col-12">
+                                    <div class="form-group col-6">
+                                        <label for="">{{__('Career Image')}}</label>
+                                        <div>
+                                            <img class="w_300" src="{{ asset($aboutUs->sidebanner_image) }}" alt="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-6">
                                         <label for="">{{__('admin.New Image')}}</label>
                                         <input type="file" name="banner_image" class="form-control-file">
+                                    </div>
+​
+                                    <div class="form-group col-6">
+                                        <label for="">{{__('admin.New Image')}}</label>
+                                        <input type="file" name="sidebanner_image" class="form-control-file">
                                     </div>
 ​
 ​
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Description')}} <span class="text-danger">*</span></label>
                                         <textarea name="description" cols="30" rows="10" class="summernote">{{ $aboutUs->description }}</textarea>
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <label>{{__('Left Description')}} <span class="text-danger">*</span></label>
+                                        <textarea name="leftdescription" cols="30" rows="10" class="summernote">{{ $aboutUs->leftdescription }}</textarea>
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <label>{{__('Right Description')}} <span class="text-danger">*</span></label>
+                                        <textarea name="rightdescription" cols="30" rows="10" class="summernote">{{ $aboutUs->rightdescription }}</textarea>
                                     </div>
                                 </div>
                                 <div class="row">

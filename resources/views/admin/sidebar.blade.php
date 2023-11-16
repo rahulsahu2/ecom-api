@@ -50,7 +50,9 @@
 
               <li class="{{ Route::is('admin.featured-category') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-category') }}">{{__('admin.Featured Category')}}</a></li>
 
+              <li class="{{ Route::is('admin.product-brand.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-brand.index') }}">{{__('admin.Brands')}}</a></li>
 
+              <li class="{{ Route::is('admin.featured-brands.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-brands') }}">{{__('Brand Category')}}</a></li>
 
             </ul>
           </li>
@@ -60,10 +62,6 @@
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Manage Products')}}</span></a>
 
             <ul class="dropdown-menu">
-
-            <li class="{{ Route::is('admin.product-brand.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-brand.index') }}">{{__('admin.Brands')}}</a></li>
-
-            <li class="{{ Route::is('admin.featured-brands.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-brands') }}">{{__('Brand Category')}}</a></li>
 
             <li><a class="nav-link" href="{{ route('admin.product-import-page') }}">{{__('admin.Product Bulk Import')}}</a></li>
 
@@ -194,6 +192,8 @@
                 <li class="{{ Route::is('admin.service.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.service.index') }}">{{__('admin.Service')}}</a></li>
 
                 <li class="{{ Route::is('admin.homepage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.homepage-section-title') }}">{{__('admin.Homepage Section Title')}}</a></li>
+
+                <li class="{{ Route::is('admin.homepage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.shop-by-concern.index') }}">{{__('Shop By Concern')}}</a></li>
 
                 <li class="{{ Route::is('admin.seller-conditions') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seller-conditions') }}">{{__('admin.Seller Conditions')}}</a></li>
 

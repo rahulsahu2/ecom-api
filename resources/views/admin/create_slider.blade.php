@@ -7,10 +7,10 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('admin.Slider')}}</h1>
+            <h1>{{__('Homepage Slider S-2')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('admin.Slider')}}</div>
+              <div class="breadcrumb-item">{{__('Homepage Slider S-2')}}</div>
             </div>
           </div>
 
@@ -29,20 +29,18 @@
                                     <input type="file" name="slider_image" class="form-control-file">
                                 </div>
 
-                                <div class="form-group col-12">
+                                <!-- <div class="form-group col-12">
                                     <label>{{__('admin.Badge')}} <span class="text-danger">*</span></label>
-                                    <input type="text" name="badge" class="form-control">
-                                </div>
+                                    <input type="text" value="test" name="badge" class="form-control">
+                                </div> -->
 
-                                <div class="form-group col-12">
+                                <!-- <div class="form-group col-12">
                                     <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
-                                    <input type="text" name="title_one" class="form-control">
-                                </div>
-
-
+                                    <input type="text" value="dd" name="title_one" class="form-control">
+                                </div> -->
 
                                 <div class="form-group col-12">
-                                    <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
+                                    <label>{{__('Title')}} <span class="text-danger">*</span></label>
                                     <input type="text" name="title_two" class="form-control">
                                 </div>
 

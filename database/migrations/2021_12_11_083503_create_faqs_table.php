@@ -15,6 +15,7 @@ class CreateFaqsTable extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
+            $table->string('category')->nullable();
             $table->string('question')->nullable();
             $table->text('ans')->nullable();
             $table->integer('status')->default(1);
