@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\featuredProducts;
+use App\Models\BestDiscounts;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorefeaturedProductsRequest;
-use App\Http\Requests\UpdatefeaturedProductsRequest;
+use App\Http\Requests\StoreBestDiscountsRequest;
+use App\Http\Requests\UpdateBestDiscountsRequest;
 
-class FeaturedProductsController extends Controller
+class BestDiscountsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,10 +32,10 @@ class FeaturedProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorefeaturedProductsRequest  $request
+     * @param  \App\Http\Requests\StoreBestDiscountsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorefeaturedProductsRequest $request)
+    public function store(StoreBestDiscountsRequest $request)
     {
         //
     }
@@ -43,10 +43,10 @@ class FeaturedProductsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\featuredProducts  $featuredProducts
+     * @param  \App\Models\BestDiscounts  $bestDiscounts
      * @return \Illuminate\Http\Response
      */
-    public function show(featuredProducts $featuredProducts)
+    public function show(BestDiscounts $bestDiscounts)
     {
         //
     }
@@ -54,10 +54,10 @@ class FeaturedProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\featuredProducts  $featuredProducts
+     * @param  \App\Models\BestDiscounts  $bestDiscounts
      * @return \Illuminate\Http\Response
      */
-    public function edit(featuredProducts $featuredProducts)
+    public function edit(BestDiscounts $bestDiscounts)
     {
         //
     }
@@ -65,11 +65,11 @@ class FeaturedProductsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatefeaturedProductsRequest  $request
-     * @param  \App\Models\featuredProducts  $featuredProducts
+     * @param  \App\Http\Requests\UpdateBestDiscountsRequest  $request
+     * @param  \App\Models\BestDiscounts  $bestDiscounts
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatefeaturedProductsRequest $request, featuredProducts $featuredProducts)
+    public function update(UpdateBestDiscountsRequest $request, BestDiscounts $bestDiscounts)
     {
         //
     }
@@ -77,10 +77,10 @@ class FeaturedProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\featuredProducts  $featuredProducts
+     * @param  \App\Models\BestDiscounts  $bestDiscounts
      * @return \Illuminate\Http\Response
      */
-    public function destroy(featuredProducts $featuredProducts)
+    public function destroy(BestDiscounts $bestDiscounts)
     {
         //
     }

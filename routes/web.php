@@ -1,5 +1,11 @@
 <?php
+use App\Http\Controllers\WEB\Admin\BestDiscountProductsController;
+use App\Http\Controllers\WEB\Admin\FeaturedBrandsController;
+use App\Http\Controllers\WEB\Admin\InfluencerPicksController;
+use App\Http\Controllers\WEB\Admin\Section8Controller;
 use App\Http\Controllers\WEB\Admin\ShopByConcernController;
+use App\Http\Controllers\WEB\Admin\TopBrandsController;
+use App\Http\Controllers\WEB\Admin\TopCategoriesProductsController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -427,14 +433,82 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::delete('delete-product-image/{id}', [ProductGalleryController::class,'destroy'])->name('delete-product-image');
     Route::put('product-gallery-status/{id}', [ProductGalleryController::class,'changeStatus'])->name('product-gallery.status');
 
-    Route::get('shop-by-concern', [ShopByConcernController::class,'index'])->name('shop-by-concern.index');
-    Route::get('create-shop-by-concern', [ShopByConcernController::class,'create'])->name('create-shop-by-concern');
-    Route::get('create-shop-by-concern/{id}', [ShopByConcernController::class,'show'])->name('show-shop-by-concern');
-    Route::post('store-shop-by-concern', [ShopByConcernController::class,'store'])->name('shop-by-concern.store');
-    Route::post('update-shop-by-concern/{id}', [ShopByConcernController::class,'update'])->name('shop-by-concern.update');
-    Route::delete('delete-shop-by-concern/{id}', [ShopByConcernController::class,'destroy'])->name('shop-by-concern.delete');
-    Route::put('shop-by-concern-status/{id}', [ShopByConcernController::class,'changeStatus'])->name('shop-by-concern.status');
-    Route::put('shop-by-concern-main/{id}', [ShopByConcernController::class,'changeMain'])->name('shop-by-concern.main');
+    Route::controller(ShopByConcernController::class)->group(function () {
+        Route::get('shop-by-concern', 'index')->name('shop-by-concern.index');
+        Route::get('create-shop-by-concern', 'create')->name('create-shop-by-concern');
+        Route::get('create-shop-by-concern/{id}', 'show')->name('show-shop-by-concern');
+        Route::post('store-shop-by-concern', 'store')->name('shop-by-concern.store');
+        Route::post('update-shop-by-concern/{id}', 'update')->name('shop-by-concern.update');
+        Route::delete('delete-shop-by-concern/{id}', 'destroy')->name('shop-by-concern.delete');
+        Route::put('shop-by-concern-status/{id}', 'changeStatus')->name('shop-by-concern.status');
+        Route::put('shop-by-concern-main/{id}', 'changeMain')->name('shop-by-concern.main');
+    });
+
+    Route::controller(TopBrandsController::class)->group(function () {
+        Route::get('top-brands', 'index')->name('top-brands.index');
+        Route::get('create-top-brands', 'create')->name('create-top-brands');
+        Route::get('create-top-brands/{id}', 'show')->name('show-top-brands');
+        Route::post('store-top-brands', 'store')->name('top-brands.store');
+        Route::post('update-top-brands/{id}', 'update')->name('top-brands.update');
+        Route::delete('delete-top-brands/{id}', 'destroy')->name('top-brands.delete');
+        Route::put('top-brands-status/{id}', 'changeStatus')->name('top-brands.status');
+        Route::put('top-brands-main/{id}', 'changeMain')->name('top-brands.main');
+    });
+
+    Route::controller(Section8Controller::class)->group(function () {
+        Route::get('section8', 'index')->name('section8.index');
+        Route::get('create-section8', 'create')->name('create-section8');
+        Route::get('create-section8/{id}', 'show')->name('show-section8');
+        Route::post('store-section8', 'store')->name('section8.store');
+        Route::post('update-section8/{id}', 'update')->name('section8.update');
+        Route::delete('delete-section8/{id}', 'destroy')->name('section8.delete');
+        Route::put('section8-status/{id}', 'changeStatus')->name('section8.status');
+        Route::put('section8-main/{id}', 'changeMain')->name('section8.main');
+    });
+
+    Route::controller(TopCategoriesProductsController::class)->group(function () {
+        Route::get('top-categories-products', 'index')->name('top-categories-products.index');
+        Route::get('create-top-categories-products', 'create')->name('create-top-categories-products');
+        Route::get('create-top-categories-products/{id}', 'show')->name('show-top-categories-products');
+        Route::post('store-top-categories-products', 'store')->name('top-categories-products.store');
+        Route::post('update-top-categories-products/{id}', 'update')->name('top-categories-products.update');
+        Route::delete('delete-top-categories-products/{id}', 'destroy')->name('top-categories-products.delete');
+        Route::put('top-categories-products-status/{id}', 'changeStatus')->name('top-categories-products.status');
+        Route::put('top-categories-products-main/{id}', 'changeMain')->name('top-categories-products.main');
+    });
+
+    Route::controller(InfluencerPicksController::class)->group(function () {
+        Route::get('influencer-picks', 'index')->name('influencer-picks.index');
+        Route::get('create-influencer-picks', 'create')->name('create-influencer-picks');
+        Route::get('create-influencer-picks/{id}', 'show')->name('show-influencer-picks');
+        Route::post('store-influencer-picks', 'store')->name('influencer-picks.store');
+        Route::post('update-influencer-picks/{id}', 'update')->name('influencer-picks.update');
+        Route::delete('delete-influencer-picks/{id}', 'destroy')->name('influencer-picks.delete');
+        Route::put('influencer-picks-status/{id}', 'changeStatus')->name('influencer-picks.status');
+        Route::put('influencer-picks-main/{id}', 'changeMain')->name('influencer-picks.main');
+    });
+
+    Route::controller(FeaturedBrandsController::class)->group(function () {
+        Route::get('featured-products', 'index')->name('featured-products.index');
+        Route::get('create-featured-products', 'create')->name('create-featured-products');
+        Route::get('create-featured-products/{id}', 'show')->name('show-featured-products');
+        Route::post('store-featured-products', 'store')->name('featured-products.store');
+        Route::post('update-featured-products/{id}', 'update')->name('featured-products.update');
+        Route::delete('delete-featured-products/{id}', 'destroy')->name('featured-products.delete');
+        Route::put('featured-products-status/{id}', 'changeStatus')->name('featured-products.status');
+        Route::put('featured-products-main/{id}', 'changeMain')->name('featured-products.main');
+    });
+
+    Route::controller(BestDiscountProductsController::class)->group(function () {
+        Route::get('best-discount-products', 'index')->name('best-discount-products.index');
+        Route::get('create-best-discount-products', 'create')->name('create-best-discount-products');
+        Route::get('create-best-discount-products/{id}', 'show')->name('show-best-discount-products');
+        Route::post('store-best-discount-products', 'store')->name('best-discount-products.store');
+        Route::post('update-best-discount-products/{id}', 'update')->name('best-discount-products.update');
+        Route::delete('delete-best-discount-products/{id}', 'destroy')->name('best-discount-products.delete');
+        Route::put('best-discount-products-status/{id}', 'changeStatus')->name('best-discount-products.status');
+        Route::put('best-discount-products-main/{id}', 'changeMain')->name('best-discount-products.main');
+    });
 
     Route::resource('service', ServiceController::class);
     Route::put('service-status/{id}', [ServiceController::class,'changeStatus'])->name('service.status');
@@ -696,7 +770,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::post('store-featured-category', [HomePageController::class, 'storeFeaturedCategory'])->name('store-featured-category');
     Route::delete('destroy-featured-category/{id}', [HomePageController::class, 'destroyFeaturedCategory'])->name('destroy-featured-category');
 
-    Route::get('featured-brands', [HomePageController::class, 'featuredBrands'])->name('featured-brands');
+    Route::get('featured-brands.index', [HomePageController::class, 'featuredBrands'])->name('featured-brands.index');
     Route::post('store-featured-brands', [HomePageController::class, 'storeFeaturedBrands'])->name('store-featured-brands');
     Route::delete('destroy-featured-brands/{id}', [HomePageController::class, 'destroyFeaturedBrands'])->name('destroy-featured-brands');
 

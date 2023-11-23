@@ -15,6 +15,11 @@ class CreateFeaturedProductsTable extends Migration
     {
         Schema::create('featured_products', function (Blueprint $table) {
             $table->id();
+            $table->string('image');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('link');
+            $table->integer('isactive');
             $table->timestamps();
         });
     }

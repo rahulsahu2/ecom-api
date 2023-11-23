@@ -7,7 +7,7 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('admin.Product Category')}}</h1>
+            <h1>{{__('Store Category')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
               <div class="breadcrumb-item">{{__('admin.Product Category')}}</div>
@@ -27,6 +27,7 @@
                                     <th>{{__('admin.SN')}}</th>
                                     <th>{{__('admin.Name')}}</th>
                                     <th>{{__('admin.Image')}}</th>
+                                    <th>{{__('Store Category')}}</th>
                                     <th>{{__('admin.Status')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
@@ -38,6 +39,9 @@
                                         <td>{{ $category->name }}</td>
                                         <td>
                                             <img src="{{ asset($category->image) }}" alt="" width="150px">
+                                        </td>
+                                        <td>
+                                            {{$category->icon}}
                                         </td>
                                         <td>
                                             @if($category->status == 1)

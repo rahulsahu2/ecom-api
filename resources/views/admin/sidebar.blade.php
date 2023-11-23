@@ -37,23 +37,19 @@
 
             <ul class="dropdown-menu">
 
-              <li class="{{ Route::is('admin.product-category.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-category.index') }}">{{__('admin.Categories')}}</a></li>
+              <li class="{{ Route::is('admin.product-category.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-category.index') }}">{{__('All Categories')}}</a></li>
 
               <li class="{{ Route::is('admin.product-sub-category.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-sub-category.index') }}">{{__('admin.Sub Categories')}}</a></li>
 
-              <li class="{{ Route::is('admin.product-child-category.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-child-category.index') }}">{{__('admin.Child Categories')}}</a></li>
+              <!-- <li class="{{ Route::is('admin.product-child-category.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-child-category.index') }}">{{__('admin.Child Categories')}}</a></li> -->
+            </ul>
+          </li>
 
-
-              <li class="{{ Route::is('admin.mega-menu-category.*') || Route::is('admin.mega-menu-sub-category') || Route::is('admin.create-mega-menu-sub-category') || Route::is('admin.edit-mega-menu-sub-category') || Route::is('admin.mega-menu-banner') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.mega-menu-category.index') }}">{{__('admin.Mega Menu Category')}}</a></li>
-
-              <li class="{{ Route::is('admin.popular-category') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.popular-category') }}">{{__('admin.Popular Category')}}</a></li>
-
-              <li class="{{ Route::is('admin.featured-category') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-category') }}">{{__('admin.Featured Category')}}</a></li>
-
+          <li class="nav-item dropdown {{ Route::is('admin.product.*') || Route::is('admin.product-brand.*') || Route::is('admin.product-variant') || Route::is('admin.create-product-variant') || Route::is('admin.edit-product-variant') || Route::is('admin.product-gallery') || Route::is('admin.product-variant-item') || Route::is('admin.create-product-variant-item') || Route::is('admin.edit-product-variant-item') || Route::is('admin.product-review') || Route::is('admin.show-product-review') || Route::is('admin.seller-product') || Route::is('admin.seller-pending-product') || Route::is('admin.wholesale') || Route::is('admin.create-wholesale') || Route::is('admin.edit-wholesale') || Route::is('admin.product-highlight') ||  Route::is('admin.product-report') || Route::is('admin.show-product-report') || Route::is('admin.specification-key.*') || Route::is('admin.stockout-product') || Route::is('admin.product-import-page') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Manage Brands')}}</span></a>
+            <ul class="dropdown-menu">
               <li class="{{ Route::is('admin.product-brand.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-brand.index') }}">{{__('admin.Brands')}}</a></li>
-
               <li class="{{ Route::is('admin.featured-brands.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-brands') }}">{{__('Brand Category')}}</a></li>
-
             </ul>
           </li>
 
@@ -180,27 +176,16 @@
 
           <li class="nav-item dropdown {{ Route::is('admin.service.*') || Route::is('admin.maintainance-mode') || Route::is('admin.announcement') ||  Route::is('admin.slider.*') || Route::is('admin.home-page') || Route::is('admin.banner-image.index') || Route::is('admin.homepage-one-visibility') || Route::is('admin.cart-bottom-banner') || Route::is('admin.shop-page') || Route::is('admin.seo-setup') || Route::is('admin.menu-visibility') || Route::is('admin.product-detail-page') || Route::is('admin.default-avatar') || Route::is('admin.seller-conditions') || Route::is('admin.subscription-banner') || Route::is('admin.testimonial.*') || Route::is('admin.homepage-section-title') || Route::is('admin.image-content') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe"></i><span>{{__('admin.Manage Website')}}</span></a>
-
             <ul class="dropdown-menu">
-
                 <li class="{{ Route::is('admin.seo-setup') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seo-setup') }}">{{__('admin.SEO Setup')}}</a></li>
-
-                <li class="{{ Route::is('admin.slider.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.slider.index') }}">{{__('admin.Slider')}}</a></li>
 
                 <li class="{{ Route::is('admin.shop-page') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.shop-page') }}">{{ __('admin.Shop Page') }}</a></li>
 
                 <li class="{{ Route::is('admin.service.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.service.index') }}">{{__('admin.Service')}}</a></li>
 
-                <li class="{{ Route::is('admin.homepage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.homepage-section-title') }}">{{__('admin.Homepage Section Title')}}</a></li>
-
-                <li class="{{ Route::is('admin.homepage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.shop-by-concern.index') }}">{{__('Shop By Concern')}}</a></li>
-
                 <li class="{{ Route::is('admin.seller-conditions') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seller-conditions') }}">{{__('admin.Seller Conditions')}}</a></li>
 
-
-
                 <li class="{{ Route::is('admin.testimonial.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.testimonial.index') }}">{{__('admin.Testimonial')}}</a></li>
-
 
                 <li class="{{ Route::is('admin.maintainance-mode') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.maintainance-mode') }}">{{__('admin.Maintainance Mode')}}</a></li>
 
@@ -211,7 +196,44 @@
                 <li class="{{ Route::is('admin.image-content') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.image-content') }}">{{__('admin.Image Content')}}</a></li>
 
                 <li class="{{ Route::is('admin.default-avatar') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.default-avatar') }}">{{__('admin.Default Avatar')}}</a></li>
+            </ul>
+          </li>
 
+          <li class="nav-item dropdown {{Route::is('admin.homepage-section-title') ||Route::is('admin.slider.*')|| Route::is('admin.shop-by-concern.index') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Manage Homepage')}}</span></a>
+
+            <ul class="dropdown-menu">           
+            <li class="{{ Route::is('admin.homepage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.homepage-section-title') }}">{{__('admin.Homepage Section Title')}}</a></li>
+
+            <li class="{{ Route::is('admin.slider.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.slider.index') }}">{{__('admin.Slider')}}</a></li>
+
+            <li class="{{ Route::is('admin.shop-by-concern.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.shop-by-concern.index') }}">{{__('Shop By Concern')}}</a></li>
+
+            <li class="{{ Route::is('admin.top-brands.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.top-brands.index') }}">{{__('Top Brands')}}</a></li>
+
+            <li class="{{ Route::is('admin.featured-brands.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-brands.index') }}">{{__('Featured Brands')}}</a></li>
+
+            <li class="{{ Route::is('admin.featured-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-products.index') }}">{{__('Featured Products')}}</a></li>
+
+            <li class="{{ Route::is('admin.section8.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.section8.index') }}">{{__('Section 8')}}</a></li>
+
+            <li class="{{ Route::is('admin.top-categories-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.top-categories-products.index') }}">{{__('Top Categories Products')}}</a></li>
+
+            <li class="{{ Route::is('admin.best-discount-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.best-discount-products.index') }}">{{__('Best Discount Products')}}</a></li>
+
+            <li class="{{ Route::is('admin.influncer-picks.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.influencer-picks.index') }}">{{__('Influencer Picks')}}</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown {{ Route::is('admin.footer.*') || Route::is('admin.social-link.*') || Route::is('admin.footer-link.*') || Route::is('admin.second-col-footer-link') || Route::is('admin.third-col-footer-link') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Website Menu')}}</span></a>
+
+            <ul class="dropdown-menu">
+            <li class="{{ Route::is('admin.mega-menu-category.*') || Route::is('admin.mega-menu-sub-category') || Route::is('admin.create-mega-menu-sub-category') || Route::is('admin.edit-mega-menu-sub-category') || Route::is('admin.mega-menu-banner') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.mega-menu-category.index') }}">{{__('admin.Mega Menu Category')}}</a></li>
+
+            <li class="{{ Route::is('admin.popular-category') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.popular-category') }}">{{__('admin.Popular Category')}}</a></li>
+
+            <li class="{{ Route::is('admin.featured-category') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-category') }}">{{__('admin.Featured Category')}}</a></li>
             </ul>
           </li>
 

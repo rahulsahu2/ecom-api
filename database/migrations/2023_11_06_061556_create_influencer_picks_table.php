@@ -15,6 +15,11 @@ class CreateInfluencerPicksTable extends Migration
     {
         Schema::create('influencer_picks', function (Blueprint $table) {
             $table->id();
+            $table->string('image');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('link');
+            $table->integer('isactive');
             $table->timestamps();
         });
     }

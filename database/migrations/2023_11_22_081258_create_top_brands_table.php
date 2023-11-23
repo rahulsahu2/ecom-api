@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBestDiscountProductsTable extends Migration
+class CreateTopBrandsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBestDiscountProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('best_discount_products', function (Blueprint $table) {
+        Schema::create('top_brands', function (Blueprint $table) {
             $table->id();
             $table->string('image');
             $table->string('title');
@@ -31,6 +31,6 @@ class CreateBestDiscountProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('best_discount_products');
+        Schema::dropIfExists('top_brands');
     }
 }
