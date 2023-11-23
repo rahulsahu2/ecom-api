@@ -63,7 +63,6 @@ class BestDiscountProductsController extends Controller
         $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
-        $shopconcern->ismain = $request->ismain;
         $shopconcern->save();
 
         $notification = trans('admin_validation.Updated Successfully');
@@ -97,7 +96,6 @@ class BestDiscountProductsController extends Controller
         $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
-        $shopconcern->ismain = $request->ismain;
         $shopconcern->save();
 
         $notification = trans('admin_validation.Created Successfully');

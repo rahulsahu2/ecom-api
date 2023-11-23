@@ -6,7 +6,12 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\BestDiscountProducts;
+use App\Models\InfluencerPicks;
+use App\Models\Section8;
 use App\Models\ShopByConcern;
+use App\Models\TopBrands;
+use App\Models\TopCategoriesProducts;
 use Illuminate\Http\Request;
 
 use App\Models\HomePageOneVisibility;
@@ -399,8 +404,6 @@ class HomeController extends Controller
 
         $serviceVisibilty = $serviceVisibilty->status == 1 ? true : false;
 
-
-
         $popularCategoryVisibilty = HomePageOneVisibility::find(4);
 
         $popularCategories = PopularCategory::with('category')->get();
@@ -435,21 +438,15 @@ class HomeController extends Controller
 
         $popularCategorySidebarBanner = $setting->popular_category_banner;
 
-
-
         $brandVisibility = HomePageOneVisibility::find(5);
 
         $brands = Brand::where(['status' => 1])->get()->take($brandVisibility->qty);
 
         $brandVisibility = $brandVisibility->status == 1 ? true : false;
 
-
-
         $flashSale = FlashSale::first();
 
         $flashSaleSidebarBanner = BannerImage::select('id','product_slug as play_store','image','banner_location','status','title as app_store')->find(24);
-
-
 
         $topRatedVisibility = HomePageOneVisibility::find(6);
 
@@ -457,25 +454,17 @@ class HomeController extends Controller
 
         $topRatedVisibility = $topRatedVisibility->status == 1 ? true : false;
 
-
-
         $sellerVisibility = HomePageOneVisibility::find(7);
 
         $sellers = Vendor::where(['status' => 1])->select('id','logo','banner_image','shop_name','slug')->get()->take($sellerVisibility->qty);
 
         $sellerVisibility = $sellerVisibility->status == 1 ? true : false;
 
-
-
         $twoColumnBannerOne = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two','badge')->find(19);
 
         $twoColumnBannerTwo = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two','badge')->find(20);
 
-
-
         $featuredCategorySidebarBanner = $setting->featured_category_banner;
-
-
 
         $featuredProductVisibility = HomePageOneVisibility::find(8);
 
@@ -489,16 +478,11 @@ class HomeController extends Controller
 
         }
 
-
         $featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where(['status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($featuredProductVisibility->qty);
 
         $featuredProductVisibility = $featuredProductVisibility->status == 1 ? true : false;
 
-
-
         $singleBannerOne = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two')->find(21);
-
-
 
         $newArrivalProductVisibility = HomePageOneVisibility::find(9);
 
@@ -506,11 +490,7 @@ class HomeController extends Controller
 
         $newArrivalProductVisibility = $newArrivalProductVisibility->status == 1 ? true : false;
 
-
-
         $singleBannerTwo = BannerImage::select('id','product_slug','image','banner_location','status','title_one')->find(22);
-
-
 
         $bestProductVisibility = HomePageOneVisibility::find(10);
 
@@ -518,29 +498,22 @@ class HomeController extends Controller
 
         $bestProductVisibility = $bestProductVisibility->status == 1 ? true : false;
 
-
-
         $subscriptionBanner = BannerImage::select('id','image','banner_location','header','title')->find(27);
 
-
+        $influencerPicks = InfluencerPicks::where(['isactive' => 1])->get();
+        $section8 = Section8::where(['isactive' => 1])->get();
+        $topbrands = TopBrands::where(['isactive' => 1])->get();
+        $topCategoriesProducts = TopCategoriesProducts::where(['isactive' => 1])->get();
+        $bestDiscountProducts = BestDiscountProducts::where(['isactive' => 1])->get();
 
         $seoSetting = SeoSetting::find(1);
-
-
-
         $setting = Setting::first();
 
         $section_title = json_decode($setting->homepage_section_title);
 
         Artisan::call('optimize:clear');
 
-
-
         $homepage_categories = Category::where(['status' => 1])->select('id','name','slug','icon','image')->get()->take(15);
-
-
-
-
 
         return response()->json([
 
@@ -555,6 +528,16 @@ class HomeController extends Controller
             'shopbyconcern'=> $shopbyConcern,
 
             'sliderBannerOne' => $sliderBannerOne,
+
+            'influencerPicks' => $influencerPicks,
+
+            'section8' => $section8,
+
+            'topbrands' => $topbrands,
+
+            'topCategoriesProducts' => $topCategoriesProducts,
+
+            'bestDiscountProducts' => $bestDiscountProducts,
 
             'sliderBannerTwo' => $sliderBannerTwo,
 
