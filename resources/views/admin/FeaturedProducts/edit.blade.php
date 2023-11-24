@@ -1,16 +1,16 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('FeaturedProducts')}}</title>
+<title>{{__('Featured Brands Product')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('FeaturedProducts')}}</h1>
+            <h1>{{__('Featured Brands Product')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('FeaturedProducts')}}</div>
+              <div class="breadcrumb-item">{{__('Featured Brands Product')}}</div>
             </div>
           </div>
 ​
@@ -23,38 +23,22 @@
                             <form action="{{ route('admin.featured-products.update',$shopconcern->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('Image')}}</label>
-                                        <div>
-                                            <img class="w_300" src="{{ asset($shopconcern->image) }}" alt="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('admin.New Image')}}</label>
-                                        <input type="file" name="image" class="form-control-file">
-                                    </div>​
-​
+                                
                                     <div class="form-group col-12">
-                                        <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="{{ $shopconcern->title }}" class="form-control">
+                                        <label>{{__('admin.Id')}} <span class="text-danger">*</span></label>
+                                        <select name="product_id" class="form-control">
+                                            <option value="" disabled>Select Product</option>
+                                            @foreach($products as $p)
+                                            <option {{$p->id == $shopconcern->product_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
-                                    <div class="form-group col-12">
-                                        <label>{{__('admin.Description')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="description" value="{{ $shopconcern->description }}" class="form-control">
-                                    </div>
-
-
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="{{ $shopconcern->link }}" class="form-control">
-                                    </div>
+                                
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
-                                        <select name="isactive" class="form-control">
-                                            <option {{$shopconcern->isactive == 1 ? 'selected':''}} value="1">{{__('admin.Active')}}</option>
-                                            <option {{$shopconcern->isactive == 0 ? 'selected':''}} value="0">{{__('admin.Inactive')}}</option>
+                                        <select name="status" class="form-control">
+                                            <option {{$shopconcern->status == 1 ? 'selected':''}} value="1">{{__('admin.Active')}}</option>
+                                            <option {{$shopconcern->status == 0 ? 'selected':''}} value="0">{{__('admin.Inactive')}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -65,31 +49,21 @@
                                 </div>
                             </form>
                         @else
-                            <form action="{{ route('admin.featured-brands-products.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.featured-products.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('admin.New Image')}}</label>
-                                        <input type="file" name="image" class="form-control-file">
-                                    </div>​
-​
                                     <div class="form-group col-12">
-                                        <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="" class="form-control">
-                                    </div>
-
-                                    <div class="form-group col-12">
-                                        <label>{{__('admin.Description')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="description" value="" class="form-control">
-                                    </div>
-
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="" class="form-control">
+                                        <label>{{__('Product')}} <span class="text-danger">*</span></label>
+                                        <select name="product_id" class="form-control">
+                                            <option value="" disabled selected>Select Product</option>
+                                            @foreach($products as $p)
+                                            <option value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
-                                        <select name="isactive" class="form-control">
+                                        <select name="status" class="form-control">
                                             <option value="1">{{__('admin.Active')}}</option>
                                             <option value="0">{{__('admin.Inactive')}}</option>
                                         </select>

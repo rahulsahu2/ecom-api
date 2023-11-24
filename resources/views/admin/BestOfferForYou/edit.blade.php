@@ -1,16 +1,16 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('Top Categories Products')}}</title>
+<title>{{__('Best Offer For You')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('Top Categories Products')}}</h1>
+            <h1>{{__('Best Offer For You')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('Top Categories Products')}}</div>
+              <div class="breadcrumb-item">{{__('Best Offer For You')}}</div>
             </div>
           </div>
 ​
@@ -20,7 +20,7 @@
                   <div class="card">
                     <div class="card-body">
                         @if ($shopconcern)
-                            <form action="{{ route('admin.top-categories-products.update',$shopconcern->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.best-offer-products.update',$shopconcern->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                 
@@ -49,7 +49,7 @@
                                 </div>
                             </form>
                         @else
-                            <form action="{{ route('admin.top-categories-products.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.best-offer-products.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-12">

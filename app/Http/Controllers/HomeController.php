@@ -7,6 +7,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\BestDiscountProducts;
+use App\Models\BestOfferForYou;
+use App\Models\featuredProducts;
 use App\Models\InfluencerPicks;
 use App\Models\Section8;
 use App\Models\ShopByConcern;
@@ -478,7 +480,7 @@ class HomeController extends Controller
 
         }
 
-        $featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where(['status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($featuredProductVisibility->qty);
+        //$featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where(['status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($featuredProductVisibility->qty);
 
         $featuredProductVisibility = $featuredProductVisibility->status == 1 ? true : false;
 
@@ -503,8 +505,9 @@ class HomeController extends Controller
         $influencerPicks = InfluencerPicks::where(['isactive' => 1])->get();
         $section8 = Section8::where(['isactive' => 1])->get();
         $topbrands = TopBrands::where(['isactive' => 1])->get();
-        $topCategoriesProducts = TopCategoriesProducts::where(['isactive' => 1])->get();
-        $bestDiscountProducts = BestDiscountProducts::where(['isactive' => 1])->get();
+        $topCategoriesProducts = TopCategoriesProducts::with('product')->where(['status' => 1])->get();
+        $bestofferproducts = BestOfferForYou::with('product')->where(['status' => 1])->get();
+        $featuredCategoryProducts = featuredProducts::with('product')->where(['status' => 1])->get();
 
         $seoSetting = SeoSetting::find(1);
         $setting = Setting::first();
@@ -537,7 +540,9 @@ class HomeController extends Controller
 
             'topCategoriesProducts' => $topCategoriesProducts,
 
-            'bestDiscountProducts' => $bestDiscountProducts,
+            'bestofferproducts' => $bestofferproducts,
+
+            'featuredCategoryProducts' => $featuredCategoryProducts,
 
             'sliderBannerTwo' => $sliderBannerTwo,
 
@@ -583,8 +588,6 @@ class HomeController extends Controller
             'featuredCategorySidebarBanner' => $featuredCategorySidebarBanner,
 
             'featuredCategories' => $featuredCategories,
-
-            'featuredCategoryProducts' => $featuredCategoryProducts,
 
             'singleBannerOne' => $singleBannerOne,
 

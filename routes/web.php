@@ -1,6 +1,8 @@
 <?php
+use App\Http\Controllers\WEB\Admin\BestOfferForYouController;
 use App\Http\Controllers\WEB\Admin\BestDiscountProductsController;
 use App\Http\Controllers\WEB\Admin\FeaturedBrandsController;
+use App\Http\Controllers\WEB\Admin\FeaturedProductsController;
 use App\Http\Controllers\WEB\Admin\InfluencerPicksController;
 use App\Http\Controllers\WEB\Admin\Section8Controller;
 use App\Http\Controllers\WEB\Admin\ShopByConcernController;
@@ -488,7 +490,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
         Route::put('influencer-picks-main/{id}', 'changeMain')->name('influencer-picks.main');
     });
 
-    Route::controller(FeaturedBrandsController::class)->group(function () {
+    Route::controller(FeaturedProductsController::class)->group(function () {
         Route::get('featured-products', 'index')->name('featured-products.index');
         Route::get('create-featured-products', 'create')->name('create-featured-products');
         Route::get('create-featured-products/{id}', 'show')->name('show-featured-products');
@@ -508,6 +510,17 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
         Route::delete('delete-best-discount-products/{id}', 'destroy')->name('best-discount-products.delete');
         Route::put('best-discount-products-status/{id}', 'changeStatus')->name('best-discount-products.status');
         Route::put('best-discount-products-main/{id}', 'changeMain')->name('best-discount-products.main');
+    });
+
+    Route::controller(BestOfferForYouController::class)->group(function () {
+        Route::get('best-offer-products', 'index')->name('best-offer-products.index');
+        Route::get('create-best-offer-products', 'create')->name('create-best-offer-products');
+        Route::get('create-best-offer-products/{id}', 'show')->name('show-best-offer-products');
+        Route::post('store-best-offer-products', 'store')->name('best-offer-products.store');
+        Route::post('update-best-offer-products/{id}', 'update')->name('best-offer-products.update');
+        Route::delete('delete-best-offer-products/{id}', 'destroy')->name('best-offer-products.delete');
+        Route::put('best-offer-products-status/{id}', 'changeStatus')->name('best-offer-products.status');
+        Route::put('best-offer-products-main/{id}', 'changeMain')->name('best-offer-products.main');
     });
 
     Route::resource('service', ServiceController::class);

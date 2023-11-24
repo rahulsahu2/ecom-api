@@ -29,15 +29,15 @@
                                     <input type="file" name="slider_image" class="form-control-file">
                                 </div>
 
-                                <!-- <div class="form-group col-12">
+                                <div class="form-group col-12" hidden>
                                     <label>{{__('admin.Badge')}} <span class="text-danger">*</span></label>
                                     <input type="text" value="test" name="badge" class="form-control">
-                                </div> -->
+                                </div>
 
-                                <!-- <div class="form-group col-12">
+                                <div class="form-group col-12" hidden>
                                     <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
                                     <input type="text" value="dd" name="title_one" class="form-control">
-                                </div> -->
+                                </div>
 
                                 <div class="form-group col-12">
                                     <label>{{__('Title')}} <span class="text-danger">*</span></label>

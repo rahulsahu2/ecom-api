@@ -35,33 +35,15 @@ class Section8Controller extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'title'=>'required',
-            'link'=>'required',
+            'id'=>'required',
         ];
         $customMessages = [
-            'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'id.required' => trans('admin_validation.Product is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $shopconcern = Section8::find($id);
-        if($request->image){
-            $exist_banner = $shopconcern->image;
-            $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'section8'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->image)
-                ->save(public_path().'/'.$banner_name);
-            $shopconcern->image = $banner_name;
-            $shopconcern->save();
-            if($exist_banner){
-                if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
-            }
-        }
-
-        $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
-        $shopconcern->link = $request->link;
+        $shopconcern->id = $request->id;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
 
@@ -72,29 +54,15 @@ class Section8Controller extends Controller
 
     public function store(Request $request){
         $rules = [
-            'image' => 'required',
-            'title'=>'required',
-            'link'=>'required',
+            'id'=>'required',
         ];
         $customMessages = [
-            'image.required' => trans('admin_validation.Image is required'),
-            'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'id.required' => trans('admin_validation.Product is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $shopconcern = new Section8();
-        if($request->image){
-            $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'section8'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->image)
-                ->save(public_path().'/'.$banner_name);
-            $shopconcern->image = $banner_name;
-        }
-        $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
-        $shopconcern->link = $request->link;
+        $shopconcern->id = $request->id;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
 
@@ -110,20 +78,6 @@ class Section8Controller extends Controller
             $message= trans('admin_validation.Inactive Successfully');
         }else{
             $shop->isactive=1;
-            $shop->save();
-            $message= trans('admin_validation.Active Successfully');
-        }
-        return response()->json($message);
-    }
-
-    public function changeMain($id){
-        $shop = Section8::find($id);
-        if($shop->ismain==1){
-            $shop->ismain=0;
-            $shop->save();
-            $message= trans('admin_validation.Inactive Successfully');
-        }else{
-            $shop->ismain=1;
             $shop->save();
             $message= trans('admin_validation.Active Successfully');
         }

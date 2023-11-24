@@ -1,6 +1,6 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('TopCategoriesProducts')}}</title>
+<title>{{__('Top Categories Products')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
@@ -25,12 +25,9 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
-                                    <th width="20%">{{__('Image')}}</th>
-                                    <th width="10%">{{__('admin.Title')}}</th>
-                                    <th width="20%">{{__('admin.Description')}}</th>
-                                    <th width="30%">{{__('admin.Link')}}</th>
+                                    <th width="20%">{{__('Product Id')}}</th>
+                                    <th width="30%">{{__('admin.Name')}}</th>
                                     <th>{{__('admin.Status')}}</th>
-                                    <th>{{__('Main')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
@@ -38,12 +35,10 @@
                                 @foreach ($shopconcern as $index => $service)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td><img class="w_300" src="{{ asset($service->image) }}" alt=""></td>
-                                        <td>{{ $service->title }}</td>
-                                        <td>{{ $service->description }}</td>
-                                        <td>{{ $service->link }}</td>
+                                        <td>{{ $service->Product->id }}</td>
+                                        <td>{{ $service->product->name }}</td>
                                         <td>
-                                            @if($service->isactive == 1)
+                                            @if($service->status == 1)
                                             <a href="javascript:;" onclick="changeStatus({{ $service->id }})">
                                                 <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
                                             </a>
@@ -71,7 +66,7 @@
 
 <script>
     function deleteData(id){
-        $("#deleteForm").attr("action",'{{ url("admin/top-brands/") }}'+"/"+id)
+        $("#deleteForm").attr("action",'{{ url("admin/delete-top-categories-products/") }}'+"/"+id)
     }
     function changeStatus(id){
         $.ajax({
@@ -87,19 +82,6 @@
             }
         })
     }
-    function changeMain(id){
-        $.ajax({
-            type:"put",
-            data: { _token : '{{ csrf_token() }}' },
-            url:"{{url('/admin/top-categories-products-main')}}"+"/"+id,
-            success:function(response){
-                toastr.success(response)
-            },
-            error:function(err){
-                console.log(err);
-
-            }
-        })
-    }
+   
 </script>
 @endsection

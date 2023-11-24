@@ -1,21 +1,21 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('Featured Brands Product')}}</title>
+<title>{{__('Best Offer For You')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('Featured Brands Product')}}</h1>
+            <h1>{{__('Best Offer For You')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('Featured Brands Product')}}</div>
+              <div class="breadcrumb-item">{{__('Best Offer For You')}}</div>
             </div>
           </div>
 
           <div class="section-body">
-            <a href="{{ route('admin.create-featured-products') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
+            <a href="{{ route('admin.create-best-offer-products') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
             <div class="row mt-4">
                 <div class="col">
                   <div class="card">
@@ -49,7 +49,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.show-featured-products',$service->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                            <a href="{{ route('admin.show-best-offer-products',$service->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                             <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $service->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
@@ -66,13 +66,13 @@
 
 <script>
     function deleteData(id){
-        $("#deleteForm").attr("action",'{{ url("admin/featured-products/") }}'+"/"+id)
+        $("#deleteForm").attr("action",'{{ url("admin/best-offer-products/") }}'+"/"+id)
     }
     function changeStatus(id){
         $.ajax({
             type:"put",
             data: { _token : '{{ csrf_token() }}' },
-            url:"{{url('/admin/featured-products-status')}}"+"/"+id,
+            url:"{{url('/admin/best-offer-products-status')}}"+"/"+id,
             success:function(response){
                 toastr.success(response)
             },

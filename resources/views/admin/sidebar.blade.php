@@ -207,19 +207,19 @@
 
             <li class="{{ Route::is('admin.slider.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.slider.index') }}">{{__('admin.Slider')}}</a></li>
 
+            <li class="{{ Route::is('admin.best-offer-products.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.best-offer-products.index') }}">{{__('Best Offer For You')}}</a></li>
+
             <li class="{{ Route::is('admin.shop-by-concern.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.shop-by-concern.index') }}">{{__('Shop By Concern')}}</a></li>
 
             <li class="{{ Route::is('admin.top-brands.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.top-brands.index') }}">{{__('Top Brands')}}</a></li>
 
             <li class="{{ Route::is('admin.featured-brands.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-brands.index') }}">{{__('Featured Brands')}}</a></li>
 
-            <li class="{{ Route::is('admin.featured-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-products.index') }}">{{__('Featured Products')}}</a></li>
+            <li class="{{ Route::is('admin.featured-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-products.index') }}">{{__('Featured Brands Products')}}</a></li>
 
             <li class="{{ Route::is('admin.section8.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.section8.index') }}">{{__('Section 8')}}</a></li>
 
             <li class="{{ Route::is('admin.top-categories-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.top-categories-products.index') }}">{{__('Top Categories Products')}}</a></li>
-
-            <li class="{{ Route::is('admin.best-discount-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.best-discount-products.index') }}">{{__('Best Discount Products')}}</a></li>
 
             <li class="{{ Route::is('admin.influncer-picks.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.influencer-picks.index') }}">{{__('Influencer Picks')}}</a></li>
             </ul>
