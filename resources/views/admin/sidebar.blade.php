@@ -49,7 +49,7 @@
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Manage Brands')}}</span></a>
             <ul class="dropdown-menu">
               <li class="{{ Route::is('admin.product-brand.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-brand.index') }}">{{__('admin.Brands')}}</a></li>
-              <li class="{{ Route::is('admin.featured-brands.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-brands') }}">{{__('Brand Category')}}</a></li>
+              <li class="{{ Route::is('admin.featured-brands.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-brands.index') }}">{{__('Brand Category')}}</a></li>
             </ul>
           </li>
 
@@ -218,6 +218,8 @@
             <li class="{{ Route::is('admin.featured-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-products.index') }}">{{__('Featured Brands Products')}}</a></li>
 
             <li class="{{ Route::is('admin.section8.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.section8.index') }}">{{__('Section 8')}}</a></li>
+
+            <li class="{{ Route::is('admin.best-seller-banners.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.best-seller-banners.index') }}">{{__('Best Seller Banners')}}</a></li>
 
             <li class="{{ Route::is('admin.top-categories-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.top-categories-products.index') }}">{{__('Top Categories Products')}}</a></li>
 

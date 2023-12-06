@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\WEB\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\TopBrands;
+use App\Models\BestSellerBanner;
 use Illuminate\Http\Request;
 use Image;
 use File;
-class TopBrandsController extends Controller
+class BestSellerBannerController extends Controller
 {
 
     public function __construct()
@@ -17,19 +17,19 @@ class TopBrandsController extends Controller
 
     public function index()
     {
-        $shopconcern = TopBrands::get();
-        return view('admin.topBrands.index',compact('shopconcern'));
+        $shopconcern = BestSellerBanner::get();
+        return view('admin.BestSellerBanner.index',compact('shopconcern'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.topBrands.edit',compact('shopconcern'));
+        return view('admin.BestSellerBanner.edit',compact('shopconcern'));
     }
 
     public function show($id)
     {
-        $shopconcern = TopBrands::find($id);
-        return view('admin.topBrands.edit',compact('shopconcern'));
+        $shopconcern = BestSellerBanner::find($id);
+        return view('admin.BestSellerBanner.edit',compact('shopconcern'));
     }
 
     public function update(Request $request, $id)
@@ -44,11 +44,11 @@ class TopBrandsController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $shopconcern = TopBrands::find($id);
+        $shopconcern = BestSellerBanner::find($id);
         if($request->image){
             $exist_banner = $shopconcern->image;
             $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'topbrands'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $banner_name = 'BestSellerBanner'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
             $banner_name = 'uploads/custom-images/'.$banner_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$banner_name);
@@ -60,7 +60,6 @@ class TopBrandsController extends Controller
         }
 
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
@@ -83,17 +82,16 @@ class TopBrandsController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $shopconcern = new TopBrands();
+        $shopconcern = new BestSellerBanner();
         if($request->image){
             $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'topbrands'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $banner_name = 'BestSellerBanner'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
             $banner_name = 'uploads/custom-images/'.$banner_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$banner_name);
             $shopconcern->image = $banner_name;
         }
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
@@ -102,28 +100,25 @@ class TopBrandsController extends Controller
         $notification = array('messege'=>$notification,'alert-type'=>'success');
         return redirect()->back()->with($notification);
     }
+
+    public function destroy($id)
+    {
+        $shopByConcern = BestSellerBanner::find($id);
+        $shopByConcern->delete();
+
+        $notification=  trans('admin_validation.Delete Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
+    }
+
     public function changeStatus($id){
-        $shop = TopBrands::find($id);
+        $shop = BestSellerBanner::find($id);
         if($shop->isactive==1){
             $shop->isactive=0;
             $shop->save();
             $message= trans('admin_validation.Inactive Successfully');
         }else{
             $shop->isactive=1;
-            $shop->save();
-            $message= trans('admin_validation.Active Successfully');
-        }
-        return response()->json($message);
-    }
-
-    public function changeMain($id){
-        $shop = TopBrands::find($id);
-        if($shop->ismain==1){
-            $shop->ismain=0;
-            $shop->save();
-            $message= trans('admin_validation.Inactive Successfully');
-        }else{
-            $shop->ismain=1;
             $shop->save();
             $message= trans('admin_validation.Active Successfully');
         }

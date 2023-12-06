@@ -63,7 +63,7 @@ class PaymentController extends Controller
 
         $myfatoorah = MyfatoorahPayment::first();
         $test_mode = $myfatoorah->account_mode == 'live' ? false : true;
-        $this->mfObj = new PaymentMyfatoorahApiV2($myfatoorah->api_key, $myfatoorah->currency_code, $test_mode);
+        $this->mfObj = null;//new PaymentMyfatoorahApiV2($myfatoorah->api_key, $myfatoorah->currency_code, $test_mode);
 
     }
 

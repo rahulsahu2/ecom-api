@@ -116,6 +116,16 @@ class ShopByConcernController extends Controller
         return response()->json($message);
     }
 
+    public function destroy($id)
+    {
+        $shopByConcern = ShopByConcern::find($id);
+        $shopByConcern->delete();
+
+        $notification=  trans('admin_validation.Delete Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
+    }
+
     public function changeMain($id){
         $shop = ShopByConcern::find($id);
         if($shop->ismain==1){

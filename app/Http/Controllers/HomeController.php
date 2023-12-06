@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BestDiscountProducts;
 use App\Models\BestOfferForYou;
+use App\Models\BestSellerBanner;
 use App\Models\featuredProducts;
 use App\Models\InfluencerPicks;
 use App\Models\Section8;
@@ -508,6 +509,8 @@ class HomeController extends Controller
         $topCategoriesProducts = TopCategoriesProducts::with('product')->where(['status' => 1])->get();
         $bestofferproducts = BestOfferForYou::with('product')->where(['status' => 1])->get();
         $featuredCategoryProducts = featuredProducts::with('product')->where(['status' => 1])->get();
+        $bestDiscountProducts = BestDiscountProducts::where(['isactive' => 1])->get();
+        $bestSellerBanner = BestSellerBanner::where(['isactive' => 1])->get();
 
         $seoSetting = SeoSetting::find(1);
         $setting = Setting::first();
@@ -516,7 +519,7 @@ class HomeController extends Controller
 
         Artisan::call('optimize:clear');
 
-        $homepage_categories = Category::where(['status' => 1])->select('id','name','slug','icon','image')->get()->take(15);
+        $homepage_categories = Category::where(['status' => 1,'icon'=> 'WinningKart'])->select('id','name','slug','icon','image')->get()->take(15);
 
         return response()->json([
 
@@ -543,6 +546,8 @@ class HomeController extends Controller
             'bestofferproducts' => $bestofferproducts,
 
             'featuredCategoryProducts' => $featuredCategoryProducts,
+            'bestDiscountProducts' =>$bestDiscountProducts,
+            'bestSellerBanners'=>$bestSellerBanner,
 
             'sliderBannerTwo' => $sliderBannerTwo,
 
@@ -992,7 +997,7 @@ class HomeController extends Controller
 
         $searchBrandArr = [];
 
-        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1])->select('id','name','slug','icon')->get();
+        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1, 'icon' => 'Brand'])->select('id','name','slug','icon')->get();
 
         $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
 

@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\WEB\Admin\BestOfferForYouController;
 use App\Http\Controllers\WEB\Admin\BestDiscountProductsController;
+use App\Http\Controllers\WEB\Admin\BestSellerBannerController;
 use App\Http\Controllers\WEB\Admin\FeaturedBrandsController;
 use App\Http\Controllers\WEB\Admin\FeaturedProductsController;
 use App\Http\Controllers\WEB\Admin\InfluencerPicksController;
@@ -521,6 +522,17 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
         Route::delete('delete-best-offer-products/{id}', 'destroy')->name('best-offer-products.delete');
         Route::put('best-offer-products-status/{id}', 'changeStatus')->name('best-offer-products.status');
         Route::put('best-offer-products-main/{id}', 'changeMain')->name('best-offer-products.main');
+    });
+
+    Route::controller(BestSellerBannerController::class)->group(function () {
+        Route::get('best-seller-banners', 'index')->name('best-seller-banners.index');
+        Route::get('create-best-seller-banners', 'create')->name('create-best-seller-banners');
+        Route::get('create-best-seller-banners/{id}', 'show')->name('show-best-seller-banners');
+        Route::post('store-best-seller-banners', 'store')->name('best-seller-banners.store');
+        Route::post('update-best-seller-banners/{id}', 'update')->name('best-seller-banners.update');
+        Route::delete('delete-best-seller-banners/{id}', 'destroy')->name('best-seller-banners.delete');
+        Route::put('best-seller-banners-status/{id}', 'changeStatus')->name('best-seller-banners.status');
+        Route::put('best-seller-banners-main/{id}', 'changeMain')->name('best-seller-banners.main');
     });
 
     Route::resource('service', ServiceController::class);

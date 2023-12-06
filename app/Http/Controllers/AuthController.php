@@ -18,6 +18,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = Auth::guard('admin-api')->attempt($credentials)) {
+            return response()->json(['error' => $credentials], 401);
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
