@@ -246,7 +246,7 @@
 
 <script>
     let activeSellerId= '';
-    let myId = {{ Auth::guard('web')->user()->id; }};
+    let myId = {{ Auth::guard('web')->user()->id }};
     function loadChatBox(id){
         $(".seller").removeClass('active');
         $("#seller-list-"+id).addClass('active')

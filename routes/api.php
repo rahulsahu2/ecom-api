@@ -107,7 +107,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('me', [AuthController::class, 'me']);
 });
 
-Route::group(['middleware' => ['demo','XSS']], function () {
+Route::group(['middleware' => ['XSS']], function () {
 
 Route::group([], function () {
 
@@ -176,6 +176,7 @@ Route::group([], function () {
 
     Route::get('/login', [LoginController::class, 'loginPage'])->name('login');
     Route::post('/store-login', [LoginController::class, 'storeLogin'])->name('store-login');
+    Route::post('/store-login-with-otp', [LoginController::class, 'storeLoginwithOtp'])->name('store-login-otp');
     Route::post('/resend-register-code', [RegisterController::class, 'resendRegisterCode'])->name('resend-register-code');
     Route::post('/store-register', [RegisterController::class, 'storeRegister'])->name('store-register');
     Route::get('/user-verification/{token}', [RegisterController::class, 'userVerification'])->name('user-verification');

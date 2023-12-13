@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use ReCaptcha\ReCaptcha;
 use App\Models\GoogleRecaptcha;
-class Recaptcha implements Rule
+class Recaptcha1 implements Rule
 {
     /**
      * Create a new rule instance.

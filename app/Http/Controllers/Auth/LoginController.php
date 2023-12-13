@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserRegistration;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -125,6 +126,54 @@ class LoginController extends Controller
         }
     }
 
+    public function storeLoginwithOtp(Request $request){
+        $rules = [
+            'email'=>'required'
+        ];
+        $customMessages = [
+            'email.required' => trans('Email is required'),
+        ];
+
+        $this->validate($request, $rules,$customMessages);
+
+        $user = null;
+        if(filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+            $user = User::where('email',$request->email)->first();
+        }else{
+            $notification = trans('user_validation.Please provide valid email');
+            return response()->json(['notification' => $notification],422);
+        }
+
+        if($user){
+            if($user->email_verified == 0){
+                $notification = trans('user_validation.Please verify your acount. If you didn\'t get OTP, please resend your OTP and verify');
+                return response()->json(['notification' => $notification],402);
+            }
+            if($user->status==1){
+                $otp = random_int(100000, 999999);
+                $user->verify_token = $otp;
+                $user->password = Hash::make($otp);
+                $user->save();
+                
+                MailHelper::setMailConfig();
+
+                $template=EmailTemplate::where('id',4)->first();
+                $subject=$template->subject;
+                $message=$template->description;
+                $message = str_replace('{{user_name}}',$request->name,$message);
+                Mail::to($user->email)->send(new UserRegistration($message,$subject,$user));
+
+                $notification = trans('Login OTP Sent Successfully');
+                return response()->json(['notification' => $notification],200);
+            }else{
+                $notification = trans('user_validation.Disabled Account');
+                return response()->json(['notification' => $notification],402);
+            }
+        }else{
+            $notification = trans('user_validation.Email does not exist');
+            return response()->json(['notification' => $notification],402);
+        }
+    }
 
     protected function respondWithToken($token, $vendor,$user)
     {
@@ -196,7 +245,6 @@ class LoginController extends Controller
                         $clientid = $biztech->client_id;
                         $senderid = $biztech->sender_id;
                         $senderid = urlencode($senderid);
-                        $message = $message;
                         $msg_type = true;  // true or false for unicode message
                         $message  = urlencode($message);
                         $mobilenumbers = $user->phone; //8801700000000 or 8801700000000,9100000000

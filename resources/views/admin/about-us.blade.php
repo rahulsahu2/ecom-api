@@ -48,7 +48,6 @@
                                         <input type="file" name="sidebanner_image" class="form-control-file">
                                     </div>
 ​
-​
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Description')}} <span class="text-danger">*</span></label>
                                         <textarea name="description" cols="30" rows="10" class="summernote">{{ $aboutUs->description }}</textarea>
