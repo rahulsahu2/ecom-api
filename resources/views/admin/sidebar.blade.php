@@ -54,7 +54,7 @@
           </li>
 
 
-          <li class="nav-item dropdown {{ Route::is('admin.product.*') || Route::is('admin.product-brand.*') || Route::is('admin.product-variant') || Route::is('admin.create-product-variant') || Route::is('admin.edit-product-variant') || Route::is('admin.product-gallery') || Route::is('admin.product-variant-item') || Route::is('admin.create-product-variant-item') || Route::is('admin.edit-product-variant-item') || Route::is('admin.product-review') || Route::is('admin.show-product-review') || Route::is('admin.seller-product') || Route::is('admin.seller-pending-product') || Route::is('admin.wholesale') || Route::is('admin.create-wholesale') || Route::is('admin.edit-wholesale') || Route::is('admin.product-highlight') ||  Route::is('admin.product-report') || Route::is('admin.show-product-report') || Route::is('admin.specification-key.*') || Route::is('admin.stockout-product') || Route::is('admin.product-import-page') ? 'active' : '' }}">
+          <li class="nav-item dropdown {{Route::is('admin.product-ingredient.index') || Route::is('admin.product-ingredient.index') || Route::is('admin.product.*') || Route::is('admin.product-brand.*') || Route::is('admin.product-variant') || Route::is('admin.create-product-variant') || Route::is('admin.edit-product-variant') || Route::is('admin.product-gallery') || Route::is('admin.product-variant-item') || Route::is('admin.create-product-variant-item') || Route::is('admin.edit-product-variant-item') || Route::is('admin.product-review') || Route::is('admin.show-product-review') || Route::is('admin.seller-product') || Route::is('admin.seller-pending-product') || Route::is('admin.wholesale') || Route::is('admin.create-wholesale') || Route::is('admin.edit-wholesale') || Route::is('admin.product-highlight') ||  Route::is('admin.product-report') || Route::is('admin.show-product-report') || Route::is('admin.specification-key.*') || Route::is('admin.stockout-product') || Route::is('admin.product-import-page') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Manage Products')}}</span></a>
 
             <ul class="dropdown-menu">
@@ -73,6 +73,9 @@
 
             <li class="{{ Route::is('admin.specification-key.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.specification-key.index') }}">{{__('admin.Specification Key')}}</a></li>
 
+            <li class="{{ Route::is('admin.product-ingredient.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-ingredient.index') }}">{{__('Product Ingredient')}}</a></li>
+            
+            <li class="{{ Route::is('admin.product-description.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-description.index') }}">{{__('Product Description')}}</a></li>
 
               <li class="{{ Route::is('admin.product-review') || Route::is('admin.show-product-review') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.product-review') }}">{{__('admin.Product Reviews')}}</a></li>
 
@@ -217,13 +220,34 @@
 
             <li class="{{ Route::is('admin.featured-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.featured-products.index') }}">{{__('Featured Brands Products')}}</a></li>
 
-            <li class="{{ Route::is('admin.section8.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.section8.index') }}">{{__('Section 8')}}</a></li>
+            <!-- <li class="{{ Route::is('admin.section8.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.section8.index') }}">{{__('Section 8')}}</a></li> -->
 
             <li class="{{ Route::is('admin.best-seller-banners.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.best-seller-banners.index') }}">{{__('Best Seller Banners')}}</a></li>
+
+            <li class="{{ Route::is('admin.best-discount-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.best-discount-products.index') }}">{{__('Best discount Products')}}</a></li>
 
             <li class="{{ Route::is('admin.top-categories-products.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.top-categories-products.index') }}">{{__('Top Categories Products')}}</a></li>
 
             <li class="{{ Route::is('admin.influncer-picks.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.influencer-picks.index') }}">{{__('Influencer Picks')}}</a></li>
+            </ul>
+          </li>
+          <!-- brandpage -->
+          <li class="nav-item dropdown {{Route::is('admin.brand-banners.index') || Route::is('admin.brand-offers.index') ||Route::is('admin.brand-description.index') ||Route::is('admin.brand-best-sellers.index') ||Route::is('admin.brand-categories.index') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Manage Brand Page')}}</span></a>
+            <ul class="dropdown-menu">           
+              <li class="{{ Route::is('admin.brand-banners.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brand-banners.index') }}">{{__('Brand Banners')}}</a></li>
+              <li class="{{ Route::is('admin.brand-offers.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brand-offers.index') }}">{{__('Brand Offers')}}</a></li>
+              <li class="{{ Route::is('admin.brand-description.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brand-description.index') }}">{{__('Brand description')}}</a></li>
+              <li class="{{ Route::is('admin.brand-best-sellers.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brand-best-sellers.index') }}">{{__('Brand Best Sellers')}}</a></li>
+              <li class="{{ Route::is('admin.brand-categories.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brand-categories.index') }}">{{__('Brand Categories')}}</a></li>
+            </ul>
+          </li>
+
+          <!-- categorypage -->
+          <li class="nav-item dropdown {{Route::is('admin.homepage-section-title') ||Route::is('admin.slider.*')|| Route::is('admin.shop-by-concern.index') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Manage Category Page')}}</span></a>
+            <ul class="dropdown-menu">           
+              <li class="{{ Route::is('admin.influncer-picks.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.influencer-picks.index') }}">{{__('Influencer Picks')}}</a></li>
             </ul>
           </li>
 

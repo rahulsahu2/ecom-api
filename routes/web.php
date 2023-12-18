@@ -2,13 +2,21 @@
 use App\Http\Controllers\WEB\Admin\BestOfferForYouController;
 use App\Http\Controllers\WEB\Admin\BestDiscountProductsController;
 use App\Http\Controllers\WEB\Admin\BestSellerBannerController;
+use App\Http\Controllers\WEB\Admin\Brands\BrandBannersController;
+use App\Http\Controllers\WEB\Admin\Brands\BrandBestSellersController;
+use App\Http\Controllers\WEB\Admin\Brands\BrandCategoriesController;
+use App\Http\Controllers\WEB\Admin\Brands\BrandDescriptionController;
+use App\Http\Controllers\WEB\Admin\Brands\BrandOffersController;
 use App\Http\Controllers\WEB\Admin\FeaturedBrandsController;
 use App\Http\Controllers\WEB\Admin\FeaturedProductsController;
 use App\Http\Controllers\WEB\Admin\InfluencerPicksController;
+use App\Http\Controllers\WEB\Admin\ProductDetails\ProductDescriptionController;
+use App\Http\Controllers\WEB\Admin\ProductDetails\ProductIngredientController;
 use App\Http\Controllers\WEB\Admin\Section8Controller;
 use App\Http\Controllers\WEB\Admin\ShopByConcernController;
 use App\Http\Controllers\WEB\Admin\TopBrandsController;
 use App\Http\Controllers\WEB\Admin\TopCategoriesProductsController;
+use App\Models\ProductDescription;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -359,558 +367,638 @@ Route::group(['middleware' => ['maintainance']], function () {
 
 
 // start admin routes
-// Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
-
-//     // start auth route
-//     Route::get('login', [AdminLoginController::class,'adminLoginPage'])->name('login');
-//     Route::post('login', [AdminLoginController::class,'storeLogin'])->name('login');
-//     Route::post('logout', [AdminLoginController::class,'adminLogout'])->name('logout');
-//     Route::get('forget-password', [AdminForgotPasswordController::class,'forgetPassword'])->name('forget-password');
-//     Route::post('send-forget-password', [AdminForgotPasswordController::class,'sendForgetEmail'])->name('send.forget.password');
-//     Route::get('reset-password/{token}', [AdminForgotPasswordController::class,'resetPassword'])->name('reset.password');
-//     Route::post('password-store/{token}', [AdminForgotPasswordController::class,'storeResetData'])->name('store.reset.password');
-//     // end auth route
-
-//     Route::get('/', [DashboardController::class,'dashobard'])->name('dashboard');
-//     Route::get('dashboard', [DashboardController::class,'dashobard'])->name('dashboard');
-//     Route::get('profile', [AdminProfileController::class,'index'])->name('profile');
-//     Route::put('profile-update', [AdminProfileController::class,'update'])->name('profile.update');
-
-//     Route::resource('product-category', ProductCategoryController::class);
-//     Route::put('product-category-status/{id}', [ProductCategoryController::class,'changeStatus'])->name('product.category.status');
-
-//     Route::resource('product-sub-category', ProductSubCategoryController::class);
-//     Route::put('product-sub-category-status/{id}', [ProductSubCategoryController::class,'changeStatus'])->name('product.sub.category.status');
-
-//     Route::resource('product-child-category', ProductChildCategoryController::class);
-//     Route::put('product-child-category-status/{id}', [ProductChildCategoryController::class,'changeStatus'])->name('product.child.category.status');
-//     Route::get('subcategory-by-category/{id}', [ProductChildCategoryController::class,'getSubcategoryByCategory'])->name('subcategory-by-category');
-//     Route::get('childcategory-by-subcategory/{id}', [ProductChildCategoryController::class,'getChildcategoryBySubCategory'])->name('childcategory-by-subcategory');
-
-//     Route::resource('product-brand', ProductBrandController::class);
-//     Route::put('product-brand-status/{id}', [ProductBrandController::class,'changeStatus'])->name('product.brand.status');
-
-//     Route::resource('specification-key', SpecificationKeyController::class);
-//     Route::put('specification-key-status/{id}', [SpecificationKeyController::class,'changeStatus'])->name('specification-key.status');
-
-//     Route::resource('testimonial', TestimonialController::class);
-//     Route::put('testimonial-status/{id}', [TestimonialController::class,'changeStatus'])->name('testimonial.status');
-
-//     Route::resource('product', ProductController::class);
-//     Route::get('create-product-info', [ProductController::class,'create'])->name('create-product-info');
-//     Route::put('product-status/{id}', [ProductController::class,'changeStatus'])->name('product.status');
-//     Route::put('product-approved/{id}', [ProductController::class,'productApproved'])->name('product-approved');
-//     Route::put('removed-product-exist-specification/{id}', [ProductController::class,'removedProductExistSpecification'])->name('removed-product-exist-specification');
-//     Route::get('seller-product', [ProductController::class,'sellerProduct'])->name('seller-product');
-//     Route::get('seller-pending-product', [ProductController::class,'sellerPendingProduct'])->name('seller-pending-product');
-//     Route::get('stockout-product', [ProductController::class,'stockoutProduct'])->name('stockout-product');
-
-//     Route::get('product-import-page',[ProductController::class,'product_import_page'])->name('product-import-page');
-//     Route::get('product-export',[ProductController::class,'product_export'])->name('product-export');
-//     Route::get('product-demo-export',[ProductController::class,'demo_product_export'])->name('product-demo-export');
-//     Route::post('product-import',[ProductController::class,'product_import'])->name('product-import');
-
-
-
-//     Route::get('product-variant/{id}', [ProductVariantController::class,'index'])->name('product-variant');
-//     Route::get('create-product-variant/{id}', [ProductVariantController::class,'create'])->name('create-product-variant');
-//     Route::post('store-product-variant', [ProductVariantController::class,'store'])->name('store-product-variant');
-//     Route::get('get-product-variant/{id}', [ProductVariantController::class,'show'])->name('get-product-variant');
-//     Route::put('update-product-variant/{id}', [ProductVariantController::class,'update'])->name('update-product-variant');
-//     Route::delete('delete-product-variant/{id}', [ProductVariantController::class,'destroy'])->name('delete-product-variant');
-//     Route::put('product-variant-status/{id}', [ProductVariantController::class,'changeStatus'])->name('product-variant.status');
-
-//     Route::get('product-variant-item', [ProductVariantItemController::class,'index'])->name('product-variant-item');
-//     Route::get('create-product-variant-item/{id}', [ProductVariantItemController::class,'create'])->name('create-product-variant-item');
-//     Route::post('store-product-variant-item', [ProductVariantItemController::class,'store'])->name('store-product-variant-item');
-//     Route::get('edit-product-variant-item/{id}', [ProductVariantItemController::class,'edit'])->name('edit-product-variant-item');
-//     Route::get('get-product-variant-item/{id}', [ProductVariantItemController::class,'show'])->name('egetdit-product-variant-item');
-
-//     Route::put('update-product-variant-item/{id}', [ProductVariantItemController::class,'update'])->name('update-product-variant-item');
-//     Route::delete('delete-product-variant-item/{id}', [ProductVariantItemController::class,'destroy'])->name('delete-product-variant-item');
-//     Route::put('product-variant-item-status/{id}', [ProductVariantItemController::class,'changeStatus'])->name('product-variant-item.status');
-
-
-//     Route::get('product-gallery/{id}', [ProductGalleryController::class,'index'])->name('product-gallery');
-//     Route::post('store-product-gallery', [ProductGalleryController::class,'store'])->name('store-product-gallery');
-//     Route::delete('delete-product-image/{id}', [ProductGalleryController::class,'destroy'])->name('delete-product-image');
-//     Route::put('product-gallery-status/{id}', [ProductGalleryController::class,'changeStatus'])->name('product-gallery.status');
-
-//     Route::controller(ShopByConcernController::class)->group(function () {
-//         Route::get('shop-by-concern', 'index')->name('shop-by-concern.index');
-//         Route::get('create-shop-by-concern', 'create')->name('create-shop-by-concern');
-//         Route::get('create-shop-by-concern/{id}', 'show')->name('show-shop-by-concern');
-//         Route::post('store-shop-by-concern', 'store')->name('shop-by-concern.store');
-//         Route::post('update-shop-by-concern/{id}', 'update')->name('shop-by-concern.update');
-//         Route::delete('delete-shop-by-concern/{id}', 'destroy')->name('shop-by-concern.delete');
-//         Route::put('shop-by-concern-status/{id}', 'changeStatus')->name('shop-by-concern.status');
-//         Route::put('shop-by-concern-main/{id}', 'changeMain')->name('shop-by-concern.main');
-//     });
-
-//     Route::controller(TopBrandsController::class)->group(function () {
-//         Route::get('top-brands', 'index')->name('top-brands.index');
-//         Route::get('create-top-brands', 'create')->name('create-top-brands');
-//         Route::get('create-top-brands/{id}', 'show')->name('show-top-brands');
-//         Route::post('store-top-brands', 'store')->name('top-brands.store');
-//         Route::post('update-top-brands/{id}', 'update')->name('top-brands.update');
-//         Route::delete('delete-top-brands/{id}', 'destroy')->name('top-brands.delete');
-//         Route::put('top-brands-status/{id}', 'changeStatus')->name('top-brands.status');
-//         Route::put('top-brands-main/{id}', 'changeMain')->name('top-brands.main');
-//     });
-
-//     Route::controller(Section8Controller::class)->group(function () {
-//         Route::get('section8', 'index')->name('section8.index');
-//         Route::get('create-section8', 'create')->name('create-section8');
-//         Route::get('create-section8/{id}', 'show')->name('show-section8');
-//         Route::post('store-section8', 'store')->name('section8.store');
-//         Route::post('update-section8/{id}', 'update')->name('section8.update');
-//         Route::delete('delete-section8/{id}', 'destroy')->name('section8.delete');
-//         Route::put('section8-status/{id}', 'changeStatus')->name('section8.status');
-//         Route::put('section8-main/{id}', 'changeMain')->name('section8.main');
-//     });
-
-//     Route::controller(TopCategoriesProductsController::class)->group(function () {
-//         Route::get('top-categories-products', 'index')->name('top-categories-products.index');
-//         Route::get('create-top-categories-products', 'create')->name('create-top-categories-products');
-//         Route::get('create-top-categories-products/{id}', 'show')->name('show-top-categories-products');
-//         Route::post('store-top-categories-products', 'store')->name('top-categories-products.store');
-//         Route::post('update-top-categories-products/{id}', 'update')->name('top-categories-products.update');
-//         Route::delete('delete-top-categories-products/{id}', 'destroy')->name('top-categories-products.delete');
-//         Route::put('top-categories-products-status/{id}', 'changeStatus')->name('top-categories-products.status');
-//         Route::put('top-categories-products-main/{id}', 'changeMain')->name('top-categories-products.main');
-//     });
-
-//     Route::controller(InfluencerPicksController::class)->group(function () {
-//         Route::get('influencer-picks', 'index')->name('influencer-picks.index');
-//         Route::get('create-influencer-picks', 'create')->name('create-influencer-picks');
-//         Route::get('create-influencer-picks/{id}', 'show')->name('show-influencer-picks');
-//         Route::post('store-influencer-picks', 'store')->name('influencer-picks.store');
-//         Route::post('update-influencer-picks/{id}', 'update')->name('influencer-picks.update');
-//         Route::delete('delete-influencer-picks/{id}', 'destroy')->name('influencer-picks.delete');
-//         Route::put('influencer-picks-status/{id}', 'changeStatus')->name('influencer-picks.status');
-//         Route::put('influencer-picks-main/{id}', 'changeMain')->name('influencer-picks.main');
-//     });
-
-//     Route::controller(FeaturedProductsController::class)->group(function () {
-//         Route::get('featured-products', 'index')->name('featured-products.index');
-//         Route::get('create-featured-products', 'create')->name('create-featured-products');
-//         Route::get('create-featured-products/{id}', 'show')->name('show-featured-products');
-//         Route::post('store-featured-products', 'store')->name('featured-products.store');
-//         Route::post('update-featured-products/{id}', 'update')->name('featured-products.update');
-//         Route::delete('delete-featured-products/{id}', 'destroy')->name('featured-products.delete');
-//         Route::put('featured-products-status/{id}', 'changeStatus')->name('featured-products.status');
-//         Route::put('featured-products-main/{id}', 'changeMain')->name('featured-products.main');
-//     });
-
-//     Route::controller(BestDiscountProductsController::class)->group(function () {
-//         Route::get('best-discount-products', 'index')->name('best-discount-products.index');
-//         Route::get('create-best-discount-products', 'create')->name('create-best-discount-products');
-//         Route::get('create-best-discount-products/{id}', 'show')->name('show-best-discount-products');
-//         Route::post('store-best-discount-products', 'store')->name('best-discount-products.store');
-//         Route::post('update-best-discount-products/{id}', 'update')->name('best-discount-products.update');
-//         Route::delete('delete-best-discount-products/{id}', 'destroy')->name('best-discount-products.delete');
-//         Route::put('best-discount-products-status/{id}', 'changeStatus')->name('best-discount-products.status');
-//         Route::put('best-discount-products-main/{id}', 'changeMain')->name('best-discount-products.main');
-//     });
-
-//     Route::controller(BestOfferForYouController::class)->group(function () {
-//         Route::get('best-offer-products', 'index')->name('best-offer-products.index');
-//         Route::get('create-best-offer-products', 'create')->name('create-best-offer-products');
-//         Route::get('create-best-offer-products/{id}', 'show')->name('show-best-offer-products');
-//         Route::post('store-best-offer-products', 'store')->name('best-offer-products.store');
-//         Route::post('update-best-offer-products/{id}', 'update')->name('best-offer-products.update');
-//         Route::delete('delete-best-offer-products/{id}', 'destroy')->name('best-offer-products.delete');
-//         Route::put('best-offer-products-status/{id}', 'changeStatus')->name('best-offer-products.status');
-//         Route::put('best-offer-products-main/{id}', 'changeMain')->name('best-offer-products.main');
-//     });
-
-//     Route::controller(BestSellerBannerController::class)->group(function () {
-//         Route::get('best-seller-banners', 'index')->name('best-seller-banners.index');
-//         Route::get('create-best-seller-banners', 'create')->name('create-best-seller-banners');
-//         Route::get('create-best-seller-banners/{id}', 'show')->name('show-best-seller-banners');
-//         Route::post('store-best-seller-banners', 'store')->name('best-seller-banners.store');
-//         Route::post('update-best-seller-banners/{id}', 'update')->name('best-seller-banners.update');
-//         Route::delete('delete-best-seller-banners/{id}', 'destroy')->name('best-seller-banners.delete');
-//         Route::put('best-seller-banners-status/{id}', 'changeStatus')->name('best-seller-banners.status');
-//         Route::put('best-seller-banners-main/{id}', 'changeMain')->name('best-seller-banners.main');
-//     });
-
-//     Route::resource('service', ServiceController::class);
-//     Route::put('service-status/{id}', [ServiceController::class,'changeStatus'])->name('service.status');
-
-//     Route::resource('about-us', AboutUsController::class);
-//     Route::resource('contact-us', ContactPageController::class);
-
-//     Route::resource('custom-page', CustomPageController::class);
-//     Route::put('custom-page-status/{id}', [CustomPageController::class,'changeStatus'])->name('custom-page.status');
-
-//     Route::resource('terms-and-condition', TermsAndConditionController::class);
-//     Route::resource('privacy-policy', PrivacyPolicyController::class);
-
-//     Route::resource('blog-category', BlogCategoryController::class);
-//     Route::put('blog-category-status/{id}', [BlogCategoryController::class,'changeStatus'])->name('blog.category.status');
-
-//     Route::resource('blog', BlogController::class);
-//     Route::put('blog-status/{id}', [BlogController::class,'changeStatus'])->name('blog.status');
-
-//     Route::resource('popular-blog', PopularBlogController::class);
-//     Route::put('popular-blog-status/{id}', [PopularBlogController::class,'changeStatus'])->name('popular-blog.status');
-
-//     Route::resource('blog-comment', BlogCommentController::class);
-//     Route::put('blog-comment-status/{id}', [BlogCommentController::class,'changeStatus'])->name('blog-comment.status');
-
-
-
-//     Route::get('clear-database',[SettingController::class,'showClearDatabasePage'])->name('clear-database');
-//     Route::delete('clear-database',[SettingController::class,'clearDatabase'])->name('clear-database');
-
-//     Route::get('subscriber',[SubscriberController::class,'index'])->name('subscriber');
-//     Route::delete('delete-subscriber/{id}',[SubscriberController::class,'destroy'])->name('delete-subscriber');
-//     Route::post('specification-subscriber-email/{id}',[SubscriberController::class,'specificationSubscriberEmail'])->name('specification-subscriber-email');
-//     Route::post('each-subscriber-email',[SubscriberController::class,'eachSubscriberEmail'])->name('each-subscriber-email');
-
-//     Route::get('contact-message',[ContactMessageController::class,'index'])->name('contact-message');
-//     Route::get('show-contact-message/{id}',[ContactMessageController::class,'show'])->name('show-contact-message');
-//     Route::delete('delete-contact-message/{id}',[ContactMessageController::class,'destroy'])->name('delete-contact-message');
-//     Route::put('enable-save-contact-message',[ContactMessageController::class,'handleSaveContactMessage'])->name('enable-save-contact-message');
-
-//     Route::get('email-configuration',[EmailConfigurationController::class,'index'])->name('email-configuration');
-//     Route::put('update-email-configuraion',[EmailConfigurationController::class,'update'])->name('update-email-configuraion');
-
-//     Route::get('email-template',[EmailTemplateController::class,'index'])->name('email-template');
-//     Route::get('edit-email-template/{id}',[EmailTemplateController::class,'edit'])->name('edit-email-template');
-//     Route::put('update-email-template/{id}',[EmailTemplateController::class,'update'])->name('update-email-template');
-
-//     Route::get('general-setting',[SettingController::class,'index'])->name('general-setting');
-//     Route::put('update-general-setting',[SettingController::class,'updateGeneralSetting'])->name('update-general-setting');
-
-//     Route::put('update-theme-color',[SettingController::class,'updateThemeColor'])->name('update-theme-color');
-
-//     Route::put('update-logo-favicon',[SettingController::class,'updateLogoFavicon'])->name('update-logo-favicon');
-//     Route::put('update-cookie-consent',[SettingController::class,'updateCookieConset'])->name('update-cookie-consent');
-//     Route::put('update-google-recaptcha',[SettingController::class,'updateGoogleRecaptcha'])->name('update-google-recaptcha');
-//     Route::put('update-facebook-comment',[SettingController::class,'updateFacebookComment'])->name('update-facebook-comment');
-//     Route::put('update-tawk-chat',[SettingController::class,'updateTawkChat'])->name('update-tawk-chat');
-//     Route::put('update-google-analytic',[SettingController::class,'updateGoogleAnalytic'])->name('update-google-analytic');
-//     Route::put('update-custom-pagination',[SettingController::class,'updateCustomPagination'])->name('update-custom-pagination');
-//     Route::put('update-social-login',[SettingController::class,'updateSocialLogin'])->name('update-social-login');
-//     Route::put('update-facebook-pixel',[SettingController::class,'updateFacebookPixel'])->name('update-facebook-pixel');
-//     Route::put('update-pusher',[SettingController::class,'updatePusher'])->name('update-pusher');
-
-
-//     Route::resource('admin', AdminController::class);
-//     Route::put('admin-status/{id}', [AdminController::class,'changeStatus'])->name('admin-status');
-
-//     Route::resource('faq', FaqController::class);
-//     Route::put('faq-status/{id}', [FaqController::class,'changeStatus'])->name('faq-status');
+Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
+
+    // start auth route
+    Route::get('login', [AdminLoginController::class,'adminLoginPage'])->name('login');
+    Route::post('login', [AdminLoginController::class,'storeLogin'])->name('login');
+    Route::post('logout', [AdminLoginController::class,'adminLogout'])->name('logout');
+    Route::get('forget-password', [AdminForgotPasswordController::class,'forgetPassword'])->name('forget-password');
+    Route::post('send-forget-password', [AdminForgotPasswordController::class,'sendForgetEmail'])->name('send.forget.password');
+    Route::get('reset-password/{token}', [AdminForgotPasswordController::class,'resetPassword'])->name('reset.password');
+    Route::post('password-store/{token}', [AdminForgotPasswordController::class,'storeResetData'])->name('store.reset.password');
+    // end auth route
+
+    Route::get('/', [DashboardController::class,'dashobard'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class,'dashobard'])->name('dashboard');
+    Route::get('profile', [AdminProfileController::class,'index'])->name('profile');
+    Route::put('profile-update', [AdminProfileController::class,'update'])->name('profile.update');
+
+    Route::resource('product-category', ProductCategoryController::class);
+    Route::put('product-category-status/{id}', [ProductCategoryController::class,'changeStatus'])->name('product.category.status');
+
+    Route::resource('product-sub-category', ProductSubCategoryController::class);
+    Route::put('product-sub-category-status/{id}', [ProductSubCategoryController::class,'changeStatus'])->name('product.sub.category.status');
+
+    Route::resource('product-child-category', ProductChildCategoryController::class);
+    Route::put('product-child-category-status/{id}', [ProductChildCategoryController::class,'changeStatus'])->name('product.child.category.status');
+    Route::get('subcategory-by-category/{id}', [ProductChildCategoryController::class,'getSubcategoryByCategory'])->name('subcategory-by-category');
+    Route::get('childcategory-by-subcategory/{id}', [ProductChildCategoryController::class,'getChildcategoryBySubCategory'])->name('childcategory-by-subcategory');
+
+    Route::resource('product-brand', ProductBrandController::class);
+    Route::put('product-brand-status/{id}', [ProductBrandController::class,'changeStatus'])->name('product.brand.status');
+
+    Route::resource('specification-key', SpecificationKeyController::class);
+    Route::put('specification-key-status/{id}', [SpecificationKeyController::class,'changeStatus'])->name('specification-key.status');
+
+    Route::resource('testimonial', TestimonialController::class);
+    Route::put('testimonial-status/{id}', [TestimonialController::class,'changeStatus'])->name('testimonial.status');
+
+    Route::resource('product', ProductController::class);
+    Route::get('create-product-info', [ProductController::class,'create'])->name('create-product-info');
+    Route::put('product-status/{id}', [ProductController::class,'changeStatus'])->name('product.status');
+    Route::put('product-approved/{id}', [ProductController::class,'productApproved'])->name('product-approved');
+    Route::put('removed-product-exist-specification/{id}', [ProductController::class,'removedProductExistSpecification'])->name('removed-product-exist-specification');
+    Route::get('seller-product', [ProductController::class,'sellerProduct'])->name('seller-product');
+    Route::get('seller-pending-product', [ProductController::class,'sellerPendingProduct'])->name('seller-pending-product');
+    Route::get('stockout-product', [ProductController::class,'stockoutProduct'])->name('stockout-product');
+
+    Route::get('product-import-page',[ProductController::class,'product_import_page'])->name('product-import-page');
+    Route::get('product-export',[ProductController::class,'product_export'])->name('product-export');
+    Route::get('product-demo-export',[ProductController::class,'demo_product_export'])->name('product-demo-export');
+    Route::post('product-import',[ProductController::class,'product_import'])->name('product-import');
+
+
+
+    Route::get('product-variant/{id}', [ProductVariantController::class,'index'])->name('product-variant');
+    Route::get('create-product-variant/{id}', [ProductVariantController::class,'create'])->name('create-product-variant');
+    Route::post('store-product-variant', [ProductVariantController::class,'store'])->name('store-product-variant');
+    Route::get('get-product-variant/{id}', [ProductVariantController::class,'show'])->name('get-product-variant');
+    Route::put('update-product-variant/{id}', [ProductVariantController::class,'update'])->name('update-product-variant');
+    Route::delete('delete-product-variant/{id}', [ProductVariantController::class,'destroy'])->name('delete-product-variant');
+    Route::put('product-variant-status/{id}', [ProductVariantController::class,'changeStatus'])->name('product-variant.status');
+
+    Route::get('product-variant-item', [ProductVariantItemController::class,'index'])->name('product-variant-item');
+    Route::get('create-product-variant-item/{id}', [ProductVariantItemController::class,'create'])->name('create-product-variant-item');
+    Route::post('store-product-variant-item', [ProductVariantItemController::class,'store'])->name('store-product-variant-item');
+    Route::get('edit-product-variant-item/{id}', [ProductVariantItemController::class,'edit'])->name('edit-product-variant-item');
+    Route::get('get-product-variant-item/{id}', [ProductVariantItemController::class,'show'])->name('egetdit-product-variant-item');
+
+    Route::put('update-product-variant-item/{id}', [ProductVariantItemController::class,'update'])->name('update-product-variant-item');
+    Route::delete('delete-product-variant-item/{id}', [ProductVariantItemController::class,'destroy'])->name('delete-product-variant-item');
+    Route::put('product-variant-item-status/{id}', [ProductVariantItemController::class,'changeStatus'])->name('product-variant-item.status');
+
+
+    Route::get('product-gallery/{id}', [ProductGalleryController::class,'index'])->name('product-gallery');
+    Route::post('store-product-gallery', [ProductGalleryController::class,'store'])->name('store-product-gallery');
+    Route::delete('delete-product-image/{id}', [ProductGalleryController::class,'destroy'])->name('delete-product-image');
+    Route::put('product-gallery-status/{id}', [ProductGalleryController::class,'changeStatus'])->name('product-gallery.status');
+
+    Route::controller(ShopByConcernController::class)->group(function () {
+        Route::get('shop-by-concern', 'index')->name('shop-by-concern.index');
+        Route::get('create-shop-by-concern', 'create')->name('create-shop-by-concern');
+        Route::get('create-shop-by-concern/{id}', 'show')->name('show-shop-by-concern');
+        Route::post('store-shop-by-concern', 'store')->name('shop-by-concern.store');
+        Route::post('update-shop-by-concern/{id}', 'update')->name('shop-by-concern.update');
+        Route::delete('delete-shop-by-concern/{id}', 'destroy')->name('shop-by-concern.delete');
+        Route::put('shop-by-concern-status/{id}', 'changeStatus')->name('shop-by-concern.status');
+        Route::put('shop-by-concern-main/{id}', 'changeMain')->name('shop-by-concern.main');
+    });
+
+    Route::controller(TopBrandsController::class)->group(function () {
+        Route::get('top-brands', 'index')->name('top-brands.index');
+        Route::get('create-top-brands', 'create')->name('create-top-brands');
+        Route::get('create-top-brands/{id}', 'show')->name('show-top-brands');
+        Route::post('store-top-brands', 'store')->name('top-brands.store');
+        Route::post('update-top-brands/{id}', 'update')->name('top-brands.update');
+        Route::delete('delete-top-brands/{id}', 'destroy')->name('top-brands.delete');
+        Route::put('top-brands-status/{id}', 'changeStatus')->name('top-brands.status');
+        Route::put('top-brands-main/{id}', 'changeMain')->name('top-brands.main');
+    });
+
+    Route::controller(Section8Controller::class)->group(function () {
+        Route::get('section8', 'index')->name('section8.index');
+        Route::get('create-section8', 'create')->name('create-section8');
+        Route::get('create-section8/{id}', 'show')->name('show-section8');
+        Route::post('store-section8', 'store')->name('section8.store');
+        Route::post('update-section8/{id}', 'update')->name('section8.update');
+        Route::delete('delete-section8/{id}', 'destroy')->name('section8.delete');
+        Route::put('section8-status/{id}', 'changeStatus')->name('section8.status');
+        Route::put('section8-main/{id}', 'changeMain')->name('section8.main');
+    });
+
+    Route::controller(TopCategoriesProductsController::class)->group(function () {
+        Route::get('top-categories-products', 'index')->name('top-categories-products.index');
+        Route::get('create-top-categories-products', 'create')->name('create-top-categories-products');
+        Route::get('create-top-categories-products/{id}', 'show')->name('show-top-categories-products');
+        Route::post('store-top-categories-products', 'store')->name('top-categories-products.store');
+        Route::post('update-top-categories-products/{id}', 'update')->name('top-categories-products.update');
+        Route::delete('delete-top-categories-products/{id}', 'destroy')->name('top-categories-products.delete');
+        Route::put('top-categories-products-status/{id}', 'changeStatus')->name('top-categories-products.status');
+        Route::put('top-categories-products-main/{id}', 'changeMain')->name('top-categories-products.main');
+    });
+
+    Route::controller(InfluencerPicksController::class)->group(function () {
+        Route::get('influencer-picks', 'index')->name('influencer-picks.index');
+        Route::get('create-influencer-picks', 'create')->name('create-influencer-picks');
+        Route::get('create-influencer-picks/{id}', 'show')->name('show-influencer-picks');
+        Route::post('store-influencer-picks', 'store')->name('influencer-picks.store');
+        Route::post('update-influencer-picks/{id}', 'update')->name('influencer-picks.update');
+        Route::delete('delete-influencer-picks/{id}', 'destroy')->name('influencer-picks.delete');
+        Route::put('influencer-picks-status/{id}', 'changeStatus')->name('influencer-picks.status');
+        Route::put('influencer-picks-main/{id}', 'changeMain')->name('influencer-picks.main');
+    });
+
+    Route::controller(FeaturedProductsController::class)->group(function () {
+        Route::get('featured-products', 'index')->name('featured-products.index');
+        Route::get('create-featured-products', 'create')->name('create-featured-products');
+        Route::get('create-featured-products/{id}', 'show')->name('show-featured-products');
+        Route::post('store-featured-products', 'store')->name('featured-products.store');
+        Route::post('update-featured-products/{id}', 'update')->name('featured-products.update');
+        Route::delete('delete-featured-products/{id}', 'destroy')->name('featured-products.delete');
+        Route::put('featured-products-status/{id}', 'changeStatus')->name('featured-products.status');
+        Route::put('featured-products-main/{id}', 'changeMain')->name('featured-products.main');
+    });
+
+    Route::controller(BestDiscountProductsController::class)->group(function () {
+        Route::get('best-discount-products', 'index')->name('best-discount-products.index');
+        Route::get('create-best-discount-products', 'create')->name('create-best-discount-products');
+        Route::get('create-best-discount-products/{id}', 'show')->name('show-best-discount-products');
+        Route::post('store-best-discount-products', 'store')->name('best-discount-products.store');
+        Route::post('update-best-discount-products/{id}', 'update')->name('best-discount-products.update');
+        Route::delete('delete-best-discount-products/{id}', 'destroy')->name('best-discount-products.delete');
+        Route::put('best-discount-products-status/{id}', 'changeStatus')->name('best-discount-products.status');
+        Route::put('best-discount-products-main/{id}', 'changeMain')->name('best-discount-products.main');
+    });
+
+    Route::controller(BestOfferForYouController::class)->group(function () {
+        Route::get('best-offer-products', 'index')->name('best-offer-products.index');
+        Route::get('create-best-offer-products', 'create')->name('create-best-offer-products');
+        Route::get('create-best-offer-products/{id}', 'show')->name('show-best-offer-products');
+        Route::post('store-best-offer-products', 'store')->name('best-offer-products.store');
+        Route::post('update-best-offer-products/{id}', 'update')->name('best-offer-products.update');
+        Route::delete('delete-best-offer-products/{id}', 'destroy')->name('best-offer-products.delete');
+        Route::put('best-offer-products-status/{id}', 'changeStatus')->name('best-offer-products.status');
+        Route::put('best-offer-products-main/{id}', 'changeMain')->name('best-offer-products.main');
+    });
+
+    Route::controller(BestSellerBannerController::class)->group(function () {
+        Route::get('best-seller-banners', 'index')->name('best-seller-banners.index');
+        Route::get('create-best-seller-banners', 'create')->name('create-best-seller-banners');
+        Route::get('create-best-seller-banners/{id}', 'show')->name('show-best-seller-banners');
+        Route::post('store-best-seller-banners', 'store')->name('best-seller-banners.store');
+        Route::post('update-best-seller-banners/{id}', 'update')->name('best-seller-banners.update');
+        Route::delete('delete-best-seller-banners/{id}', 'destroy')->name('best-seller-banners.delete');
+        Route::put('best-seller-banners-status/{id}', 'changeStatus')->name('best-seller-banners.status');
+        Route::put('best-seller-banners-main/{id}', 'changeMain')->name('best-seller-banners.main');
+    });
+
+    //brand page 
+    Route::controller(BrandBannersController::class)->group(function () {
+        Route::get('brand-banners', 'index')->name('brand-banners.index');
+        Route::get('create-brand-banners', 'create')->name('create-brand-banners');
+        Route::get('create-brand-banners/{id}', 'show')->name('show-brand-banners');
+        Route::post('store-brand-banners', 'store')->name('brand-banners.store');
+        Route::post('update-brand-banners/{id}', 'update')->name('brand-banners.update');
+        Route::delete('delete-brand-banners/{id}', 'destroy')->name('brand-banners.delete');
+        Route::put('brand-banners-status/{id}', 'changeStatus')->name('brand-banners.status');
+        Route::put('brand-banners-main/{id}', 'changeMain')->name('brand-banners.main');
+    });
+
+    Route::controller(BrandBestSellersController::class)->group(function () {
+        Route::get('brand-best-sellers', 'index')->name('brand-best-sellers.index');
+        Route::get('create-brand-best-sellers', 'create')->name('create-brand-best-sellers');
+        Route::get('create-brand-best-sellers/{id}', 'show')->name('show-brand-best-sellers');
+        Route::post('store-brand-best-sellers', 'store')->name('brand-best-sellers.store');
+        Route::post('update-brand-best-sellers/{id}', 'update')->name('brand-best-sellers.update');
+        Route::delete('delete-brand-best-sellers/{id}', 'destroy')->name('brand-best-sellers.delete');
+        Route::put('brand-best-sellers-status/{id}', 'changeStatus')->name('brand-best-sellers.status');
+        Route::put('brand-best-sellers-main/{id}', 'changeMain')->name('brand-best-sellers.main');
+    });
+
+    Route::controller(BrandDescriptionController::class)->group(function () {
+        Route::get('brand-description', 'index')->name('brand-description.index');
+        Route::get('create-brand-description', 'create')->name('create-brand-description');
+        Route::get('create-brand-description/{id}', 'show')->name('show-brand-description');
+        Route::post('store-brand-description', 'store')->name('brand-description.store');
+        Route::post('update-brand-description/{id}', 'update')->name('brand-description.update');
+        Route::delete('delete-brand-description/{id}', 'destroy')->name('brand-description.delete');
+        Route::put('brand-description-status/{id}', 'changeStatus')->name('brand-description.status');
+        Route::put('brand-description-main/{id}', 'changeMain')->name('brand-description.main');
+    });
+
+    Route::controller(BrandCategoriesController::class)->group(function () {
+        Route::get('brand-categories', 'index')->name('brand-categories.index');
+        Route::get('create-brand-categories', 'create')->name('create-brand-categories');
+        Route::get('create-brand-categories/{id}', 'show')->name('show-brand-categories');
+        Route::post('store-brand-categories', 'store')->name('brand-categories.store');
+        Route::post('update-brand-categories/{id}', 'update')->name('brand-categories.update');
+        Route::delete('delete-brand-categories/{id}', 'destroy')->name('brand-categories.delete');
+        Route::put('brand-categories-status/{id}', 'changeStatus')->name('brand-categories.status');
+        Route::put('brand-categories-main/{id}', 'changeMain')->name('brand-categories.main');
+    });
+
+    Route::controller(BrandOffersController::class)->group(function () {
+        Route::get('brand-offers', 'index')->name('brand-offers.index');
+        Route::get('create-brand-offers', 'create')->name('create-brand-offers');
+        Route::get('create-brand-offers/{id}', 'show')->name('show-brand-offers');
+        Route::post('store-brand-offers', 'store')->name('brand-offers.store');
+        Route::post('update-brand-offers/{id}', 'update')->name('brand-offers.update');
+        Route::delete('delete-brand-offers/{id}', 'destroy')->name('brand-offers.delete');
+        Route::put('brand-offers-status/{id}', 'changeStatus')->name('brand-offers.status');
+        Route::put('brand-offers-main/{id}', 'changeMain')->name('brand-offers.main');
+    });
+    //brand end
+
+    //product desc
+    Route::controller(ProductDescriptionController::class)->group(function () {
+        Route::get('product-description', 'index')->name('product-description.index');
+        Route::get('create-product-description', 'create')->name('create-product-description');
+        Route::get('create-product-description/{id}', 'show')->name('show-product-description');
+        Route::post('store-product-description', 'store')->name('product-description.store');
+        Route::post('update-product-description/{id}', 'update')->name('product-description.update');
+        Route::delete('delete-product-description/{id}', 'destroy')->name('product-description.delete');
+        Route::put('product-description-status/{id}', 'changeStatus')->name('product-description.status');
+        Route::put('product-description-main/{id}', 'changeMain')->name('product-description.main');
+    });
+
+    Route::controller(ProductIngredientController::class)->group(function () {
+        Route::get('product-ingredient', 'index')->name('product-ingredient.index');
+        Route::get('create-product-ingredient', 'create')->name('create-product-ingredient');
+        Route::get('create-product-ingredient/{id}', 'show')->name('show-product-ingredient');
+        Route::post('store-product-ingredient', 'store')->name('product-ingredient.store');
+        Route::post('update-product-ingredient/{id}', 'update')->name('product-ingredient.update');
+        Route::delete('delete-product-ingredient/{id}', 'destroy')->name('product-ingredient.delete');
+        Route::put('product-ingredient-status/{id}', 'changeStatus')->name('product-ingredient.status');
+        Route::put('product-ingredient-main/{id}', 'changeMain')->name('product-ingredient.main');
+    });
+
+    Route::resource('service', ServiceController::class);
+    Route::put('service-status/{id}', [ServiceController::class,'changeStatus'])->name('service.status');
+
+    Route::resource('about-us', AboutUsController::class);
+    Route::resource('contact-us', ContactPageController::class);
+
+    Route::resource('custom-page', CustomPageController::class);
+    Route::put('custom-page-status/{id}', [CustomPageController::class,'changeStatus'])->name('custom-page.status');
+
+    Route::resource('terms-and-condition', TermsAndConditionController::class);
+    Route::resource('privacy-policy', PrivacyPolicyController::class);
+
+    Route::resource('blog-category', BlogCategoryController::class);
+    Route::put('blog-category-status/{id}', [BlogCategoryController::class,'changeStatus'])->name('blog.category.status');
+
+    Route::resource('blog', BlogController::class);
+    Route::put('blog-status/{id}', [BlogController::class,'changeStatus'])->name('blog.status');
+
+    Route::resource('popular-blog', PopularBlogController::class);
+    Route::put('popular-blog-status/{id}', [PopularBlogController::class,'changeStatus'])->name('popular-blog.status');
+
+    Route::resource('blog-comment', BlogCommentController::class);
+    Route::put('blog-comment-status/{id}', [BlogCommentController::class,'changeStatus'])->name('blog-comment.status');
+
+
+
+    Route::get('clear-database',[SettingController::class,'showClearDatabasePage'])->name('clear-database');
+    Route::delete('clear-database',[SettingController::class,'clearDatabase'])->name('clear-database');
+
+    Route::get('subscriber',[SubscriberController::class,'index'])->name('subscriber');
+    Route::delete('delete-subscriber/{id}',[SubscriberController::class,'destroy'])->name('delete-subscriber');
+    Route::post('specification-subscriber-email/{id}',[SubscriberController::class,'specificationSubscriberEmail'])->name('specification-subscriber-email');
+    Route::post('each-subscriber-email',[SubscriberController::class,'eachSubscriberEmail'])->name('each-subscriber-email');
+
+    Route::get('contact-message',[ContactMessageController::class,'index'])->name('contact-message');
+    Route::get('show-contact-message/{id}',[ContactMessageController::class,'show'])->name('show-contact-message');
+    Route::delete('delete-contact-message/{id}',[ContactMessageController::class,'destroy'])->name('delete-contact-message');
+    Route::put('enable-save-contact-message',[ContactMessageController::class,'handleSaveContactMessage'])->name('enable-save-contact-message');
+
+    Route::get('email-configuration',[EmailConfigurationController::class,'index'])->name('email-configuration');
+    Route::put('update-email-configuraion',[EmailConfigurationController::class,'update'])->name('update-email-configuraion');
+
+    Route::get('email-template',[EmailTemplateController::class,'index'])->name('email-template');
+    Route::get('edit-email-template/{id}',[EmailTemplateController::class,'edit'])->name('edit-email-template');
+    Route::put('update-email-template/{id}',[EmailTemplateController::class,'update'])->name('update-email-template');
+
+    Route::get('general-setting',[SettingController::class,'index'])->name('general-setting');
+    Route::put('update-general-setting',[SettingController::class,'updateGeneralSetting'])->name('update-general-setting');
+
+    Route::put('update-theme-color',[SettingController::class,'updateThemeColor'])->name('update-theme-color');
+
+    Route::put('update-logo-favicon',[SettingController::class,'updateLogoFavicon'])->name('update-logo-favicon');
+    Route::put('update-cookie-consent',[SettingController::class,'updateCookieConset'])->name('update-cookie-consent');
+    Route::put('update-google-recaptcha',[SettingController::class,'updateGoogleRecaptcha'])->name('update-google-recaptcha');
+    Route::put('update-facebook-comment',[SettingController::class,'updateFacebookComment'])->name('update-facebook-comment');
+    Route::put('update-tawk-chat',[SettingController::class,'updateTawkChat'])->name('update-tawk-chat');
+    Route::put('update-google-analytic',[SettingController::class,'updateGoogleAnalytic'])->name('update-google-analytic');
+    Route::put('update-custom-pagination',[SettingController::class,'updateCustomPagination'])->name('update-custom-pagination');
+    Route::put('update-social-login',[SettingController::class,'updateSocialLogin'])->name('update-social-login');
+    Route::put('update-facebook-pixel',[SettingController::class,'updateFacebookPixel'])->name('update-facebook-pixel');
+    Route::put('update-pusher',[SettingController::class,'updatePusher'])->name('update-pusher');
+
+
+    Route::resource('admin', AdminController::class);
+    Route::put('admin-status/{id}', [AdminController::class,'changeStatus'])->name('admin-status');
+
+    Route::resource('faq', FaqController::class);
+    Route::put('faq-status/{id}', [FaqController::class,'changeStatus'])->name('faq-status');
+
+
+    Route::get('product-review',[ProductReviewController::class,'index'])->name('product-review');
+    Route::put('product-review-status/{id}',[ProductReviewController::class,'changeStatus'])->name('product-review-status');
+    Route::get('show-product-review/{id}',[ProductReviewController::class,'show'])->name('show-product-review');
+    Route::delete('delete-product-review/{id}',[ProductReviewController::class,'destroy'])->name('delete-product-review');
+
+    Route::get('product-report',[ProductReportController::class, 'index'])->name('product-report');
+    Route::get('show-product-report/{id}',[ProductReportController::class, 'show'])->name('show-product-report');
+    Route::delete('delete-product-report/{id}',[ProductReportController::class, 'destroy'])->name('delete-product-report');
+    Route::put('de-active-product/{id}',[ProductReportController::class, 'deactiveProduct'])->name('de-active-product');
+
+    Route::get('customer-list',[CustomerController::class,'index'])->name('customer-list');
+    Route::get('customer-show/{id}',[CustomerController::class,'show'])->name('customer-show');
+    Route::put('customer-status/{id}',[CustomerController::class,'changeStatus'])->name('customer-status');
+    Route::delete('customer-delete/{id}',[CustomerController::class,'destroy'])->name('customer-delete');
+    Route::get('pending-customer-list',[CustomerController::class,'pendingCustomerList'])->name('pending-customer-list');
+    Route::get('send-email-to-all-customer',[CustomerController::class,'sendEmailToAllUser'])->name('send-email-to-all-customer');
+    Route::post('send-mail-to-all-user',[CustomerController::class,'sendMailToAllUser'])->name('send-mail-to-all-user');
+    Route::post('send-mail-to-single-user/{id}',[CustomerController::class,'sendMailToSingleUser'])->name('send-mail-to-single-user');
+
+
+    Route::get('seller-list',[SellerController::class,'index'])->name('seller-list');
+    Route::get('seller-show/{id}',[SellerController::class,'show'])->name('seller-show');
+    Route::put('seller-status/{id}',[SellerController::class,'changeStatus'])->name('seller-status');
+    Route::delete('seller-delete/{id}',[SellerController::class,'destroy'])->name('seller-delete');
+    Route::get('pending-seller-list',[SellerController::class,'pendingSellerList'])->name('pending-seller-list');
+    Route::put('seller-update/{id}',[SellerController::class,'updateSeller'])->name('seller-update');
+    Route::get('seller-shop-detail/{id}',[SellerController::class,'sellerShopDetail'])->name('seller-shop-detail');
+    Route::put('remove-seller-social-link/{id}',[SellerController::class,'removeSellerSocialLink'])->name('remove-seller-social-link');
+
+
+    Route::put('update-seller-shop/{id}',[SellerController::class,'updateSellerSop'])->name('update-seller-shop');
+    Route::get('seller-reviews/{id}',[SellerController::class,'sellerReview'])->name('seller-reviews');
+    Route::get('show-seller-review-details/{id}',[SellerController::class,'showSellerReviewDetails'])->name('show-seller-review-details');
+    Route::get('send-email-to-seller/{id}',[SellerController::class,'sendEmailToSeller'])->name('send-email-to-seller');
+    Route::post('send-mail-to-single-seller/{id}',[SellerController::class,'sendMailtoSingleSeller'])->name('send-mail-to-single-seller');
+    Route::get('email-history/{id}',[SellerController::class,'emailHistory'])->name('email-history');
+    Route::get('product-by-seller/{id}',[SellerController::class,'productBySaller'])->name('product-by-seller');
+    Route::get('send-email-to-all-seller',[SellerController::class,'sendEmailToAllSeller'])->name('send-email-to-all-seller');
+    Route::post('send-mail-to-all-seller',[SellerController::class,'sendMailToAllSeller'])->name('send-mail-to-all-seller');
+    Route::get('withdraw-list/{id}',[SellerController::class,'sellerWithdrawList'])->name('withdraw-list');
+
+
+    Route::get('state-by-country/{id}',[SellerController::class,'stateByCountry'])->name('state-by-country');
+    Route::get('city-by-state/{id}',[SellerController::class,'cityByState'])->name('city-by-state');
+
+    Route::resource('error-page', ErrorPageController::class);
+
+    Route::get('maintainance-mode',[ContentController::class,'maintainanceMode'])->name('maintainance-mode');
+    Route::put('maintainance-mode-update',[ContentController::class,'maintainanceModeUpdate'])->name('maintainance-mode-update');
+
+    Route::get('announcement',[ContentController::class,'announcementModal'])->name('announcement');
+    Route::post('announcement-update',[ContentController::class,'announcementModalUpdate'])->name('announcement-update');
+
+    Route::get('topbar-contact', [ContentController::class, 'headerPhoneNumber'])->name('topbar-contact');
+    Route::put('update-topbar-contact', [ContentController::class, 'updateHeaderPhoneNumber'])->name('update-topbar-contact');
+
+    Route::get('product-quantity-progressbar', [ContentController::class, 'productProgressbar'])->name('product-quantity-progressbar');
+    Route::put('update-product-quantity-progressbar', [ContentController::class, 'updateProductProgressbar'])->name('update-product-quantity-progressbar');
+
+    Route::get('default-avatar', [ContentController::class, 'defaultAvatar'])->name('default-avatar');
+    Route::post('update-default-avatar', [ContentController::class, 'updateDefaultAvatar'])->name('update-default-avatar');
+
+    Route::get('seller-conditions', [ContentController::class, 'sellerCondition'])->name('seller-conditions');
+    Route::put('update-seller-conditions', [ContentController::class, 'updatesellerCondition'])->name('update-seller-conditions');
+
+    Route::get('subscription-banner', [ContentController::class, 'subscriptionBanner'])->name('subscription-banner');
+    Route::post('update-subscription-banner', [ContentController::class, 'updatesubscriptionBanner'])->name('update-subscription-banner');
+
+
+
+
+    Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
+    Route::put('update-flash-sale', [FlashSaleController::class, 'update'])->name('update-flash-sale');
+    Route::get('flash-sale-product', [FlashSaleController::class, 'flash_sale_product'])->name('flash-sale-product');
+    Route::post('store-flash-sale-product', [FlashSaleController::class, 'store'])->name('store-flash-sale-product');
+    Route::put('flash-sale-product-status/{id}', [FlashSaleController::class, 'changeStatus'])->name('flash-sale-product-status');
+    Route::delete('delete-flash-sale-product/{id}', [FlashSaleController::class,'destroy'])->name('delete-flash-sale-product');
+
+
+    Route::get('advertisement',[AdvertisementController::class, 'index'])->name('advertisement');
+
+    Route::post('mega-menu-banner-update', [AdvertisementController::class, 'megaMenuBannerUpdate'])->name('mega-menu-banner-update');
+
+
+    Route::post('slider-banner-one', [AdvertisementController::class, 'updateSliderBannerOne'])->name('slider-banner-one');
+
+    Route::post('slider-banner-two', [AdvertisementController::class, 'updateSliderBannerTwo'])->name('slider-banner-two');
+
+    Route::post('popular-category-sidebar', [AdvertisementController::class, 'updatePopularCategorySidebar'])->name('popular-category-sidebar');
+
+
+    Route::post('homepage-two-col-first-banner', [AdvertisementController::class, 'homepageTwoColFirstBanner'])->name('homepage-two-col-first-banner');
+
+
+    Route::post('homepage-two-col-second-banner', [AdvertisementController::class, 'homepageTwoColSecondBanner'])->name('homepage-two-col-second-banner');
+
+
+    Route::post('homepage-single-first-banner', [AdvertisementController::class, 'homepageSinleFirstBanner'])->name('homepage-single-first-banner');
+
+    Route::post('homepage-single-second-banner', [AdvertisementController::class, 'homepageSinleSecondBanner'])->name('homepage-single-second-banner');
+
+
+    Route::post('homepage-flash-sale-sidebar-banner', [AdvertisementController::class, 'homepageFlashSaleSidebarBanner'])->name('homepage-flash-sale-sidebar-banner');
+
+
+    Route::post('shop-page-center-banner', [AdvertisementController::class, 'shopPageCenterBanner'])->name('shop-page-center-banner');
+
+    Route::post('shop-page-sidebar-banner', [AdvertisementController::class, 'shopPageSidebarBanner'])->name('shop-page-sidebar-banner');
+
+    Route::get('login-page', [ContentController::class, 'loginPage'])->name('login-page');
+    Route::post('update-login-page', [ContentController::class, 'updateloginPage'])->name('update-login-page');
+
+    Route::get('image-content', [ContentController::class, 'image_content'])->name('image-content');
+    Route::post('update-image-content', [ContentController::class, 'updateImageContent'])->name('update-image-content');
+
+    Route::get('shop-page',[ContentController::Class, 'shopPage'])->name('shop-page');
+    Route::put('update-filter-price',[ContentController::Class, 'updateFilterPrice'])->name('update-filter-price');
+
+    Route::get('seo-setup',[ContentController::Class, 'seoSetup'])->name('seo-setup');
+    Route::put('update-seo-setup/{id}',[ContentController::Class, 'updateSeoSetup'])->name('update-seo-setup');
+    Route::get('get-seo-setup/{id}',[ContentController::Class, 'getSeoSetup'])->name('get-seo-setup');
+
+
+
+    Route::resource('country', CountryController::class);
+    Route::put('country-status/{id}',[CountryController::class,'changeStatus'])->name('country-status');
+
+    Route::get('country-import-page',[CountryController::class,'country_import_page'])->name('country-import-page');
+    Route::get('country-export',[CountryController::class,'country_export'])->name('country-export');
+    Route::get('country-demo-export',[CountryController::class,'demo_country_export'])->name('country-demo-export');
+    Route::post('country-import',[CountryController::class,'country_import'])->name('country-import');
+
+    Route::resource('state', CountryStateController::class);
+    Route::put('state-status/{id}',[CountryStateController::class,'changeStatus'])->name('state-status');
+
+    Route::get('state-import-page',[CountryStateController::class,'state_import_page'])->name('state-import-page');
+    Route::get('state-export',[CountryStateController::class,'state_export'])->name('state-export');
+    Route::get('state-demo-export',[CountryStateController::class,'demo_state_export'])->name('state-demo-export');
+    Route::post('state-import',[CountryStateController::class,'state_import'])->name('state-import');
+
+    Route::resource('city', CityController::class);
+    Route::put('city-status/{id}',[CityController::class,'changeStatus'])->name('city-status');
+
+    Route::get('city-import-page',[CityController::class,'city_import_page'])->name('city-import-page');
+    Route::get('city-export',[CityController::class,'city_export'])->name('city-export');
+    Route::get('city-demo-export',[CityController::class,'demo_city_export'])->name('city-demo-export');
+    Route::post('city-import',[CityController::class,'city_import'])->name('city-import');
+
+    Route::get('payment-method',[PaymentMethodController::class,'index'])->name('payment-method');
+    Route::put('update-paypal',[PaymentMethodController::class,'updatePaypal'])->name('update-paypal');
+    Route::put('update-stripe',[PaymentMethodController::class,'updateStripe'])->name('update-stripe');
+    Route::put('update-razorpay',[PaymentMethodController::class,'updateRazorpay'])->name('update-razorpay');
+    Route::put('update-bank',[PaymentMethodController::class,'updateBank'])->name('update-bank');
+    Route::put('update-mollie',[PaymentMethodController::class,'updateMollie'])->name('update-mollie');
+    Route::put('update-paystack',[PaymentMethodController::class,'updatePayStack'])->name('update-paystack');
+    Route::put('update-flutterwave',[PaymentMethodController::class,'updateflutterwave'])->name('update-flutterwave');
+    Route::put('update-instamojo',[PaymentMethodController::class,'updateInstamojo'])->name('update-instamojo');
+    Route::put('update-cash-on-delivery',[PaymentMethodController::class,'updateCashOnDelivery'])->name('update-cash-on-delivery');
+    Route::put('update-sslcommerz',[PaymentMethodController::class,'updateSslcommerz'])->name('update-sslcommerz');
+    Route::put('update-myfatoorah',[PaymentMethodController::class,'update_myfatoorah'])->name('update-myfatoorah');
+
+    Route::resource('mega-menu-category', MegaMenuController::class);
+    Route::put('mega-menu-category-status/{id}',[MegaMenuController::class,'changeStatus'])->name('mega-menu-category-status');
+
+    Route::get('mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'index'])->name('mega-menu-sub-category');
+    Route::get('create-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'create'])->name('create-mega-menu-sub-category');
+    Route::get('get-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'show'])->name('get-mega-menu-sub-category');
+    Route::post('store-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'store'])->name('store-mega-menu-sub-category');
+    Route::get('edit-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'edit'])->name('edit-mega-menu-sub-category');
+    Route::put('update-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'update'])->name('update-mega-menu-sub-category');
+    Route::delete('delete-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'destroy'])->name('delete-mega-menu-sub-category');
+    Route::put('mega-menu-sub-category-status/{id}',[MegaMenuSubCategoryController::class,'changeStatus'])->name('mega-menu-sub-category-status');
+
+
+    Route::resource('slider', SliderController::class);
+    Route::put('slider-status/{id}',[SliderController::class,'changeStatus'])->name('slider-status');
+
+
+    Route::get('popular-category', [HomePageController::class, 'popularCategory'])->name('popular-category');
+    Route::post('store-popular-category', [HomePageController::class, 'storePopularCategory'])->name('store-popular-category');
+    Route::delete('destroy-popular-category/{id}', [HomePageController::class, 'destroyPopularCategory'])->name('destroy-popular-category');
+
+    Route::put('popular-category-banner', [HomePageController::class, 'bannerPopularCategory'])->name('popular-category-banner');
+
+    Route::put('featured-category-banner', [HomePageController::class, 'bannerFeaturedCategory'])->name('featured-category-banner');
+
+    Route::get('featured-category', [HomePageController::class, 'featuredCategory'])->name('featured-category');
+    Route::post('store-featured-category', [HomePageController::class, 'storeFeaturedCategory'])->name('store-featured-category');
+    Route::delete('destroy-featured-category/{id}', [HomePageController::class, 'destroyFeaturedCategory'])->name('destroy-featured-category');
+
+    Route::get('featured-brands.index', [HomePageController::class, 'featuredBrands'])->name('featured-brands.index');
+    Route::post('store-featured-brands', [HomePageController::class, 'storeFeaturedBrands'])->name('store-featured-brands');
+    Route::delete('destroy-featured-brands/{id}', [HomePageController::class, 'destroyFeaturedBrands'])->name('destroy-featured-brands');
+
+
+
+    Route::get('homepage-section-title', [HomePageController::class, 'homepage_section_content'])->name('homepage-section-title');
+    Route::post('update-homepage-section-title', [HomePageController::class, 'update_homepage_section_content'])->name('update-homepage-section-title');
 
 
-//     Route::get('product-review',[ProductReviewController::class,'index'])->name('product-review');
-//     Route::put('product-review-status/{id}',[ProductReviewController::class,'changeStatus'])->name('product-review-status');
-//     Route::get('show-product-review/{id}',[ProductReviewController::class,'show'])->name('show-product-review');
-//     Route::delete('delete-product-review/{id}',[ProductReviewController::class,'destroy'])->name('delete-product-review');
 
-//     Route::get('product-report',[ProductReportController::class, 'index'])->name('product-report');
-//     Route::get('show-product-report/{id}',[ProductReportController::class, 'show'])->name('show-product-report');
-//     Route::delete('delete-product-report/{id}',[ProductReportController::class, 'destroy'])->name('delete-product-report');
-//     Route::put('de-active-product/{id}',[ProductReportController::class, 'deactiveProduct'])->name('de-active-product');
+    Route::get('homepage-visibility', [HomepageVisibilityController::class, 'index'])->name('homepage-visibility');
+    Route::put('update-homepage-visibility', [HomepageVisibilityController::class, 'update'])->name('update-homepage-visibility');
 
-//     Route::get('customer-list',[CustomerController::class,'index'])->name('customer-list');
-//     Route::get('customer-show/{id}',[CustomerController::class,'show'])->name('customer-show');
-//     Route::put('customer-status/{id}',[CustomerController::class,'changeStatus'])->name('customer-status');
-//     Route::delete('customer-delete/{id}',[CustomerController::class,'destroy'])->name('customer-delete');
-//     Route::get('pending-customer-list',[CustomerController::class,'pendingCustomerList'])->name('pending-customer-list');
-//     Route::get('send-email-to-all-customer',[CustomerController::class,'sendEmailToAllUser'])->name('send-email-to-all-customer');
-//     Route::post('send-mail-to-all-user',[CustomerController::class,'sendMailToAllUser'])->name('send-mail-to-all-user');
-//     Route::post('send-mail-to-single-user/{id}',[CustomerController::class,'sendMailToSingleUser'])->name('send-mail-to-single-user');
+    Route::get('menu-visibility', [MenuVisibilityController::class, 'index'])->name('menu-visibility');
+    Route::put('update-menu-visibility/{id}', [MenuVisibilityController::class, 'update'])->name('update-menu-visibility');
 
+    Route::resource('shipping', ShippingMethodController::class);
+    Route::get('city-wise-shipping/{city_id}', [ShippingMethodController::class , 'cityWiseShipping'])->name('city-wise-shipping');
 
-//     Route::get('seller-list',[SellerController::class,'index'])->name('seller-list');
-//     Route::get('seller-show/{id}',[SellerController::class,'show'])->name('seller-show');
-//     Route::put('seller-status/{id}',[SellerController::class,'changeStatus'])->name('seller-status');
-//     Route::delete('seller-delete/{id}',[SellerController::class,'destroy'])->name('seller-delete');
-//     Route::get('pending-seller-list',[SellerController::class,'pendingSellerList'])->name('pending-seller-list');
-//     Route::put('seller-update/{id}',[SellerController::class,'updateSeller'])->name('seller-update');
-//     Route::get('seller-shop-detail/{id}',[SellerController::class,'sellerShopDetail'])->name('seller-shop-detail');
-//     Route::put('remove-seller-social-link/{id}',[SellerController::class,'removeSellerSocialLink'])->name('remove-seller-social-link');
+    Route::get('shipping-import-page',[ShippingMethodController::class,'shipping_import_page'])->name('shipping-import-page');
+    Route::get('shipping-export',[ShippingMethodController::class,'shipping_export'])->name('shipping-export');
+    Route::get('shipping-demo-export',[ShippingMethodController::class,'demo_shipping_export'])->name('shipping-demo-export');
+    Route::post('shipping-import',[ShippingMethodController::class,'shipping_import'])->name('shipping-import');
 
+    Route::resource('withdraw-method', WithdrawMethodController::class);
+    Route::put('withdraw-method-status/{id}',[WithdrawMethodController::class,'changeStatus'])->name('withdraw-method-status');
 
-//     Route::put('update-seller-shop/{id}',[SellerController::class,'updateSellerSop'])->name('update-seller-shop');
-//     Route::get('seller-reviews/{id}',[SellerController::class,'sellerReview'])->name('seller-reviews');
-//     Route::get('show-seller-review-details/{id}',[SellerController::class,'showSellerReviewDetails'])->name('show-seller-review-details');
-//     Route::get('send-email-to-seller/{id}',[SellerController::class,'sendEmailToSeller'])->name('send-email-to-seller');
-//     Route::post('send-mail-to-single-seller/{id}',[SellerController::class,'sendMailtoSingleSeller'])->name('send-mail-to-single-seller');
-//     Route::get('email-history/{id}',[SellerController::class,'emailHistory'])->name('email-history');
-//     Route::get('product-by-seller/{id}',[SellerController::class,'productBySaller'])->name('product-by-seller');
-//     Route::get('send-email-to-all-seller',[SellerController::class,'sendEmailToAllSeller'])->name('send-email-to-all-seller');
-//     Route::post('send-mail-to-all-seller',[SellerController::class,'sendMailToAllSeller'])->name('send-mail-to-all-seller');
-//     Route::get('withdraw-list/{id}',[SellerController::class,'sellerWithdrawList'])->name('withdraw-list');
+    Route::get('seller-withdraw', [SellerWithdrawController::class, 'index'])->name('seller-withdraw');
+    Route::get('pending-seller-withdraw', [SellerWithdrawController::class, 'pendingSellerWithdraw'])->name('pending-seller-withdraw');
 
+    Route::get('show-seller-withdraw/{id}', [SellerWithdrawController::class, 'show'])->name('show-seller-withdraw');
+    Route::delete('delete-seller-withdraw/{id}', [SellerWithdrawController::class, 'destroy'])->name('delete-seller-withdraw');
+    Route::put('approved-seller-withdraw/{id}', [SellerWithdrawController::class, 'approvedWithdraw'])->name('approved-seller-withdraw');
 
-//     Route::get('state-by-country/{id}',[SellerController::class,'stateByCountry'])->name('state-by-country');
-//     Route::get('city-by-state/{id}',[SellerController::class,'cityByState'])->name('city-by-state');
+    Route::get('all-order', [OrderController::class, 'index'])->name('all-order');
+    Route::get('pending-order', [OrderController::class, 'pendingOrder'])->name('pending-order');
+    Route::get('pregress-order', [OrderController::class, 'pregressOrder'])->name('pregress-order');
+    Route::get('delivered-order', [OrderController::class, 'deliveredOrder'])->name('delivered-order');
+    Route::get('completed-order', [OrderController::class, 'completedOrder'])->name('completed-order');
+    Route::get('declined-order', [OrderController::class, 'declinedOrder'])->name('declined-order');
+    Route::get('cash-on-delivery', [OrderController::class, 'cashOnDelivery'])->name('cash-on-delivery');
+    Route::get('order-show/{id}', [OrderController::class, 'show'])->name('order-show');
+    Route::delete('delete-order/{id}', [OrderController::class, 'destroy'])->name('delete-order');
+    Route::put('update-order-status/{id}', [OrderController::class, 'updateOrderStatus'])->name('update-order-status');
 
-//     Route::resource('error-page', ErrorPageController::class);
+    Route::resource('coupon', CouponController::class);
+    Route::put('coupon-status/{id}',[CouponController::class,'changeStatus'])->name('coupon-status');
 
-//     Route::get('maintainance-mode',[ContentController::class,'maintainanceMode'])->name('maintainance-mode');
-//     Route::put('maintainance-mode-update',[ContentController::class,'maintainanceModeUpdate'])->name('maintainance-mode-update');
+    Route::resource('banner-image', BreadcrumbController::class);
 
-//     Route::get('announcement',[ContentController::class,'announcementModal'])->name('announcement');
-//     Route::post('announcement-update',[ContentController::class,'announcementModalUpdate'])->name('announcement-update');
+    Route::resource('footer', FooterController::class);
+    Route::resource('social-link', FooterSocialLinkController::class);
+    Route::resource('footer-link', FooterLinkController::class);
+    Route::get('second-col-footer-link', [FooterLinkController::class, 'secondColFooterLink'])->name('second-col-footer-link');
+    Route::get('third-col-footer-link', [FooterLinkController::class, 'thirdColFooterLink'])->name('third-col-footer-link');
+    Route::put('update-col-title/{id}', [FooterLinkController::class, 'updateColTitle'])->name('update-col-title');
 
-//     Route::get('topbar-contact', [ContentController::class, 'headerPhoneNumber'])->name('topbar-contact');
-//     Route::put('update-topbar-contact', [ContentController::class, 'updateHeaderPhoneNumber'])->name('update-topbar-contact');
 
-//     Route::get('product-quantity-progressbar', [ContentController::class, 'productProgressbar'])->name('product-quantity-progressbar');
-//     Route::put('update-product-quantity-progressbar', [ContentController::class, 'updateProductProgressbar'])->name('update-product-quantity-progressbar');
+    Route::get('admin-language', [LanguageController::class, 'adminLnagugae'])->name('admin-language');
+    Route::post('update-admin-language', [LanguageController::class, 'updateAdminLanguage'])->name('update-admin-language');
 
-//     Route::get('default-avatar', [ContentController::class, 'defaultAvatar'])->name('default-avatar');
-//     Route::post('update-default-avatar', [ContentController::class, 'updateDefaultAvatar'])->name('update-default-avatar');
+    Route::get('admin-validation-language', [LanguageController::class, 'adminValidationLnagugae'])->name('admin-validation-language');
+    Route::post('update-admin-validation-language', [LanguageController::class, 'updateAdminValidationLnagugae'])->name('update-admin-validation-language');
 
-//     Route::get('seller-conditions', [ContentController::class, 'sellerCondition'])->name('seller-conditions');
-//     Route::put('update-seller-conditions', [ContentController::class, 'updatesellerCondition'])->name('update-seller-conditions');
 
-//     Route::get('subscription-banner', [ContentController::class, 'subscriptionBanner'])->name('subscription-banner');
-//     Route::post('update-subscription-banner', [ContentController::class, 'updatesubscriptionBanner'])->name('update-subscription-banner');
+    Route::get('website-language', [LanguageController::class, 'websiteLanguage'])->name('website-language');
+    Route::post('update-language', [LanguageController::class, 'updateLanguage'])->name('update-language');
 
+    Route::get('website-validation-language', [LanguageController::class, 'websiteValidationLanguage'])->name('website-validation-language');
+    Route::post('update-validation-language', [LanguageController::class, 'updateValidationLanguage'])->name('update-validation-language');
 
 
+    Route::get('sms-notification', [NotificationController::class, 'twilio_sms'])->name('sms-notification');
+    Route::put('update-twilio-configuration', [NotificationController::class, 'update_twilio_sms'])->name('update-twilio-configuration');
+    Route::put('update-biztech-configuration', [NotificationController::class, 'update_biztech_sms'])->name('update-biztech-configuration');
 
-//     Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
-//     Route::put('update-flash-sale', [FlashSaleController::class, 'update'])->name('update-flash-sale');
-//     Route::get('flash-sale-product', [FlashSaleController::class, 'flash_sale_product'])->name('flash-sale-product');
-//     Route::post('store-flash-sale-product', [FlashSaleController::class, 'store'])->name('store-flash-sale-product');
-//     Route::put('flash-sale-product-status/{id}', [FlashSaleController::class, 'changeStatus'])->name('flash-sale-product-status');
-//     Route::delete('delete-flash-sale-product/{id}', [FlashSaleController::class,'destroy'])->name('delete-flash-sale-product');
+    Route::get('sms-template', [NotificationController::class, 'sms_template'])->name('sms-template');
+    Route::get('edit-sms-template/{id}', [NotificationController::class, 'edit_sms_template'])->name('edit-sms-template');
+    Route::put('update-sms-template/{id}', [NotificationController::class, 'update_sms_template'])->name('update-sms-template');
 
+    Route::get('inventory', [InventoryController::class, 'index'])->name('inventory');
+    Route::get('stock-history/{id}', [InventoryController::class, 'show_inventory'])->name('stock-history');
+    Route::post('add-stock', [InventoryController::class, 'add_stock'])->name('add-stock');
+    Route::delete('delete-stock/{id}', [InventoryController::class, 'delete_stock'])->name('delete-stock');
 
-//     Route::get('advertisement',[AdvertisementController::class, 'index'])->name('advertisement');
+    //Delivery man route
+    Route::resource('delivery-man', DeliveryManController::class);
+    Route::put('delivery-man-status/{id}',[DeliveryManController::class,'changeStatus'])->name('delivery-man-status');
 
-//     Route::post('mega-menu-banner-update', [AdvertisementController::class, 'megaMenuBannerUpdate'])->name('mega-menu-banner-update');
+    Route::get('delivery-man-review', [DeliveryManController::class, 'review'])->name('delivery-man-review');
+    Route::put('delivery-man-review-status/{id}', [DeliveryManController::class, 'changeReviewStatus'])->name('delivery-man-review-status');
+    Route::delete('delete-delivery-man-review/{id}', [DeliveryManController::class, 'deleteReview'])->name('delete-delivery-man-review');
 
+    Route::resource('delivery-man-withdraw-method', DeliveryManWithdrawMethodController::class);
+    Route::put('delivery-man-withdraw-method-status/{id}', [DeliveryManWithdrawMethodController::class,'changeStatus']);
 
-//     Route::post('slider-banner-one', [AdvertisementController::class, 'updateSliderBannerOne'])->name('slider-banner-one');
+    Route::get('delivery-man-withdraw', [DeliveryManWithdrawController::class, 'index'])->name('delivery-man-withdraw');
+    Route::get('pending-delivery-man-withdraw', [DeliveryManWithdrawController::class, 'pendingDeliveryManWithdraw'])->name('pending-delivery-man-withdraw');
 
-//     Route::post('slider-banner-two', [AdvertisementController::class, 'updateSliderBannerTwo'])->name('slider-banner-two');
+    Route::get('show-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'show'])->name('show-delivery-man-withdraw');
+    Route::delete('delete-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'destroy'])->name('delete-delivery-man-withdraw');
+    Route::put('approved-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'approvedWithdraw'])->name('approved-delivery-man-withdraw');
+    Route::get('delivery-man-withdraw-list/{id}', [DeliveryManWithdrawController::class, 'withdrawList'])->name('delivery-man-withdraw-list');
 
-//     Route::post('popular-category-sidebar', [AdvertisementController::class, 'updatePopularCategorySidebar'])->name('popular-category-sidebar');
 
+    Route::get('delivery-man-order-amount', [DeliveryManOrderAmountController::class, 'index'])->name('delivery-man-order-amount');
+    Route::get('get-deliveryman-account-info/{id}', [DeliveryManOrderAmountController::class, 'getWithDeliveryManAccountInfo'])->name('get-deliveryman-account-info');
 
-//     Route::post('homepage-two-col-first-banner', [AdvertisementController::class, 'homepageTwoColFirstBanner'])->name('homepage-two-col-first-banner');
+    Route::get('delivery-man-order-amount/create', [DeliveryManOrderAmountController::class, 'create'])->name('delivery-man-order-amount.create');
+    Route::post('delivery-man-order-amount', [DeliveryManOrderAmountController::class, 'store'])->name('delivery-man-order-amount.store');
 
+    Route::delete('delete-delivery-order-amount/{id}', [DeliveryManOrderAmountController::class, 'destroy'])->name('delivery-man-order-amount.delete');
 
-//     Route::post('homepage-two-col-second-banner', [AdvertisementController::class, 'homepageTwoColSecondBanner'])->name('homepage-two-col-second-banner');
 
-
-//     Route::post('homepage-single-first-banner', [AdvertisementController::class, 'homepageSinleFirstBanner'])->name('homepage-single-first-banner');
-
-//     Route::post('homepage-single-second-banner', [AdvertisementController::class, 'homepageSinleSecondBanner'])->name('homepage-single-second-banner');
-
-
-//     Route::post('homepage-flash-sale-sidebar-banner', [AdvertisementController::class, 'homepageFlashSaleSidebarBanner'])->name('homepage-flash-sale-sidebar-banner');
-
-
-//     Route::post('shop-page-center-banner', [AdvertisementController::class, 'shopPageCenterBanner'])->name('shop-page-center-banner');
-
-//     Route::post('shop-page-sidebar-banner', [AdvertisementController::class, 'shopPageSidebarBanner'])->name('shop-page-sidebar-banner');
-
-//     Route::get('login-page', [ContentController::class, 'loginPage'])->name('login-page');
-//     Route::post('update-login-page', [ContentController::class, 'updateloginPage'])->name('update-login-page');
-
-//     Route::get('image-content', [ContentController::class, 'image_content'])->name('image-content');
-//     Route::post('update-image-content', [ContentController::class, 'updateImageContent'])->name('update-image-content');
-
-//     Route::get('shop-page',[ContentController::Class, 'shopPage'])->name('shop-page');
-//     Route::put('update-filter-price',[ContentController::Class, 'updateFilterPrice'])->name('update-filter-price');
-
-//     Route::get('seo-setup',[ContentController::Class, 'seoSetup'])->name('seo-setup');
-//     Route::put('update-seo-setup/{id}',[ContentController::Class, 'updateSeoSetup'])->name('update-seo-setup');
-//     Route::get('get-seo-setup/{id}',[ContentController::Class, 'getSeoSetup'])->name('get-seo-setup');
-
-
-
-//     Route::resource('country', CountryController::class);
-//     Route::put('country-status/{id}',[CountryController::class,'changeStatus'])->name('country-status');
-
-//     Route::get('country-import-page',[CountryController::class,'country_import_page'])->name('country-import-page');
-//     Route::get('country-export',[CountryController::class,'country_export'])->name('country-export');
-//     Route::get('country-demo-export',[CountryController::class,'demo_country_export'])->name('country-demo-export');
-//     Route::post('country-import',[CountryController::class,'country_import'])->name('country-import');
-
-//     Route::resource('state', CountryStateController::class);
-//     Route::put('state-status/{id}',[CountryStateController::class,'changeStatus'])->name('state-status');
-
-//     Route::get('state-import-page',[CountryStateController::class,'state_import_page'])->name('state-import-page');
-//     Route::get('state-export',[CountryStateController::class,'state_export'])->name('state-export');
-//     Route::get('state-demo-export',[CountryStateController::class,'demo_state_export'])->name('state-demo-export');
-//     Route::post('state-import',[CountryStateController::class,'state_import'])->name('state-import');
-
-//     Route::resource('city', CityController::class);
-//     Route::put('city-status/{id}',[CityController::class,'changeStatus'])->name('city-status');
-
-//     Route::get('city-import-page',[CityController::class,'city_import_page'])->name('city-import-page');
-//     Route::get('city-export',[CityController::class,'city_export'])->name('city-export');
-//     Route::get('city-demo-export',[CityController::class,'demo_city_export'])->name('city-demo-export');
-//     Route::post('city-import',[CityController::class,'city_import'])->name('city-import');
-
-//     Route::get('payment-method',[PaymentMethodController::class,'index'])->name('payment-method');
-//     Route::put('update-paypal',[PaymentMethodController::class,'updatePaypal'])->name('update-paypal');
-//     Route::put('update-stripe',[PaymentMethodController::class,'updateStripe'])->name('update-stripe');
-//     Route::put('update-razorpay',[PaymentMethodController::class,'updateRazorpay'])->name('update-razorpay');
-//     Route::put('update-bank',[PaymentMethodController::class,'updateBank'])->name('update-bank');
-//     Route::put('update-mollie',[PaymentMethodController::class,'updateMollie'])->name('update-mollie');
-//     Route::put('update-paystack',[PaymentMethodController::class,'updatePayStack'])->name('update-paystack');
-//     Route::put('update-flutterwave',[PaymentMethodController::class,'updateflutterwave'])->name('update-flutterwave');
-//     Route::put('update-instamojo',[PaymentMethodController::class,'updateInstamojo'])->name('update-instamojo');
-//     Route::put('update-cash-on-delivery',[PaymentMethodController::class,'updateCashOnDelivery'])->name('update-cash-on-delivery');
-//     Route::put('update-sslcommerz',[PaymentMethodController::class,'updateSslcommerz'])->name('update-sslcommerz');
-//     Route::put('update-myfatoorah',[PaymentMethodController::class,'update_myfatoorah'])->name('update-myfatoorah');
-
-//     Route::resource('mega-menu-category', MegaMenuController::class);
-//     Route::put('mega-menu-category-status/{id}',[MegaMenuController::class,'changeStatus'])->name('mega-menu-category-status');
-
-//     Route::get('mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'index'])->name('mega-menu-sub-category');
-//     Route::get('create-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'create'])->name('create-mega-menu-sub-category');
-//     Route::get('get-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'show'])->name('get-mega-menu-sub-category');
-//     Route::post('store-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'store'])->name('store-mega-menu-sub-category');
-//     Route::get('edit-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'edit'])->name('edit-mega-menu-sub-category');
-//     Route::put('update-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'update'])->name('update-mega-menu-sub-category');
-//     Route::delete('delete-mega-menu-sub-category/{id}', [MegaMenuSubCategoryController::class, 'destroy'])->name('delete-mega-menu-sub-category');
-//     Route::put('mega-menu-sub-category-status/{id}',[MegaMenuSubCategoryController::class,'changeStatus'])->name('mega-menu-sub-category-status');
-
-
-//     Route::resource('slider', SliderController::class);
-//     Route::put('slider-status/{id}',[SliderController::class,'changeStatus'])->name('slider-status');
-
-
-//     Route::get('popular-category', [HomePageController::class, 'popularCategory'])->name('popular-category');
-//     Route::post('store-popular-category', [HomePageController::class, 'storePopularCategory'])->name('store-popular-category');
-//     Route::delete('destroy-popular-category/{id}', [HomePageController::class, 'destroyPopularCategory'])->name('destroy-popular-category');
-
-//     Route::put('popular-category-banner', [HomePageController::class, 'bannerPopularCategory'])->name('popular-category-banner');
-
-//     Route::put('featured-category-banner', [HomePageController::class, 'bannerFeaturedCategory'])->name('featured-category-banner');
-
-//     Route::get('featured-category', [HomePageController::class, 'featuredCategory'])->name('featured-category');
-//     Route::post('store-featured-category', [HomePageController::class, 'storeFeaturedCategory'])->name('store-featured-category');
-//     Route::delete('destroy-featured-category/{id}', [HomePageController::class, 'destroyFeaturedCategory'])->name('destroy-featured-category');
-
-//     Route::get('featured-brands.index', [HomePageController::class, 'featuredBrands'])->name('featured-brands.index');
-//     Route::post('store-featured-brands', [HomePageController::class, 'storeFeaturedBrands'])->name('store-featured-brands');
-//     Route::delete('destroy-featured-brands/{id}', [HomePageController::class, 'destroyFeaturedBrands'])->name('destroy-featured-brands');
-
-
-
-//     Route::get('homepage-section-title', [HomePageController::class, 'homepage_section_content'])->name('homepage-section-title');
-//     Route::post('update-homepage-section-title', [HomePageController::class, 'update_homepage_section_content'])->name('update-homepage-section-title');
-
-
-
-//     Route::get('homepage-visibility', [HomepageVisibilityController::class, 'index'])->name('homepage-visibility');
-//     Route::put('update-homepage-visibility', [HomepageVisibilityController::class, 'update'])->name('update-homepage-visibility');
-
-//     Route::get('menu-visibility', [MenuVisibilityController::class, 'index'])->name('menu-visibility');
-//     Route::put('update-menu-visibility/{id}', [MenuVisibilityController::class, 'update'])->name('update-menu-visibility');
-
-//     Route::resource('shipping', ShippingMethodController::class);
-//     Route::get('city-wise-shipping/{city_id}', [ShippingMethodController::class , 'cityWiseShipping'])->name('city-wise-shipping');
-
-//     Route::get('shipping-import-page',[ShippingMethodController::class,'shipping_import_page'])->name('shipping-import-page');
-//     Route::get('shipping-export',[ShippingMethodController::class,'shipping_export'])->name('shipping-export');
-//     Route::get('shipping-demo-export',[ShippingMethodController::class,'demo_shipping_export'])->name('shipping-demo-export');
-//     Route::post('shipping-import',[ShippingMethodController::class,'shipping_import'])->name('shipping-import');
-
-//     Route::resource('withdraw-method', WithdrawMethodController::class);
-//     Route::put('withdraw-method-status/{id}',[WithdrawMethodController::class,'changeStatus'])->name('withdraw-method-status');
-
-//     Route::get('seller-withdraw', [SellerWithdrawController::class, 'index'])->name('seller-withdraw');
-//     Route::get('pending-seller-withdraw', [SellerWithdrawController::class, 'pendingSellerWithdraw'])->name('pending-seller-withdraw');
-
-//     Route::get('show-seller-withdraw/{id}', [SellerWithdrawController::class, 'show'])->name('show-seller-withdraw');
-//     Route::delete('delete-seller-withdraw/{id}', [SellerWithdrawController::class, 'destroy'])->name('delete-seller-withdraw');
-//     Route::put('approved-seller-withdraw/{id}', [SellerWithdrawController::class, 'approvedWithdraw'])->name('approved-seller-withdraw');
-
-//     Route::get('all-order', [OrderController::class, 'index'])->name('all-order');
-//     Route::get('pending-order', [OrderController::class, 'pendingOrder'])->name('pending-order');
-//     Route::get('pregress-order', [OrderController::class, 'pregressOrder'])->name('pregress-order');
-//     Route::get('delivered-order', [OrderController::class, 'deliveredOrder'])->name('delivered-order');
-//     Route::get('completed-order', [OrderController::class, 'completedOrder'])->name('completed-order');
-//     Route::get('declined-order', [OrderController::class, 'declinedOrder'])->name('declined-order');
-//     Route::get('cash-on-delivery', [OrderController::class, 'cashOnDelivery'])->name('cash-on-delivery');
-//     Route::get('order-show/{id}', [OrderController::class, 'show'])->name('order-show');
-//     Route::delete('delete-order/{id}', [OrderController::class, 'destroy'])->name('delete-order');
-//     Route::put('update-order-status/{id}', [OrderController::class, 'updateOrderStatus'])->name('update-order-status');
-
-//     Route::resource('coupon', CouponController::class);
-//     Route::put('coupon-status/{id}',[CouponController::class,'changeStatus'])->name('coupon-status');
-
-//     Route::resource('banner-image', BreadcrumbController::class);
-
-//     Route::resource('footer', FooterController::class);
-//     Route::resource('social-link', FooterSocialLinkController::class);
-//     Route::resource('footer-link', FooterLinkController::class);
-//     Route::get('second-col-footer-link', [FooterLinkController::class, 'secondColFooterLink'])->name('second-col-footer-link');
-//     Route::get('third-col-footer-link', [FooterLinkController::class, 'thirdColFooterLink'])->name('third-col-footer-link');
-//     Route::put('update-col-title/{id}', [FooterLinkController::class, 'updateColTitle'])->name('update-col-title');
-
-
-//     Route::get('admin-language', [LanguageController::class, 'adminLnagugae'])->name('admin-language');
-//     Route::post('update-admin-language', [LanguageController::class, 'updateAdminLanguage'])->name('update-admin-language');
-
-//     Route::get('admin-validation-language', [LanguageController::class, 'adminValidationLnagugae'])->name('admin-validation-language');
-//     Route::post('update-admin-validation-language', [LanguageController::class, 'updateAdminValidationLnagugae'])->name('update-admin-validation-language');
-
-
-//     Route::get('website-language', [LanguageController::class, 'websiteLanguage'])->name('website-language');
-//     Route::post('update-language', [LanguageController::class, 'updateLanguage'])->name('update-language');
-
-//     Route::get('website-validation-language', [LanguageController::class, 'websiteValidationLanguage'])->name('website-validation-language');
-//     Route::post('update-validation-language', [LanguageController::class, 'updateValidationLanguage'])->name('update-validation-language');
-
-
-//     Route::get('sms-notification', [NotificationController::class, 'twilio_sms'])->name('sms-notification');
-//     Route::put('update-twilio-configuration', [NotificationController::class, 'update_twilio_sms'])->name('update-twilio-configuration');
-//     Route::put('update-biztech-configuration', [NotificationController::class, 'update_biztech_sms'])->name('update-biztech-configuration');
-
-//     Route::get('sms-template', [NotificationController::class, 'sms_template'])->name('sms-template');
-//     Route::get('edit-sms-template/{id}', [NotificationController::class, 'edit_sms_template'])->name('edit-sms-template');
-//     Route::put('update-sms-template/{id}', [NotificationController::class, 'update_sms_template'])->name('update-sms-template');
-
-//     Route::get('inventory', [InventoryController::class, 'index'])->name('inventory');
-//     Route::get('stock-history/{id}', [InventoryController::class, 'show_inventory'])->name('stock-history');
-//     Route::post('add-stock', [InventoryController::class, 'add_stock'])->name('add-stock');
-//     Route::delete('delete-stock/{id}', [InventoryController::class, 'delete_stock'])->name('delete-stock');
-
-//     //Delivery man route
-//     Route::resource('delivery-man', DeliveryManController::class);
-//     Route::put('delivery-man-status/{id}',[DeliveryManController::class,'changeStatus'])->name('delivery-man-status');
-
-//     Route::get('delivery-man-review', [DeliveryManController::class, 'review'])->name('delivery-man-review');
-//     Route::put('delivery-man-review-status/{id}', [DeliveryManController::class, 'changeReviewStatus'])->name('delivery-man-review-status');
-//     Route::delete('delete-delivery-man-review/{id}', [DeliveryManController::class, 'deleteReview'])->name('delete-delivery-man-review');
-
-//     Route::resource('delivery-man-withdraw-method', DeliveryManWithdrawMethodController::class);
-//     Route::put('delivery-man-withdraw-method-status/{id}', [DeliveryManWithdrawMethodController::class,'changeStatus']);
-
-//     Route::get('delivery-man-withdraw', [DeliveryManWithdrawController::class, 'index'])->name('delivery-man-withdraw');
-//     Route::get('pending-delivery-man-withdraw', [DeliveryManWithdrawController::class, 'pendingDeliveryManWithdraw'])->name('pending-delivery-man-withdraw');
-
-//     Route::get('show-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'show'])->name('show-delivery-man-withdraw');
-//     Route::delete('delete-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'destroy'])->name('delete-delivery-man-withdraw');
-//     Route::put('approved-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'approvedWithdraw'])->name('approved-delivery-man-withdraw');
-//     Route::get('delivery-man-withdraw-list/{id}', [DeliveryManWithdrawController::class, 'withdrawList'])->name('delivery-man-withdraw-list');
-
-
-//     Route::get('delivery-man-order-amount', [DeliveryManOrderAmountController::class, 'index'])->name('delivery-man-order-amount');
-//     Route::get('get-deliveryman-account-info/{id}', [DeliveryManOrderAmountController::class, 'getWithDeliveryManAccountInfo'])->name('get-deliveryman-account-info');
-
-//     Route::get('delivery-man-order-amount/create', [DeliveryManOrderAmountController::class, 'create'])->name('delivery-man-order-amount.create');
-//     Route::post('delivery-man-order-amount', [DeliveryManOrderAmountController::class, 'store'])->name('delivery-man-order-amount.store');
-
-//     Route::delete('delete-delivery-order-amount/{id}', [DeliveryManOrderAmountController::class, 'destroy'])->name('delivery-man-order-amount.delete');
-
-
-// });
+});
 
 });
 

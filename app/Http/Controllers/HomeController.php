@@ -997,7 +997,7 @@ class HomeController extends Controller
 
         $searchBrandArr = [];
 
-        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1, 'icon' => 'Brand'])->select('id','name','slug','icon')->get();
+        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1, 'icon' => 'WinningKart'])->select('id','name','slug','icon')->get();
 
         $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
 

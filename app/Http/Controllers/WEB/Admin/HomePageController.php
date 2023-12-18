@@ -194,7 +194,7 @@ class HomePageController extends Controller
 
     public function featuredBrands(){
         $featuredCategories = featuredBrands::with('category')->get();
-        $categories = Category::where(['status' => 1,'icon'=> 'WinningKart'])->get();
+        $categories = Category::where(['status' => 1,'icon'=> 'Brand'])->get();
 
         $featuredBrands = featuredBrands::with('brands')->get();
         $brands = Brand::where('status',1)->get();

@@ -71,12 +71,14 @@
         @endif
     </script>
 
+@if(isset($errors))
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             <script>
                 toastr.error('{{ $error }}');
             </script>
         @endforeach
+    @endif
     @endif
 
 
