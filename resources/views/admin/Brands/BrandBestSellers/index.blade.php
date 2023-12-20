@@ -25,9 +25,8 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
-                                    <th width="20%">{{__('Image')}}</th>
-                                    <th width="10%">{{__('admin.Title')}}</th>
-                                    <th width="30%">{{__('admin.Link')}}</th>
+                                    <th>{{__('Brand')}}</th>
+                                    <th width="30%">{{__('Product')}}</th>
                                     <th>{{__('admin.Status')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
@@ -36,9 +35,8 @@
                                 @foreach ($BrandBestSellers as $index => $service)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td><img class="w_300" src="{{ asset($service->image) }}" alt=""></td>
-                                        <td>{{ $service->title }}</td>
-                                        <td>{{ $service->link }}</td>
+                                        <td>{{ $service->brand->name }}</td>
+                                        <td>{{ $service->product->name }}</td>
                                         <td>
                                             @if($service->isactive == 1)
                                             <a href="javascript:;" onclick="changeStatus({{ $service->id }})">

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\WEB\Admin\Brands;
 
+use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\Brands\BrandBestSellers;
@@ -24,40 +26,34 @@ class BrandBestSellersController extends Controller
 
     public function create(){
         $BrandBestSellers = null;
-        return view('admin.Brands.BrandBestSellers.edit',compact('BrandBestSellers'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        $products = Product::where(['status' => 1])->get();
+        return view('admin.Brands.BrandBestSellers.edit',compact('BrandBestSellers','brands','products'));
     }
 
     public function show($id)
     {
         $BrandBestSellers = BrandBestSellers::find($id);
-        return view('admin.Brands.BrandBestSellers.edit',compact('BrandBestSellers'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        $products = Product::where(['status' => 1])->get();
+        return view('admin.Brands.BrandBestSellers.edit',compact('BrandBestSellers','brands','products'));
     }
 
     public function update(Request $request, $id)
     {
         $rules = [
-            'title'=>'required',
-            'link'=>'required',
+            'product_id'=>'required',
+            'brand_id' => 'required',
         ];
         $customMessages = [
-            'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'product_id.required' => trans('admin_validation.Product is required'),
+            'brand_id.required' => trans('admin_validation.Brand is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $BrandBestSellers = BrandBestSellers::find($id);
-        if($request->image){
-            $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'BrandBestSellers'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->image)
-                ->save(public_path().'/'.$banner_name);
-            $BrandBestSellers->image = $banner_name;
-            $BrandBestSellers->save();
-        }
-
-        $BrandBestSellers->title = $request->title;
-        $BrandBestSellers->link = $request->link;
+        $BrandBestSellers->brand_id = $request->brand_id;
+        $BrandBestSellers->product_id = $request->product_id;
         $BrandBestSellers->isactive = $request->isactive;
         $BrandBestSellers->save();
 
@@ -68,28 +64,18 @@ class BrandBestSellersController extends Controller
 
     public function store(Request $request){
         $rules = [
-            'image' => 'required',
-            'title'=>'required',
-            'link'=>'required',
+            'product_id'=>'required',
+            'brand_id' => 'required',
         ];
         $customMessages = [
-            'image.required' => trans('admin_validation.Image is required'),
-            'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'product_id.required' => trans('admin_validation.Product is required'),
+            'brand_id.required' => trans('admin_validation.Brand is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $BrandBestSellers = new BrandBestSellers();
-        if($request->image){
-            $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'BrandBestSellers'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->image)
-                ->save(public_path().'/'.$banner_name);
-            $BrandBestSellers->image = $banner_name;
-        }
-        $BrandBestSellers->title = $request->title;
-        $BrandBestSellers->link = $request->link;
+        $BrandBestSellers->brand_id = $request->brand_id;
+        $BrandBestSellers->product_id = $request->product_id;
         $BrandBestSellers->isactive = $request->isactive;
         $BrandBestSellers->save();
 

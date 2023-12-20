@@ -9,8 +9,15 @@ namespace App\Http\Controllers;
 use App\Models\BestDiscountProducts;
 use App\Models\BestOfferForYou;
 use App\Models\BestSellerBanner;
+use App\Models\Brands\BrandBanners;
+use App\Models\Brands\BrandBestSellers;
+use App\Models\Brands\BrandCategories;
+use App\Models\Brands\BrandDescription;
+use App\Models\Brands\BrandOffers;
 use App\Models\featuredProducts;
 use App\Models\InfluencerPicks;
+use App\Models\ProductDescription;
+use App\Models\ProductIngredient;
 use App\Models\Section8;
 use App\Models\ShopByConcern;
 use App\Models\TopBrands;
@@ -347,6 +354,41 @@ class HomeController extends Controller
 
         return response()->json(['category' => $category]);
 
+    }
+
+    public function BrandDetails($slug){
+        $brand = Brand::where('slug', $slug)->first();
+        $flag = false;
+        $setting = Setting::first();
+        $section_title = json_decode($setting->brand_section_title);
+        $brandBanner = [];
+        $brandBestSeller =[];
+        $brandCategories =[];
+        $brandDescription = null;
+        $brandOffers = [];
+
+        if($brand){
+            $flag = true;
+            $products = $this->productBrandWise($slug);
+            $brandBanner = BrandBanners::where(['isactive'=> 1,'brand_id'=>$brand->id])->get();
+            $brandBestSeller = BrandBestSellers::where(['isactive'=> 1,'brand_id'=>$brand->id])->with('product')->get();
+            $brandCategories = BrandCategories::where(['isactive'=> 1,'brand_id'=>$brand->id])->get();
+            $brandDescription = BrandDescription::where(['isactive'=> 1,'brand_id'=>$brand->id])->first();
+            $brandOffers = BrandOffers::where(['isactive'=> 1,'brand_id'=>$brand->id])->get();
+        }
+        return response()->json(
+            [
+                'status' => $flag, 
+                'pageTitle' => $section_title,
+                'brand' => $brand,
+                'brandBanner' => $brandBanner,
+                'brandBestSeller' => $brandBestSeller,
+                'brandCategories' => $brandCategories,
+                'brandDescription' => $brandDescription,
+                'brandOffers' => $brandOffers,
+                'products' => $products
+            ]
+        );
     }
 
 
@@ -1332,6 +1374,45 @@ class HomeController extends Controller
 
     }
 
+    public function productBrandWise($slug){
+
+        $brand = Brand::where(['slug'=>$slug])->first();
+
+        $searchCategoryArr = [];
+
+        $searchBrandArr = [];
+
+        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1])->select('id','name','slug','icon')->get();
+
+        $activeVariants = ProductVariant::with('activeVariantItems')->select('name','id')->groupBy('name')->get();
+
+        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+
+        $products = Product::with('activeVariants.activeVariantItems')->orderBy('id','desc')->where(['status' => 1, 'approve_by_admin' => 1,'brand_id' => $brand->id]);
+
+        $products = $products->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id');
+
+        $products = $products->paginate($paginateQty);
+
+        $seoSetting = SeoSetting::find(9);
+
+        return response()->json([
+
+            'searchCategoryArr' => $searchCategoryArr,
+
+            'searchBrandArr' => $searchBrandArr,
+
+            'categories' => $categories,
+
+            'activeVariants' => $activeVariants,
+
+            'products' => $products,
+
+            'seoSetting' => $seoSetting,
+
+        ]);
+    }
+
 
 
     public function searchProduct(Request $request){
@@ -1600,23 +1681,15 @@ class HomeController extends Controller
 
         $product = Product::with('category','brand','activeVariants.activeVariantItems','avgReview')->where(['status' => 1, 'slug' => $slug])->first();
 
-
-
         if(!$product){
 
             $notification = trans('user_validation.Something went wrong');
-
             return response()->json(['message' => $notification],403);
-
         }
-
-
 
         $paginateQty = CustomPagination::whereId('5')->first()->qty;
 
         $productReviews = ProductReview::with('user')->where(['status' => 1, 'product_id' =>$product->id])->get()->take(10);
-
-
 
         $totalProductReviewQty = ProductReview::where(['status' => 1, 'product_id' =>$product->id])->count();
 
@@ -1636,15 +1709,13 @@ class HomeController extends Controller
 
         $this_seller_products = [];
 
+        $productDescription = ProductDescription::where('product_id', $product->id)->where('isActive',1)->get();
+        $productIngredient = ProductIngredient::where('product_id', $product->id)->where('isActive',1)->get();
+
         if($is_seller_product){
 
             $this_seller_products = Product::with('activeVariants.activeVariantItems')->where(['vendor_id' => $product->vendor_id, 'status' => 1, 'approve_by_admin' => 1])->where('id' , '!=', $product->id)->get()->take(10);
-
         }
-
-
-
-
 
         $seller = Vendor::with('user')->where('id', $product->vendor_id)->first();
 
@@ -1672,10 +1743,6 @@ class HomeController extends Controller
 
         }
 
-
-
-
-
         $tagArray = json_decode($product->tags);
 
         $tags = '';
@@ -1690,10 +1757,6 @@ class HomeController extends Controller
 
         }
 
-
-
-
-
         return response()->json([
 
             'product' => $product,
@@ -1707,6 +1770,10 @@ class HomeController extends Controller
             'totalReview' => $totalReview,
 
             'productReviews' => $productReviews,
+
+            'productDescription' => $productDescription,
+
+            'productIngredient' => $productIngredient,
 
             'specifications' => $specifications,
 

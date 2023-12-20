@@ -34,6 +34,16 @@
                                     <div class="form-group col-6">
                                         <label for="">{{__('admin.New Image')}}</label>
                                         <input type="file" name="image" class="form-control-file">
+                                    </div>
+                                    
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Product Name')}} <span class="text-danger">*</span></label>
+                                        <select name="product_id" class="form-control">
+                                            <option value="" disabled>Select Product</option>
+                                            @foreach($products as $p)
+                                            <option {{$p->id == $brandBanners->product_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>​
 ​
                                     <div class="form-group col-12">
@@ -46,10 +56,6 @@
                                         <input type="text" name="description" value="{{ $shopconcern->description }}" class="form-control">
                                     </div>
 
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="{{ $shopconcern->link }}" class="form-control">
-                                    </div>
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                         <select name="isactive" class="form-control">
@@ -71,6 +77,16 @@
                                     <div class="form-group col-6">
                                         <label for="">{{__('admin.New Image')}}</label>
                                         <input type="file" name="image" class="form-control-file">
+                                    </div>
+                                    
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Product Name')}} <span class="text-danger">*</span></label>
+                                        <select name="product_id" class="form-control">
+                                            <option value="" disabled>Select Product</option>
+                                            @foreach($products as $p)
+                                            <option value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>​
 ​
                                     <div class="form-group col-12">
@@ -83,10 +99,6 @@
                                         <input type="text" name="description" value="" class="form-control">
                                     </div>
 
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="" class="form-control">
-                                    </div>
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                         <select name="isactive" class="form-control">

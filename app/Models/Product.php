@@ -73,6 +73,14 @@ class Product extends Model
         return $this->hasMany(ProductReview::class)->where('status', 1);
     }
 
+    public function ProductDescription(){
+        return $this->hasMany(ProductDescription::class,'product_id')->where('status', 1);
+    }
+
+    public function ProductIngredient(){
+        return $this->hasMany(ProductIngredient::class,'product_id')->where('status', 1);
+    }
+
 
     protected $fillable = [
         'name',

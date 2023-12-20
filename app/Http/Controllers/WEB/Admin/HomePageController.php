@@ -31,6 +31,20 @@ class HomePageController extends Controller
         return view('admin.homepage_section_title', compact('sections'));
     }
 
+    public function brand_section_content(){
+
+        $setting = Setting::first();
+        $sections = json_decode($setting->brand_section_title);
+        return view('admin.brandpage_section_title', compact('sections'));
+    }
+
+    public function category_section_content(){
+
+        $setting = Setting::first();
+        $sections = json_decode($setting->category_section_title);
+        return view('admin.categorypage_section_title', compact('sections'));
+    }
+
     public function update_homepage_section_content(Request $request){
 
         $sections = array();
@@ -55,6 +69,57 @@ class HomePageController extends Controller
         $notification = array('messege'=>$notification,'alert-type'=>'success');
         return redirect()->back()->with($notification);
     }
+
+    public function update_brand_section_content(Request $request){
+
+        $sections = array();
+        foreach($request->customs as $index => $custom){
+            $item = (object) array(
+                'key' => $request->keys[$index],
+                'default' => $request->defaults[$index],
+                'custom' => $request->customs[$index],
+            );
+
+            $sections[] = $item;
+        }
+
+        $sections = json_encode($sections);
+
+        $setting = Setting::first();
+        $setting->brand_section_title = $sections;
+        $setting->save();
+
+
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
+    }
+
+    public function update_category_section_content(Request $request){
+
+        $sections = array();
+        foreach($request->customs as $index => $custom){
+            $item = (object) array(
+                'key' => $request->keys[$index],
+                'default' => $request->defaults[$index],
+                'custom' => $request->customs[$index],
+            );
+
+            $sections[] = $item;
+        }
+
+        $sections = json_encode($sections);
+
+        $setting = Setting::first();
+        $setting->category_section_title = $sections;
+        $setting->save();
+
+
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
+    }
+
     public function popularCategory(){
         $popularCategories = PopularCategory::with('category')->get();
 

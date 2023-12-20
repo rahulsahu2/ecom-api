@@ -232,9 +232,10 @@
             </ul>
           </li>
           <!-- brandpage -->
-          <li class="nav-item dropdown {{Route::is('admin.brand-banners.index') || Route::is('admin.brand-offers.index') ||Route::is('admin.brand-description.index') ||Route::is('admin.brand-best-sellers.index') ||Route::is('admin.brand-categories.index') ? 'active' : '' }}">
+          <li class="nav-item dropdown {{Route::is('admin.brandpage-section-title') || Route::is('admin.brand-banners.index') || Route::is('admin.brand-offers.index') ||Route::is('admin.brand-description.index') ||Route::is('admin.brand-best-sellers.index') ||Route::is('admin.brand-categories.index') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Manage Brand Page')}}</span></a>
-            <ul class="dropdown-menu">           
+            <ul class="dropdown-menu"> 
+              <li class="{{ Route::is('admin.brandpage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brandpage-section-title') }}">{{__('Brandpage Section Title')}}</a></li>          
               <li class="{{ Route::is('admin.brand-banners.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brand-banners.index') }}">{{__('Brand Banners')}}</a></li>
               <li class="{{ Route::is('admin.brand-offers.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brand-offers.index') }}">{{__('Brand Offers')}}</a></li>
               <li class="{{ Route::is('admin.brand-description.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.brand-description.index') }}">{{__('Brand description')}}</a></li>
@@ -244,9 +245,10 @@
           </li>
 
           <!-- categorypage -->
-          <li class="nav-item dropdown {{Route::is('admin.homepage-section-title') ||Route::is('admin.slider.*')|| Route::is('admin.shop-by-concern.index') ? 'active' : '' }}">
+          <li class="nav-item dropdown {{Route::is('admin.categorypage-section-title') || Route::is('admin.homepage-section-title') ||Route::is('admin.slider.*')|| Route::is('admin.shop-by-concern.index') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Manage Category Page')}}</span></a>
             <ul class="dropdown-menu">           
+            <li class="{{ Route::is('admin.categorypage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.categorypage-section-title') }}">{{__('Categorypage Section Title')}}</a></li>          
               <li class="{{ Route::is('admin.influncer-picks.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.influencer-picks.index') }}">{{__('Influencer Picks')}}</a></li>
             </ul>
           </li>

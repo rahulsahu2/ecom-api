@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\WEB\Admin\ProductDetails;
+use App\Models\Product;
+use App\Models\ProductDescription;
 use Illuminate\Http\Request;
 use Image;
-use App\Models\ProductIngredient;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProductIngredientRequest;
-use App\Http\Requests\UpdateProductIngredientRequest;
+use App\Http\Requests\StoreProductDescriptionRequest;
+use App\Http\Requests\UpdateProductDescriptionRequest;
 
 class ProductDescriptionController extends Controller
 {
@@ -17,38 +18,40 @@ class ProductDescriptionController extends Controller
 
     public function index()
     {
-        $shopconcern = ProductIngredient::get();
+        $shopconcern = ProductDescription::get();
         return view('admin.ProductDescription.index',compact('shopconcern'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.ProductDescription.edit',compact('shopconcern'));
+        $products = Product::orderBy('id','desc')->where(['status' => 1, 'approve_by_admin' => 1])->get();
+        return view('admin.ProductDescription.edit',compact('shopconcern','products'));
     }
 
     public function show($id)
     {
-        $shopconcern = ProductIngredient::find($id);
-        return view('admin.ProductDescription.edit',compact('shopconcern'));
+        $shopconcern = ProductDescription::find($id);
+        $products = Product::orderBy('id','desc')->where(['status' => 1, 'approve_by_admin' => 1])->get();
+        return view('admin.ProductDescription.edit',compact('shopconcern','products'));
     }
 
     public function update(Request $request, $id)
     {
         $rules = [
             'title'=>'required',
-            'link'=>'required',
+            'product_id'=>'required',
         ];
         $customMessages = [
             'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'product_id.required' => trans('admin_validation.Product is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $shopconcern = ProductIngredient::find($id);
+        $shopconcern = ProductDescription::find($id);
         if($request->image){
             $exist_banner = $shopconcern->image;
             $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'ProductIngredient'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $banner_name = 'ProductDescription'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
             $banner_name = 'uploads/custom-images/'.$banner_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$banner_name);
@@ -58,7 +61,7 @@ class ProductDescriptionController extends Controller
 
         $shopconcern->title = $request->title;
         $shopconcern->description = $request->description;
-        $shopconcern->link = $request->link;
+        $shopconcern->product_id = $request->product_id;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
 
@@ -71,19 +74,17 @@ class ProductDescriptionController extends Controller
         $rules = [
             'image' => 'required',
             'title'=>'required',
-            'link'=>'required',
         ];
         $customMessages = [
             'image.required' => trans('admin_validation.Image is required'),
             'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $shopconcern = new ProductIngredient();
+        $shopconcern = new ProductDescription();
         if($request->image){
             $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'ProductIngredient'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $banner_name = 'ProductDescription'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
             $banner_name = 'uploads/custom-images/'.$banner_name;
             Image::make($request->image)
                 ->save(public_path().'/'.$banner_name);
@@ -91,7 +92,7 @@ class ProductDescriptionController extends Controller
         }
         $shopconcern->title = $request->title;
         $shopconcern->description = $request->description;
-        $shopconcern->link = $request->link;
+        $shopconcern->Product_id = $request->product_id;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
 
@@ -100,7 +101,7 @@ class ProductDescriptionController extends Controller
         return redirect()->back()->with($notification);
     }
     public function changeStatus($id){
-        $shop = ProductIngredient::find($id);
+        $shop = ProductDescription::find($id);
         if($shop->isactive==1){
             $shop->isactive=0;
             $shop->save();
@@ -115,7 +116,7 @@ class ProductDescriptionController extends Controller
 
     public function destroy($id)
     {
-        $obj = ProductIngredient::find($id);
+        $obj = ProductDescription::find($id);
         $obj->delete();
 
         $notification = trans('admin_validation.Delete Successfully');

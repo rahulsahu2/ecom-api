@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\WEB\Admin\ProductDetails;
-use App\Models\ProductDescription;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\ProductIngredient;
@@ -24,24 +24,24 @@ class ProductIngredientController extends Controller
 
     public function create(){
         $shopconcern = null;
-        return view('admin.ProductIngredient.edit',compact('shopconcern'));
+        $products = Product::orderBy('id','desc')->where(['status' => 1, 'approve_by_admin' => 1])->get();
+        return view('admin.ProductIngredient.edit',compact('shopconcern','products'));
     }
 
     public function show($id)
     {
         $shopconcern = ProductIngredient::find($id);
-        return view('admin.ProductIngredient.edit',compact('shopconcern'));
+        $products = Product::orderBy('id','desc')->where(['status' => 1, 'approve_by_admin' => 1])->get();
+        return view('admin.ProductIngredient.edit',compact('shopconcern'.'products'));
     }
 
     public function update(Request $request, $id)
     {
         $rules = [
             'title'=>'required',
-            'link'=>'required',
         ];
         $customMessages = [
             'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -58,8 +58,8 @@ class ProductIngredientController extends Controller
         }
 
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
-        $shopconcern->link = $request->link;
+        $shopconcern->description = '';
+        $shopconcern->product_id = $request->product_id;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
 
@@ -72,12 +72,10 @@ class ProductIngredientController extends Controller
         $rules = [
             'image' => 'required',
             'title'=>'required',
-            'link'=>'required',
         ];
         $customMessages = [
             'image.required' => trans('admin_validation.Image is required'),
             'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -91,8 +89,8 @@ class ProductIngredientController extends Controller
             $shopconcern->image = $banner_name;
         }
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
-        $shopconcern->link = $request->link;
+        $shopconcern->description = '';
+        $shopconcern->product_id = $request->product_id;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
 
@@ -116,7 +114,7 @@ class ProductIngredientController extends Controller
 
     public function destroy($id)
     {
-        $obj = ProductDescription::find($id);
+        $obj = ProductIngredient::find($id);
         $obj->delete();
 
         $notification = trans('admin_validation.Delete Successfully');

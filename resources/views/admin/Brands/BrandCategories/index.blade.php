@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
+                                    <th>{{__('Brand')}}</th>
                                     <th width="20%">{{__('Image')}}</th>
                                     <th width="10%">{{__('admin.Title')}}</th>
                                     <th width="30%">{{__('admin.Link')}}</th>
@@ -36,6 +37,7 @@
                                 @foreach ($BrandCategories as $index => $service)
                                     <tr>
                                         <td>{{ ++$index }}</td>
+                                        <td>{{ $service->brand->name }}</td>
                                         <td><img class="w_300" src="{{ asset($service->image) }}" alt=""></td>
                                         <td>{{ $service->title }}</td>
                                         <td>{{ $service->link }}</td>

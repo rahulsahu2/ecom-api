@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WEB\Admin\Brands;
 
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\Brands\BrandOffers;
@@ -24,13 +25,15 @@ class BrandOffersController extends Controller
 
     public function create(){
         $BrandOffers = null;
-        return view('admin.Brands.BrandOffers.edit',compact('BrandOffers'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Brands.BrandOffers.edit',compact('BrandOffers','brands'));
     }
 
     public function show($id)
     {
         $BrandOffers = BrandOffers::find($id);
-        return view('admin.Brands.BrandOffers.edit',compact('BrandOffers'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Brands.BrandOffers.edit',compact('BrandOffers','brands'));
     }
 
     public function update(Request $request, $id)
@@ -38,10 +41,12 @@ class BrandOffersController extends Controller
         $rules = [
             'title'=>'required',
             'link'=>'required',
+            'brand_id' => 'required',
         ];
         $customMessages = [
             'title.required' => trans('admin_validation.Title is required'),
             'link.required' => trans('admin_validation.Link is required'),
+            'brand_id.required' => trans('admin_validation.Brand is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -57,6 +62,7 @@ class BrandOffersController extends Controller
         }
 
         $BrandOffers->title = $request->title;
+        $BrandOffers->brand_id = $request->brand_id;
         $BrandOffers->link = $request->link;
         $BrandOffers->isactive = $request->isactive;
         $BrandOffers->save();
@@ -89,6 +95,7 @@ class BrandOffersController extends Controller
             $BrandOffers->image = $banner_name;
         }
         $BrandOffers->title = $request->title;
+        $BrandOffers->brand_id = $request->brand_id;
         $BrandOffers->link = $request->link;
         $BrandOffers->isactive = $request->isactive;
         $BrandOffers->save();

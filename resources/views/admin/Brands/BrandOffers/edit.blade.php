@@ -34,6 +34,16 @@
                                     <div class="form-group col-6">
                                         <label for="">{{__('admin.New Image')}}</label>
                                         <input type="file" name="image" class="form-control-file">
+                                    </div>
+                                    
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select name="brand_id" class="form-control">
+                                            <option value="" disabled>Select Brand</option>
+                                            @foreach($brands as $p)
+                                            <option {{$p->id == $BrandBestSellers->brand_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>​
 ​
                                     <div class="form-group col-12">
@@ -66,6 +76,16 @@
                                     <div class="form-group col-6">
                                         <label for="">{{__('admin.New Image')}}</label>
                                         <input type="file" name="image" class="form-control-file">
+                                    </div>
+                                    
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select name="brand_id" class="form-control">
+                                            <option value="" disabled>Select Brand</option>
+                                            @foreach($brands as $p)
+                                            <option value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>​
 ​
                                     <div class="form-group col-12">

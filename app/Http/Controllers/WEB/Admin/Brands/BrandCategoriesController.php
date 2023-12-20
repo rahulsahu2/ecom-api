@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\WEB\Admin\Brands;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\Brands\BrandCategories;
@@ -21,13 +22,15 @@ class BrandCategoriesController extends Controller
 
     public function create(){
         $BrandCategories = null;
-        return view('admin.Brands.BrandCategories.edit',compact('BrandCategories'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Brands.BrandCategories.edit',compact('BrandCategories','brands'));
     }
 
     public function show($id)
     {
         $BrandCategories = BrandCategories::find($id);
-        return view('admin.Brands.BrandCategories.edit',compact('BrandCategories'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Brands.BrandCategories.edit',compact('BrandCategories','brands'));
     }
 
     public function update(Request $request, $id)
@@ -35,10 +38,12 @@ class BrandCategoriesController extends Controller
         $rules = [
             'title'=>'required',
             'link'=>'required',
+            'brand_id' => 'required',
         ];
         $customMessages = [
             'title.required' => trans('admin_validation.Title is required'),
             'link.required' => trans('admin_validation.Link is required'),
+            'brand_id.required' => trans('admin_validation.Brand is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -54,6 +59,7 @@ class BrandCategoriesController extends Controller
         }
 
         $BrandCategories->title = $request->title;
+        $BrandCategories->brand_id = $request->brand_id;
         $BrandCategories->link = $request->link;
         $BrandCategories->isactive = $request->isactive;
         $BrandCategories->save();
@@ -86,6 +92,7 @@ class BrandCategoriesController extends Controller
             $BrandCategories->image = $banner_name;
         }
         $BrandCategories->title = $request->title;
+        $BrandCategories->brand_id = $request->brand_id;
         $BrandCategories->link = $request->link;
         $BrandCategories->isactive = $request->isactive;
         $BrandCategories->save();

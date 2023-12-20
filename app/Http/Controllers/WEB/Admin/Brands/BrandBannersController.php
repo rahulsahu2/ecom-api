@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WEB\Admin\Brands;
 
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Models\Brands\BrandBanners;
 use App\Http\Controllers\Controller;
@@ -16,19 +17,21 @@ class BrandBannersController extends Controller
 
     public function index()
     {
-        $brandBanners = BrandBanners::get();
+        $brandBanners = BrandBanners::with('brand')->get();
         return view('admin.Brands.BrandBanners.index',compact('brandBanners'));
     }
 
     public function create(){
         $brandBanners = null;
-        return view('admin.Brands.BrandBanners.edit',compact('brandBanners'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Brands.BrandBanners.edit',compact('brandBanners','brands'));
     }
 
     public function show($id)
     {
         $brandBanners = BrandBanners::find($id);
-        return view('admin.Brands.BrandBanners.edit',compact('brandBanners'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Brands.BrandBanners.edit',compact('brandBanners','brands'));
     }
 
     public function update(Request $request, $id)
@@ -36,10 +39,12 @@ class BrandBannersController extends Controller
         $rules = [
             'title'=>'required',
             'link'=>'required',
+            'brand_id' => 'required',
         ];
         $customMessages = [
             'title.required' => trans('admin_validation.Title is required'),
             'link.required' => trans('admin_validation.Link is required'),
+            'brand_id.required' => trans('admin_validation.Brand is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -55,6 +60,7 @@ class BrandBannersController extends Controller
         }
 
         $brandBanners->title = $request->title;
+        $brandBanners->brand_id = $request->brand_id;
         $brandBanners->link = $request->link;
         $brandBanners->isactive = $request->isactive;
         $brandBanners->save();
@@ -87,6 +93,7 @@ class BrandBannersController extends Controller
             $brandBanners->image = $banner_name;
         }
         $brandBanners->title = $request->title;
+        $brandBanners->brand_id = $request->brand_id;
         $brandBanners->link = $request->link;
         $brandBanners->isactive = $request->isactive;
         $brandBanners->save();

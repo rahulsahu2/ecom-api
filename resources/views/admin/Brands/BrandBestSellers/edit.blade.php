@@ -23,31 +23,31 @@
                         @if ($BrandBestSellers)
                             <form action="{{ route('admin.brand-best-sellers.update',$BrandBestSellers->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('Image')}}</label>
-                                        <div>
-                                            <img class="w_300" src="{{ asset($BrandBestSellers->image) }}" alt="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('admin.New Image')}}</label>
-                                        <input type="file" name="image" class="form-control-file">
-                                    </div>​
+                                <div class="row">​
 ​
-                                    <div class="form-group col-12">
-                                        <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="{{ $BrandBestSellers->title }}" class="form-control">
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select name="brand_id" class="form-control">
+                                            <option value="" disabled>Select Brand</option>
+                                            @foreach($brands as $p)
+                                            <option {{$p->id == $BrandBestSellers->brand_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="{{ $BrandBestSellers->link }}" class="form-control">
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select id="brand" name="product_id" class="form-control">
+                                            <option value="" disabled>Select Product</option>
+                                            @foreach($products as $p)
+                                            <option {{$p->id == $BrandBestSellers->product_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
-                                        <select name="isactive" class="form-control">
+                                        <select id="product" name="isactive" class="form-control">
                                             <option {{$BrandBestSellers->isactive == 1 ? 'selected':''}} value="1">{{__('admin.Active')}}</option>
                                             <option {{$BrandBestSellers->isactive == 0 ? 'selected':''}} value="0">{{__('admin.Inactive')}}</option>
                                         </select>
@@ -63,20 +63,27 @@
                             <form action="{{ route('admin.brand-best-sellers.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('admin.New Image')}}</label>
-                                        <input type="file" name="image" class="form-control-file">
+                                    
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select id="brand" name="brand_id" class="form-control">
+                                            <option value="" disabled>Select Brand</option>
+                                            @foreach($brands as $p)
+                                            <option value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>​
 ​
-                                    <div class="form-group col-12">
-                                        <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="" class="form-control">
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select id="product" name="product_id" class="form-control">
+                                            <option value="0" disabled selected>Select Product</option>
+                                            @foreach($products as $p)
+                                            <option data-brand="{{$p->brand_id}}" value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="" class="form-control">
-                                    </div>
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                         <select name="isactive" class="form-control">
@@ -84,7 +91,6 @@
                                             <option value="0">{{__('admin.Inactive')}}</option>
                                         </select>
                                     </div>
-    
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -99,4 +105,18 @@
           </div>
         </section>
       </div>
+      <script>
+        $(document).ready(function() {
+            $('#brand').change(function() {
+                var Id = $(this).val();
+                console.log(Id);
+                $('#product option').each(function() {
+                    console.log($(this).attr('data-brand'));
+                    if ($(this).attr('data-brand') != Id) {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+      </script>
 @endsection

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\WEB\Admin\Category;
+use Illuminate\Http\Request;
+use Image;
 use App\Models\CategoryShopConcern;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryShopConcernRequest;
@@ -9,79 +10,116 @@ use App\Http\Requests\UpdateCategoryShopConcernRequest;
 
 class CategoryShopConcernController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
-        //
+        $shopconcern = CategoryShopConcern::get();
+        return view('admin.CategoryShopConcern.index',compact('shopconcern'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function create(){
+        $shopconcern = null;
+        return view('admin.CategoryShopConcern.edit',compact('shopconcern'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCategoryShopConcernRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreCategoryShopConcernRequest $request)
+    public function show($id)
     {
-        //
+        $shopconcern = CategoryShopConcern::find($id);
+        return view('admin.CategoryShopConcern.edit',compact('shopconcern'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\CategoryShopConcern  $categoryShopConcern
-     * @return \Illuminate\Http\Response
-     */
-    public function show(CategoryShopConcern $categoryShopConcern)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'title'=>'required',
+            'link'=>'required',
+        ];
+        $customMessages = [
+            'title.required' => trans('admin_validation.Title is required'),
+            'link.required' => trans('admin_validation.Link is required'),
+        ];
+        $this->validate($request, $rules,$customMessages);
+
+        $shopconcern = CategoryShopConcern::find($id);
+        if($request->image){
+            $exist_banner = $shopconcern->image;
+            $extention = $request->image->getClientOriginalExtension();
+            $banner_name = 'CategoryShopConcern'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $banner_name = 'uploads/custom-images/'.$banner_name;
+            Image::make($request->image)
+                ->save(public_path().'/'.$banner_name);
+            $shopconcern->image = $banner_name;
+            $shopconcern->save();
+        }
+
+        $shopconcern->title = $request->title;
+        $shopconcern->description = $request->description;
+        $shopconcern->link = $request->link;
+        $shopconcern->isactive = $request->isactive;
+        $shopconcern->save();
+
+        $notification = trans('admin_validation.Updated Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\CategoryShopConcern  $categoryShopConcern
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CategoryShopConcern $categoryShopConcern)
-    {
-        //
+    public function store(Request $request){
+        $rules = [
+            'image' => 'required',
+            'title'=>'required',
+            'link'=>'required',
+        ];
+        $customMessages = [
+            'image.required' => trans('admin_validation.Image is required'),
+            'title.required' => trans('admin_validation.Title is required'),
+            'link.required' => trans('admin_validation.Link is required'),
+        ];
+        $this->validate($request, $rules,$customMessages);
+
+        $shopconcern = new CategoryShopConcern();
+        if($request->image){
+            $extention = $request->image->getClientOriginalExtension();
+            $banner_name = 'CategoryShopConcern'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $banner_name = 'uploads/custom-images/'.$banner_name;
+            Image::make($request->image)
+                ->save(public_path().'/'.$banner_name);
+            $shopconcern->image = $banner_name;
+        }
+        $shopconcern->title = $request->title;
+        $shopconcern->description = $request->description;
+        $shopconcern->link = $request->link;
+        $shopconcern->isactive = $request->isactive;
+        $shopconcern->save();
+
+        $notification = trans('admin_validation.Created Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
+    }
+    public function changeStatus($id){
+        $shop = CategoryShopConcern::find($id);
+        if($shop->isactive==1){
+            $shop->isactive=0;
+            $shop->save();
+            $message= trans('admin_validation.Inactive Successfully');
+        }else{
+            $shop->isactive=1;
+            $shop->save();
+            $message= trans('admin_validation.Active Successfully');
+        }
+        return response()->json($message);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCategoryShopConcernRequest  $request
-     * @param  \App\Models\CategoryShopConcern  $categoryShopConcern
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateCategoryShopConcernRequest $request, CategoryShopConcern $categoryShopConcern)
+    public function destroy($id)
     {
-        //
-    }
+        $obj = CategoryShopConcern::find($id);
+        $obj->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\CategoryShopConcern  $categoryShopConcern
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(CategoryShopConcern $categoryShopConcern)
-    {
-        //
+        $notification = trans('admin_validation.Delete Successfully');
+        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->route('admin.product-description.index')->with($notification);
     }
 }

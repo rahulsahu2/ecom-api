@@ -892,6 +892,12 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::get('homepage-section-title', [HomePageController::class, 'homepage_section_content'])->name('homepage-section-title');
     Route::post('update-homepage-section-title', [HomePageController::class, 'update_homepage_section_content'])->name('update-homepage-section-title');
 
+    Route::get('brand-section-title', [HomePageController::class, 'brand_section_content'])->name('brandpage-section-title');
+    Route::post('update-brand-section-title', [HomePageController::class, 'update_brand_section_content'])->name('update-brandpage-section-title');
+
+    Route::get('category-section-title', [HomePageController::class, 'category_section_content'])->name('categorypage-section-title');
+    Route::post('update-category-section-title', [HomePageController::class, 'update_category_section_content'])->name('update-categorypage-section-title');
+
 
 
     Route::get('homepage-visibility', [HomepageVisibilityController::class, 'index'])->name('homepage-visibility');

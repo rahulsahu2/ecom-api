@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WEB\Admin\Brands;
 
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\Brands\BrandDescription;
@@ -24,40 +25,30 @@ class BrandDescriptionController extends Controller
 
     public function create(){
         $BrandDescription = null;
-        return view('admin.Brands.BrandDescription.edit',compact('BrandDescription'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Brands.BrandDescription.edit',compact('BrandDescription','brands'));
     }
 
     public function show($id)
     {
         $BrandDescription = BrandDescription::find($id);
-        return view('admin.Brands.BrandDescription.edit',compact('BrandDescription'));
+        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Brands.BrandDescription.edit',compact('BrandDescription','brands'));
     }
 
     public function update(Request $request, $id)
     {
         $rules = [
-            'title'=>'required',
-            'link'=>'required',
+            'brand_id'=>'required',
         ];
         $customMessages = [
-            'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'brand_id.required' => trans('admin_validation.Brand is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $BrandDescription = BrandDescription::find($id);
-        if($request->image){
-            $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'BrandDescription'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->image)
-                ->save(public_path().'/'.$banner_name);
-            $BrandDescription->image = $banner_name;
-            $BrandDescription->save();
-        }
-
-        $BrandDescription->title = $request->title;
-        $BrandDescription->link = $request->link;
+        $BrandDescription->brand_id = $request->brand_id;
+        $BrandDescription->content = $request->content;
         $BrandDescription->isactive = $request->isactive;
         $BrandDescription->save();
 
@@ -68,28 +59,16 @@ class BrandDescriptionController extends Controller
 
     public function store(Request $request){
         $rules = [
-            'image' => 'required',
-            'title'=>'required',
-            'link'=>'required',
+            'brand_id'=>'required',
         ];
         $customMessages = [
-            'image.required' => trans('admin_validation.Image is required'),
-            'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'brand_id.required' => trans('admin_validation.Brand is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $BrandDescription = new BrandDescription();
-        if($request->image){
-            $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'BrandDescription'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->image)
-                ->save(public_path().'/'.$banner_name);
-            $BrandDescription->image = $banner_name;
-        }
-        $BrandDescription->title = $request->title;
-        $BrandDescription->link = $request->link;
+        $BrandDescription->brand_id = $request->brand_id;
+        $BrandDescription->content = $request->content;
         $BrandDescription->isactive = $request->isactive;
         $BrandDescription->save();
 

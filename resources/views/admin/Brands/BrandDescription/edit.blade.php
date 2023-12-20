@@ -24,27 +24,21 @@
                             <form action="{{ route('admin.brand-description.update',$BrandDescription->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('Image')}}</label>
-                                        <div>
-                                            <img class="w_300" src="{{ asset($BrandDescription->image) }}" alt="">
-                                        </div>
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select name="brand_id" class="form-control">
+                                            <option value="" disabled>Select Brand</option>
+                                            @foreach($brands as $p)
+                                            <option {{$p->id == $BrandBestSellers->brand_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('admin.New Image')}}</label>
-                                        <input type="file" name="image" class="form-control-file">
-                                    </div>​
 ​
                                     <div class="form-group col-12">
-                                        <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="{{ $BrandDescription->title }}" class="form-control">
+                                        <label>{{__('Content')}} <span class="text-danger">*</span></label>
+                                        <textarea name="content" id="" cols="30" rows="10" class="summernote">{{ old('content') }}</textarea>
                                     </div>
 
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="{{ $BrandDescription->link }}" class="form-control">
-                                    </div>
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                         <select name="isactive" class="form-control">
@@ -63,19 +57,20 @@
                             <form action="{{ route('admin.brand-description.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('admin.New Image')}}</label>
-                                        <input type="file" name="image" class="form-control-file">
+                                                                       
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select name="brand_id" class="form-control">
+                                            <option value="" disabled>Select Brand</option>
+                                            @foreach($brands as $p)
+                                            <option value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>​
 ​
                                     <div class="form-group col-12">
-                                        <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="" class="form-control">
-                                    </div>
-
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="" class="form-control">
+                                        <label>{{__('Content')}} <span class="text-danger">*</span></label>
+                                        <textarea name="content" id="" cols="30" rows="10" class="summernote"></textarea>
                                     </div>
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
