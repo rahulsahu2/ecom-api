@@ -18,18 +18,18 @@ class CategoryBannersController extends Controller
     public function index()
     {
         $shopconcern = CategoryBanners::get();
-        return view('admin.CategoryBanners.index',compact('shopconcern'));
+        return view('admin.Category.CategoryBanners.index',compact('shopconcern'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.CategoryBanners.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryBanners.edit',compact('shopconcern'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryBanners::find($id);
-        return view('admin.CategoryBanners.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryBanners.edit',compact('shopconcern'));
     }
 
     public function update(Request $request, $id)

@@ -7,6 +7,12 @@ use App\Http\Controllers\WEB\Admin\Brands\BrandBestSellersController;
 use App\Http\Controllers\WEB\Admin\Brands\BrandCategoriesController;
 use App\Http\Controllers\WEB\Admin\Brands\BrandDescriptionController;
 use App\Http\Controllers\WEB\Admin\Brands\BrandOffersController;
+use App\Http\Controllers\WEB\Admin\Category\CategoryBannersController;
+use App\Http\Controllers\WEB\Admin\Category\CategoryBestSellersController;
+use App\Http\Controllers\WEB\Admin\Category\CategoryListController;
+use App\Http\Controllers\WEB\Admin\Category\CategoryOfferBrandsController;
+use App\Http\Controllers\WEB\Admin\Category\CategoryShopConcernController;
+use App\Http\Controllers\WEB\Admin\Category\CategoryTrendingController;
 use App\Http\Controllers\WEB\Admin\FeaturedBrandsController;
 use App\Http\Controllers\WEB\Admin\FeaturedProductsController;
 use App\Http\Controllers\WEB\Admin\InfluencerPicksController;
@@ -621,6 +627,72 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
         Route::delete('delete-product-ingredient/{id}', 'destroy')->name('product-ingredient.delete');
         Route::put('product-ingredient-status/{id}', 'changeStatus')->name('product-ingredient.status');
         Route::put('product-ingredient-main/{id}', 'changeMain')->name('product-ingredient.main');
+    });
+
+    Route::controller(CategoryBannersController::class)->group(function () {
+        Route::get('category-banners', 'index')->name('category-banners.index');
+        Route::get('create-category-banners', 'create')->name('create-category-banners');
+        Route::get('create-category-banners/{id}', 'show')->name('show-category-banners');
+        Route::post('store-category-banners', 'store')->name('category-banners.store');
+        Route::post('update-category-banners/{id}', 'update')->name('category-banners.update');
+        Route::delete('delete-category-banners/{id}', 'destroy')->name('category-banners.delete');
+        Route::put('category-banners-status/{id}', 'changeStatus')->name('category-banners.status');
+        Route::put('category-banners-main/{id}', 'changeMain')->name('category-banners.main');
+    });
+
+    Route::controller(CategoryTrendingController::class)->group(function () {
+        Route::get('category-trending', 'index')->name('category-trending.index');
+        Route::get('create-category-trending', 'create')->name('create-category-trending');
+        Route::get('create-category-trending/{id}', 'show')->name('show-category-trending');
+        Route::post('store-category-trending', 'store')->name('category-trending.store');
+        Route::post('update-category-trending/{id}', 'update')->name('category-trending.update');
+        Route::delete('delete-category-trending/{id}', 'destroy')->name('category-trending.delete');
+        Route::put('category-trending-status/{id}', 'changeStatus')->name('category-trending.status');
+        Route::put('category-trending-main/{id}', 'changeMain')->name('category-trending.main');
+    });
+
+    Route::controller(CategoryShopConcernController::class)->group(function () {
+        Route::get('category-shop-concern', 'index')->name('category-shop-concern.index');
+        Route::get('create-category-shop-concern', 'create')->name('create-category-shop-concern');
+        Route::get('create-category-shop-concern/{id}', 'show')->name('show-category-shop-concern');
+        Route::post('store-category-shop-concern', 'store')->name('category-shop-concern.store');
+        Route::post('update-category-shop-concern/{id}', 'update')->name('category-shop-concern.update');
+        Route::delete('delete-category-shop-concern/{id}', 'destroy')->name('category-shop-concern.delete');
+        Route::put('category-shop-concern-status/{id}', 'changeStatus')->name('category-shop-concern.status');
+        Route::put('category-shop-concern-main/{id}', 'changeMain')->name('category-shop-concern.main');
+    });
+
+    Route::controller(CategoryOfferBrandsController::class)->group(function () {
+        Route::get('category-offer-brands', 'index')->name('category-offer-brands.index');
+        Route::get('create-category-offer-brands', 'create')->name('create-category-offer-brands');
+        Route::get('create-category-offer-brands/{id}', 'show')->name('show-category-offer-brands');
+        Route::post('store-category-offer-brands', 'store')->name('category-offer-brands.store');
+        Route::post('update-category-offer-brands/{id}', 'update')->name('category-offer-brands.update');
+        Route::delete('delete-category-offer-brands/{id}', 'destroy')->name('category-offer-brands.delete');
+        Route::put('category-offer-brands-status/{id}', 'changeStatus')->name('category-offer-brands.status');
+        Route::put('category-offer-brands-main/{id}', 'changeMain')->name('category-offer-brands.main');
+    });
+
+    Route::controller(CategoryListController::class)->group(function () {
+        Route::get('category-list', 'index')->name('category-list.index');
+        Route::get('create-category-list', 'create')->name('create-category-list');
+        Route::get('create-category-list/{id}', 'show')->name('show-category-list');
+        Route::post('store-category-list', 'store')->name('category-list.store');
+        Route::post('update-category-list/{id}', 'update')->name('category-list.update');
+        Route::delete('delete-category-list/{id}', 'destroy')->name('category-list.delete');
+        Route::put('category-list-status/{id}', 'changeStatus')->name('category-list.status');
+        Route::put('category-list-main/{id}', 'changeMain')->name('category-list.main');
+    });
+
+    Route::controller(CategoryBestSellersController::class)->group(function () {
+        Route::get('category-best-sellers', 'index')->name('category-best-sellers.index');
+        Route::get('create-category-best-sellers', 'create')->name('create-category-best-sellers');
+        Route::get('create-category-best-sellers/{id}', 'show')->name('show-category-best-sellers');
+        Route::post('store-category-best-sellers', 'store')->name('category-best-sellers.store');
+        Route::post('update-category-best-sellers/{id}', 'update')->name('category-best-sellers.update');
+        Route::delete('delete-category-best-sellers/{id}', 'destroy')->name('category-best-sellers.delete');
+        Route::put('category-best-sellers-status/{id}', 'changeStatus')->name('category-best-sellers.status');
+        Route::put('category-best-sellers-main/{id}', 'changeMain')->name('category-best-sellers.main');
     });
 
     Route::resource('service', ServiceController::class);

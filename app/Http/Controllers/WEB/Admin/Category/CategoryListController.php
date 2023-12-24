@@ -18,18 +18,18 @@ class CategoryListController extends Controller
     public function index()
     {
         $shopconcern = CategoryList::get();
-        return view('admin.CategoryList.index',compact('shopconcern'));
+        return view('admin.Category.CategoryList.index',compact('shopconcern'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.CategoryList.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryList.edit',compact('shopconcern'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryList::find($id);
-        return view('admin.CategoryList.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryList.edit',compact('shopconcern'));
     }
 
     public function update(Request $request, $id)

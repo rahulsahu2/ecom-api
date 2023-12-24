@@ -18,18 +18,18 @@ class CategoryBestSellersController extends Controller
     public function index()
     {
         $shopconcern = CategoryBestSellers::get();
-        return view('admin.CategoryBestSellers.index',compact('shopconcern'));
+        return view('admin.Category.CategoryBestSellers.index',compact('shopconcern'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.CategoryBestSellers.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryBestSellers.edit',compact('shopconcern'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryBestSellers::find($id);
-        return view('admin.CategoryBestSellers.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryBestSellers.edit',compact('shopconcern'));
     }
 
     public function update(Request $request, $id)

@@ -366,6 +366,7 @@ class HomeController extends Controller
         $brandCategories =[];
         $brandDescription = null;
         $brandOffers = [];
+        $products = [];
 
         if($brand){
             $flag = true;
@@ -892,7 +893,7 @@ class HomeController extends Controller
 
     public function faq(){
 
-        $faqs = FAQ::orderBy('id','desc')->where('status',1)->get();
+        $faqs = FAQ::orderBy('id','desc')->groupBy('category')->where('status',1)->get();
 
         return response()->json(['faqs' => $faqs]);
 

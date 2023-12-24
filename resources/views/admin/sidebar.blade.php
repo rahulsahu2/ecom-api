@@ -245,11 +245,17 @@
           </li>
 
           <!-- categorypage -->
-          <li class="nav-item dropdown {{Route::is('admin.categorypage-section-title') || Route::is('admin.homepage-section-title') ||Route::is('admin.slider.*')|| Route::is('admin.shop-by-concern.index') ? 'active' : '' }}">
+          <li class="nav-item dropdown {{Route::is('admin.categorypage-section-title') || Route::is('admin.category-best-sellers.index') || Route::is('admin.category-list.index') || Route::is('admin.category-offer-brands.index') || Route::is('admin.category-shop-concern.index') || Route::is('admin.category-banners.index') || Route::is('admin.category-trending.index') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('Manage Category Page')}}</span></a>
             <ul class="dropdown-menu">           
-            <li class="{{ Route::is('admin.categorypage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.categorypage-section-title') }}">{{__('Categorypage Section Title')}}</a></li>          
-              <li class="{{ Route::is('admin.influncer-picks.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.influencer-picks.index') }}">{{__('Influencer Picks')}}</a></li>
+              <li class="{{ Route::is('admin.categorypage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.categorypage-section-title') }}">{{__('Category Page Title')}}</a></li>          
+
+              <li class="{{ Route::is('admin.category-banners.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.category-banners.index') }}">{{__('Category Banners')}}</a></li>
+              <li class="{{ Route::is('admin.category-trending.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.category-trending.index') }}">{{__('Category Trending')}}</a></li>
+              <li class="{{ Route::is('admin.category-shop-concern.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.category-shop-concern.index') }}">{{__('Category By shop Concern')}}</a></li>
+              <li class="{{ Route::is('admin.category-offer-brands.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.category-offer-brands.index') }}">{{__('Category Offer Brands')}}</a></li>
+              <li class="{{ Route::is('admin.category-list.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.category-list.index') }}">{{__('Category List')}}</a></li>
+              <li class="{{ Route::is('admin.category-best-sellers.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.category-best-sellers.index') }}">{{__('Category Best Sellers')}}</a></li>
             </ul>
           </li>
 

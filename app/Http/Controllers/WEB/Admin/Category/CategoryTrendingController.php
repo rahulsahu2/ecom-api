@@ -18,18 +18,18 @@ class CategoryTrendingController extends Controller
     public function index()
     {
         $shopconcern = CategoryTrending::get();
-        return view('admin.CategoryTrending.index',compact('shopconcern'));
+        return view('admin.Category.CategoryTrending.index',compact('shopconcern'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.CategoryTrending.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryTrending.edit',compact('shopconcern'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryTrending::find($id);
-        return view('admin.CategoryTrending.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryTrending.edit',compact('shopconcern'));
     }
 
     public function update(Request $request, $id)

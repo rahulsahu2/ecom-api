@@ -19,18 +19,18 @@ class CategoryOfferBrandsController extends Controller
     public function index()
     {
         $shopconcern = CategoryOfferBrands::get();
-        return view('admin.CategoryOfferBrands.index',compact('shopconcern'));
+        return view('admin.Category.CategoryOfferBrands.index',compact('shopconcern'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.CategoryOfferBrands.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryOfferBrands.edit',compact('shopconcern'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryOfferBrands::find($id);
-        return view('admin.CategoryOfferBrands.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryOfferBrands.edit',compact('shopconcern'));
     }
 
     public function update(Request $request, $id)

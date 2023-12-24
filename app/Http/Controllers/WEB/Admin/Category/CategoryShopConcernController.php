@@ -18,18 +18,18 @@ class CategoryShopConcernController extends Controller
     public function index()
     {
         $shopconcern = CategoryShopConcern::get();
-        return view('admin.CategoryShopConcern.index',compact('shopconcern'));
+        return view('admin.Category.CategoryShopConcern.index',compact('shopconcern'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.CategoryShopConcern.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryShopConcern.edit',compact('shopconcern'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryShopConcern::find($id);
-        return view('admin.CategoryShopConcern.edit',compact('shopconcern'));
+        return view('admin.Category.CategoryShopConcern.edit',compact('shopconcern'));
     }
 
     public function update(Request $request, $id)
