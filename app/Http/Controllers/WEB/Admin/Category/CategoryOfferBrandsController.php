@@ -19,22 +19,22 @@ class CategoryOfferBrandsController extends Controller
 
     public function index()
     {
-        $shopconcern = CategoryOfferBrands::get();
+        $brandBanners = CategoryOfferBrands::get();
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryOfferBrands.index',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryOfferBrands.index',compact('brandBanners','categories'));
     }
 
     public function create(){
-        $shopconcern = null;
+        $brandBanners = null;
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryOfferBrands.edit',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryOfferBrands.edit',compact('brandBanners','categories'));
     }
 
     public function show($id)
     {
-        $shopconcern = CategoryOfferBrands::find($id);
+        $brandBanners = CategoryOfferBrands::find($id);
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryOfferBrands.edit',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryOfferBrands.edit',compact('brandBanners','categories'));
     }
 
     public function update(Request $request, $id)
@@ -63,7 +63,6 @@ class CategoryOfferBrandsController extends Controller
 
         $shopconcern->category_id = $request->category_id;
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();

@@ -20,14 +20,14 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                        @if ($categoryBanners)
-                            <form action="{{ route('admin.category-offer-brands.update',$categoryBanners->id) }}" method="POST" enctype="multipart/form-data">
+                        @if ($brandBanners)
+                            <form action="{{ route('admin.category-offer-brands.update',$brandBanners->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-6">
                                         <label for="">{{__('Image')}}</label>
                                         <div>
-                                            <img class="w_300" src="{{ asset($categoryBanners->image) }}" alt="">
+                                            <img class="w_300" src="{{ asset($brandBanners->image) }}" alt="">
                                         </div>
                                     </div>
 
@@ -40,26 +40,31 @@
                                         <label>{{__('category Name')}} <span class="text-danger">*</span></label>
                                         <select name="category_id" class="form-control">
                                             <option value="" disabled>Select category</option>
-                                            @foreach($categorys as $p)
-                                            <option {{$p->id == $categoryBanners->category_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @foreach($categories as $p)
+                                            <option {{$p->id == $brandBanners->category_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
 ​
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="{{ $categoryBanners->title }}" class="form-control">
+                                        <input type="text" name="title" value="{{ $brandBanners->title }}" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <label>{{__('admin.Description')}} <span class="text-danger">*</span></label>
+                                        <input type="text" name="description" value="{{ $brandBanners->description }}" class="form-control">
                                     </div>
 
                                     <div class="form-group col-12">
                                         <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="{{ $categoryBanners->link }}" class="form-control">
+                                        <input type="text" name="link" value="{{ $brandBanners->link }}" class="form-control">
                                     </div>
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                         <select name="isactive" class="form-control">
-                                            <option {{$categoryBanners->isactive == 1 ? 'selected':''}} value="1">{{__('admin.Active')}}</option>
-                                            <option {{$categoryBanners->isactive == 0 ? 'selected':''}} value="0">{{__('admin.Inactive')}}</option>
+                                            <option {{$brandBanners->isactive == 1 ? 'selected':''}} value="1">{{__('admin.Active')}}</option>
+                                            <option {{$brandBanners->isactive == 0 ? 'selected':''}} value="0">{{__('admin.Inactive')}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -82,7 +87,7 @@
                                         <label>{{__('category Name')}} <span class="text-danger">*</span></label>
                                         <select name="category_id" class="form-control">
                                             <option value="" disabled>Select category</option>
-                                            @foreach($categorys as $p)
+                                            @foreach($categories as $p)
                                             <option value="{{$p->id}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>
@@ -91,6 +96,11 @@
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
                                         <input type="text" name="title" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <label>{{__('admin.Description')}} <span class="text-danger">*</span></label>
+                                        <input type="text" name="description" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group col-12">

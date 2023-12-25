@@ -34,7 +34,7 @@
                                   </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categoryBanners as $index => $service)
+                                @foreach ($brandBanners as $index => $service)
                                     <tr>
                                         <td>{{ ++$index }}</td>
                                         <td>{{ $service->category->name }}</td>

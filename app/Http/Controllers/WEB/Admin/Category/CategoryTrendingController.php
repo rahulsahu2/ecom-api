@@ -18,22 +18,22 @@ class CategoryTrendingController extends Controller
 
     public function index()
     {
-        $shopconcern = CategoryTrending::get();
+        $brandBanners = CategoryTrending::get();
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryTrending.index',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryTrending.index',compact('brandBanners','categories'));
     }
 
     public function create(){
-        $shopconcern = null;
+        $brandBanners = null;
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryTrending.edit',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryTrending.edit',compact('brandBanners','categories'));
     }
 
     public function show($id)
     {
-        $shopconcern = CategoryTrending::find($id);
+        $brandBanners = CategoryTrending::find($id);
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryTrending.edit',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryTrending.edit',compact('brandBanners','categories'));
     }
 
     public function update(Request $request, $id)

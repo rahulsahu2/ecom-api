@@ -1,16 +1,16 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('Category Best Sellers')}}</title>
+<title>{{__('Brand Banners')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('Category Best Sellers')}}</h1>
+            <h1>{{__('Brand Banners')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('Category Best Sellers')}}</div>
+              <div class="breadcrumb-item">{{__('Brand Banners')}}</div>
             </div>
           </div>
 
@@ -25,22 +25,18 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
-                                    <th>{{__('category')}}</th>
-                                    <th width="20%">{{__('Image')}}</th>
-                                    <th width="10%">{{__('admin.Title')}}</th>
-                                    <th width="30%">{{__('admin.Link')}}</th>
+                                    <th>{{__('Brand')}}</th>
+                                    <th width="30%">{{__('Product')}}</th>
                                     <th>{{__('admin.Status')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categoryBanners as $index => $service)
+                                @foreach ($brandBanners as $index => $service)
                                     <tr>
                                         <td>{{ ++$index }}</td>
                                         <td>{{ $service->category->name }}</td>
-                                        <td><img class="w_300" src="{{ asset($service->image) }}" alt=""></td>
-                                        <td>{{ $service->title }}</td>
-                                        <td>{{ $service->link }}</td>
+                                        <td>{{ $service->product->name }}</td>
                                         <td>
                                             @if($service->isactive == 1)
                                             <a href="javascript:;" onclick="changeStatus({{ $service->id }})">

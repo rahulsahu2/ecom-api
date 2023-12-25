@@ -18,22 +18,22 @@ class CategoryShopConcernController extends Controller
 
     public function index()
     {
-        $shopconcern = CategoryShopConcern::get();
+        $brandBanners = CategoryShopConcern::get();
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryShopConcern.index',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryShopConcern.index',compact('brandBanners','categories'));
     }
 
     public function create(){
-        $shopconcern = null;
+        $brandBanners = null;
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryShopConcern.edit',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryShopConcern.edit',compact('brandBanners','categories'));
     }
 
     public function show($id)
     {
-        $shopconcern = CategoryShopConcern::find($id);
+        $brandBanners = CategoryShopConcern::find($id);
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryShopConcern.edit',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryShopConcern.edit',compact('brandBanners','categories'));
     }
 
     public function update(Request $request, $id)
@@ -62,7 +62,6 @@ class CategoryShopConcernController extends Controller
 
         $shopconcern->category_id = $request->category_id;
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
@@ -97,7 +96,6 @@ class CategoryShopConcernController extends Controller
 
         $shopconcern->category_id = $request->category_id;
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();

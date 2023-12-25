@@ -14,6 +14,12 @@ use App\Models\Brands\BrandBestSellers;
 use App\Models\Brands\BrandCategories;
 use App\Models\Brands\BrandDescription;
 use App\Models\Brands\BrandOffers;
+use App\Models\CategoryBanners;
+use App\Models\CategoryBestSellers;
+use App\Models\CategoryList;
+use App\Models\CategoryOfferBrands;
+use App\Models\CategoryShopConcern;
+use App\Models\CategoryTrending;
 use App\Models\featuredProducts;
 use App\Models\InfluencerPicks;
 use App\Models\ProductDescription;
@@ -392,7 +398,45 @@ class HomeController extends Controller
         );
     }
 
+    public function CategoryDetails($slug){
+        $category = Category::where('slug', $slug)->first();
+        $flag = false;
+        $setting = Setting::first();
+        $section_title = json_decode($setting->category_section_title);
 
+        $categoryBanner = [];
+        $categorySubCategories =[];
+        $categoryofferBrands = [];
+        $shopConcern = [];
+        $categoryBestSeller =[];
+        $trendingNow = [];
+        $categoryOffers = [];
+
+        if($category){
+            $flag = true;
+            $categoryBanner = CategoryBanners::where(['isactive'=> 1,'category_id'=>$category->id])->get();
+            $categorySubCategories = SubCategory::where(['status'=> 1,'category_id'=>$category->id])->get();
+            $categoryofferBrands = CategoryOfferBrands::where(['isactive'=> 1,'category_id'=>$category->id])->get();
+            $shopConcern = CategoryShopConcern::where(['isactive'=> 1,'category_id'=>$category->id])->get();
+            $categoryBestSeller = CategoryBestSellers::where(['isactive'=> 1,'category_id'=>$category->id])->get();
+            $trendingNow = CategoryTrending::where(['isactive'=> 1,'category_id'=>$category->id])->get();
+            $categoryOffers = CategoryList::where(['isactive'=> 1,'category_id'=>$category->id])->get();
+        }
+        return response()->json(
+            [
+                'status' => $flag, 
+                'pageTitle' => $section_title,
+                'category' => $category,
+                'CategoryBanner' => $categoryBanner,
+                'categorySubCategories' => $categorySubCategories,
+                'categoryofferBrands' => $categoryofferBrands,
+                'shopConcern' => $shopConcern,
+                'categoryBestSeller' => $categoryBestSeller,
+                'trendingNow' => $trendingNow,
+                'categoryOffers' => $categoryOffers
+            ]
+        );
+    }
 
 
 

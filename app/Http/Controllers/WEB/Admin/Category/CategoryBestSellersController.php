@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WEB\Admin\Category;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\CategoryBestSellers;
@@ -18,51 +19,41 @@ class CategoryBestSellersController extends Controller
 
     public function index()
     {
-        $shopconcern = CategoryBestSellers::get();
-        return view('admin.Category.CategoryBestSellers.index',compact('shopconcern'));
+        $brandBanners = CategoryBestSellers::get();
+        return view('admin.Category.CategoryBestSellers.index',compact('brandBanners'));
     }
 
     public function create(){
-        $shopconcern = null;
+        $brandBanners = null;
+        $products = Product::where(['status' => 1])->get();
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryBestSellers.edit',compact('shopconcern'.'categories'));
+        return view('admin.Category.CategoryBestSellers.edit',compact('brandBanners','categories','products'));
     }
 
     public function show($id)
     {
-        $shopconcern = CategoryBestSellers::find($id);
+        $brandBanners = CategoryBestSellers::find($id);
+        $products = Product::where(['status' => 1])->get();
         $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
-        return view('admin.Category.CategoryBestSellers.edit',compact('shopconcern','categories'));
+        return view('admin.Category.CategoryBestSellers.edit',compact('brandBanners','categories','products'));
     }
 
     public function update(Request $request, $id)
     {
         $rules = [
-            'title'=>'required',
-            'link'=>'required',
+            'product_id'=>'required',
+            'category_id'=>'required',
         ];
         $customMessages = [
-            'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'product_id.required' => trans('admin_validation.Product is required'),
+            'category_id.required' => trans('admin_validation.Category is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $shopconcern = CategoryBestSellers::find($id);
-        if($request->image){
-            $exist_banner = $shopconcern->image;
-            $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'CategoryBestSellers'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->image)
-                ->save(public_path().'/'.$banner_name);
-            $shopconcern->image = $banner_name;
-            $shopconcern->save();
-        }
 
         $shopconcern->category_id = $request->category_id;
-        $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
-        $shopconcern->link = $request->link;
+        $shopconcern->product_id = $request->product_id;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
 
@@ -73,31 +64,18 @@ class CategoryBestSellersController extends Controller
 
     public function store(Request $request){
         $rules = [
-            'image' => 'required',
-            'title'=>'required',
-            'link'=>'required',
+            'product_id'=>'required',
+            'category_id'=>'required',
         ];
         $customMessages = [
-            'image.required' => trans('admin_validation.Image is required'),
-            'title.required' => trans('admin_validation.Title is required'),
-            'link.required' => trans('admin_validation.Link is required'),
+            'product_id.required' => trans('admin_validation.Product is required'),
+            'category_id.required' => trans('admin_validation.Category is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $shopconcern = new CategoryBestSellers();
-        if($request->image){
-            $extention = $request->image->getClientOriginalExtension();
-            $banner_name = 'CategoryBestSellers'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->image)
-                ->save(public_path().'/'.$banner_name);
-            $shopconcern->image = $banner_name;
-        }
-
         $shopconcern->category_id = $request->category_id;
-        $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
-        $shopconcern->link = $request->link;
+        $shopconcern->product_id = $request->product_id;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
 

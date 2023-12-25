@@ -11,4 +11,7 @@ class CategoryBestSellers extends Model
     public function Category(){
         return $this->belongsTo(Category::class,'category_id');
     }
+    public function Product(){
+        return $this->belongsTo(Product::class,'product_id');
+    }
 }

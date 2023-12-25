@@ -1,65 +1,55 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('category Best Sellers')}}</title>
+<title>{{__('Category Best Seller Banner')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('category Banner')}}</h1>
+            <h1>{{__('Category Best Seller Banner')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('category Banner')}}</div>
+              <div class="breadcrumb-item">{{__('Category Best Seller Banner')}}</div>
             </div>
           </div>
 ​
           <div class="section-body">
-          <a href="{{ route('admin.category-best-sellers.index') }}" class="btn btn-primary"><i class="fas fa-list"></i> {{__('Category Best Sellers')}}</a>
+          <a href="{{ route('admin.category-best-sellers.index') }}" class="btn btn-primary"><i class="fas fa-list"></i> {{__('Category Best Seller Banners')}}</a>
             <div class="row mt-4">
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                        @if ($categoryBanners)
-                            <form action="{{ route('admin.category-best-sellers.update',$categoryBanners->id) }}" method="POST" enctype="multipart/form-data">
+                        @if ($brandBanners)
+                            <form action="{{ route('admin.category-best-sellers.update',$brandBanners->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('Image')}}</label>
-                                        <div>
-                                            <img class="w_300" src="{{ asset($categoryBanners->image) }}" alt="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('admin.New Image')}}</label>
-                                        <input type="file" name="image" class="form-control-file">
-                                    </div>
-                                    
+                                <div class="row">​
+​
                                     ​<div class="form-group col-12">
-                                        <label>{{__('category Name')}} <span class="text-danger">*</span></label>
-                                        <select name="category_id" class="form-control">
-                                            <option value="" disabled>Select category</option>
-                                            @foreach($categorys as $p)
-                                            <option {{$p->id == $categoryBanners->category_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                        <label>{{__('Category Name')}} <span class="text-danger">*</span></label>
+                                        <select id="category" name="category_id" class="form-control">
+                                            <option value="" disabled>Select Category</option>
+                                            @foreach($categories as $p)
+                                            <option {{$p->id == $brandBanners->category_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-​
-                                    <div class="form-group col-12">
-                                        <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="{{ $categoryBanners->title }}" class="form-control">
+
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Product Name')}} <span class="text-danger">*</span></label>
+                                        <select id="product" name="product_id" class="form-control">
+                                            <option value="" disabled>Select Product</option>
+                                            @foreach($products as $p)
+                                            <option data-category="{{$p->category_id}}" {{$p->id == $brandBanners->product_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                     <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="{{ $categoryBanners->link }}" class="form-control">
-                                    </div>
-                                    <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
-                                        <select name="isactive" class="form-control">
-                                            <option {{$categoryBanners->isactive == 1 ? 'selected':''}} value="1">{{__('admin.Active')}}</option>
-                                            <option {{$categoryBanners->isactive == 0 ? 'selected':''}} value="0">{{__('admin.Inactive')}}</option>
+                                        <select id="product" name="isactive" class="form-control">
+                                            <option {{$brandBanners->isactive == 1 ? 'selected':''}} value="1">{{__('admin.Active')}}</option>
+                                            <option {{$brandBanners->isactive == 0 ? 'selected':''}} value="0">{{__('admin.Inactive')}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -73,30 +63,27 @@
                             <form action="{{ route('admin.category-best-sellers.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="">{{__('admin.New Image')}}</label>
-                                        <input type="file" name="image" class="form-control-file">
-                                    </div>
                                     
                                     ​<div class="form-group col-12">
-                                        <label>{{__('category Name')}} <span class="text-danger">*</span></label>
-                                        <select name="category_id" class="form-control">
-                                            <option value="" disabled>Select category</option>
-                                            @foreach($categorys as $p)
+                                        <label>{{__('Category Name')}} <span class="text-danger">*</span></label>
+                                        <select id="category" name="category_id" class="form-control">
+                                            <option value="" disabled>Select Brand</option>
+                                            @foreach($categories as $p)
                                             <option value="{{$p->id}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div>​
 ​
-                                    <div class="form-group col-12">
-                                        <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="" class="form-control">
+                                    ​<div class="form-group col-12">
+                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
+                                        <select id="product" name="product_id" class="form-control">
+                                            <option value="0" disabled selected>Select Product</option>
+                                            @foreach($products as $p)
+                                            <option data-category="{{$p->category_id}}" value="{{$p->id}}">{{$p->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
-                                    <div class="form-group col-12">
-                                        <label>{{__('Link')}} <span class="text-danger">*</span></label>
-                                        <input type="text" name="link" value="" class="form-control">
-                                    </div>
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                         <select name="isactive" class="form-control">
@@ -104,7 +91,6 @@
                                             <option value="0">{{__('admin.Inactive')}}</option>
                                         </select>
                                     </div>
-    
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -119,4 +105,18 @@
           </div>
         </section>
       </div>
+      <script>
+        $(document).ready(function() {
+            $('#category').change(function() {
+                var Id = $(this).val();
+                console.log(Id);
+                $('#product option').each(function() {
+                    console.log($(this).attr('data-category'));
+                    if ($(this).attr('data-brand') != Id) {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+      </script>
 @endsection

@@ -52,6 +52,11 @@
                                     </div>
 
                                     <div class="form-group col-12">
+                                        <label>{{__('admin.Description')}} <span class="text-danger">*</span></label>
+                                        <input type="text" name="description" value="{{ $brandBanners->description }}" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-12">
                                         <label>{{__('Link')}} <span class="text-danger">*</span></label>
                                         <input type="text" name="link" value="{{ $brandBanners->link }}" class="form-control">
                                     </div>
@@ -91,6 +96,11 @@
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
                                         <input type="text" name="title" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <label>{{__('admin.Description')}} <span class="text-danger">*</span></label>
+                                        <input type="text" name="description" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group col-12">

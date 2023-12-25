@@ -139,7 +139,9 @@ Route::group([], function () {
     Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
     Route::get('/seller-terms-conditoins', [HomeController::class, 'sellerTemsCondition'])->name('seller-terms-conditoins');
 
+    //extra-pages
     Route::get('/brand-details/{slug}', [HomeController::class, 'BrandDetails'])->name('brand-details');
+    Route::get('/category-details/{slug}', [HomeController::class, 'CategoryDetails'])->name('category-details');
 
     Route::get('/sellers', [HomeController::class, 'seller'])->name('sellers');
     Route::get('/sellers/{shop_name}', [HomeController::class, 'sellerDetail'])->name('seller-detail');
