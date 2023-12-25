@@ -15,13 +15,13 @@
           </div>
 ​
           <div class="section-body">
-          <a href="{{ route('admin.Category-banners.index') }}" class="btn btn-primary"><i class="fas fa-list"></i> {{__('Category Banners')}}</a>
+          <a href="{{ route('admin.category-banners.index') }}" class="btn btn-primary"><i class="fas fa-list"></i> {{__('Category Banners')}}</a>
             <div class="row mt-4">
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
                         @if ($shopconcern)
-                            <form action="{{ route('admin.Category-banners.update',$shopconcern->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.category-banners.update',$shopconcern->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-6">
@@ -38,9 +38,9 @@
                                     
                                     ​<div class="form-group col-12">
                                         <label>{{__('Category Name')}} <span class="text-danger">*</span></label>
-                                        <select name="Category_id" class="form-control">
+                                        <select name="category_id" class="form-control">
                                             <option value="" disabled>Select Category</option>
-                                            @foreach($Categorys as $p)
+                                            @foreach($categories as $p)
                                             <option {{$p->id == $shopconcern->Category_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>
@@ -70,7 +70,7 @@
                                 </div>
                             </form>
                         @else
-                            <form action="{{ route('admin.Category-banners.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.category-banners.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-6">
@@ -80,9 +80,9 @@
                                     
                                     ​<div class="form-group col-12">
                                         <label>{{__('Category Name')}} <span class="text-danger">*</span></label>
-                                        <select name="Category_id" class="form-control">
+                                        <select name="category_id" class="form-control">
                                             <option value="" disabled>Select Category</option>
-                                            @foreach($Categorys as $p)
+                                            @foreach($categories as $p)
                                             <option value="{{$p->id}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>

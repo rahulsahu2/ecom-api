@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\WEB\Admin\Category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\CategoryBanners;
@@ -18,18 +19,21 @@ class CategoryBannersController extends Controller
     public function index()
     {
         $shopconcern = CategoryBanners::get();
-        return view('admin.Category.CategoryBanners.index',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryBanners.index',compact('shopconcern','categories'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.Category.CategoryBanners.edit',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryBanners.edit',compact('shopconcern','categories'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryBanners::find($id);
-        return view('admin.Category.CategoryBanners.edit',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryBanners.edit',compact('shopconcern','categories'));
     }
 
     public function update(Request $request, $id)
@@ -56,8 +60,8 @@ class CategoryBannersController extends Controller
             $shopconcern->save();
         }
 
+        $shopconcern->category_id = $request->category_id;
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();
@@ -90,7 +94,7 @@ class CategoryBannersController extends Controller
             $shopconcern->image = $banner_name;
         }
         $shopconcern->title = $request->title;
-        $shopconcern->description = $request->description;
+        $shopconcern->category_id = $request->category_id;
         $shopconcern->link = $request->link;
         $shopconcern->isactive = $request->isactive;
         $shopconcern->save();

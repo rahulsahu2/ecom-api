@@ -1,21 +1,21 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('Brand Banners')}}</title>
+<title>{{__('Category Banners')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('Brand Banners')}}</h1>
+            <h1>{{__('Category Banners')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('Brand Banners')}}</div>
+              <div class="breadcrumb-item">{{__('Category Banners')}}</div>
             </div>
           </div>
 
           <div class="section-body">
-            <a href="{{ route('admin.create-brand-banners') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
+            <a href="{{ route('admin.create-category-offer-brands') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
             <div class="row mt-4">
                 <div class="col">
                   <div class="card">
@@ -25,7 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
-                                    <th>{{__('Brand')}}</th>
+                                    <th>{{__('category')}}</th>
                                     <th width="20%">{{__('Image')}}</th>
                                     <th width="10%">{{__('admin.Title')}}</th>
                                     <th width="30%">{{__('admin.Link')}}</th>
@@ -34,10 +34,10 @@
                                   </tr>
                             </thead>
                             <tbody>
-                                @foreach ($brandBanners as $index => $service)
+                                @foreach ($categoryBanners as $index => $service)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td>{{ $service->brand->name }}</td>
+                                        <td>{{ $service->category->name }}</td>
                                         <td><img class="w_300" src="{{ asset($service->image) }}" alt=""></td>
                                         <td>{{ $service->title }}</td>
                                         <td>{{ $service->link }}</td>
@@ -53,7 +53,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.show-brand-banners',$service->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                            <a href="{{ route('admin.show-category-offer-brands',$service->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                             <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $service->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
@@ -70,13 +70,13 @@
 
 <script>
     function deleteData(id){
-        $("#deleteForm").attr("action",'{{ url("admin/delete-brand-banners/") }}'+"/"+id)
+        $("#deleteForm").attr("action",'{{ url("admin/delete-category-offer-brands/") }}'+"/"+id)
     }
     function changeStatus(id){
         $.ajax({
             type:"put",
             data: { _token : '{{ csrf_token() }}' },
-            url:"{{url('/admin/brand-banners-status')}}"+"/"+id,
+            url:"{{url('/admin/category-offer-brands-status')}}"+"/"+id,
             success:function(response){
                 toastr.success(response)
             },

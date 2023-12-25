@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\WEB\Admin\Category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\CategoryList;
@@ -18,18 +19,21 @@ class CategoryListController extends Controller
     public function index()
     {
         $shopconcern = CategoryList::get();
-        return view('admin.Category.CategoryList.index',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryList.index',compact('shopconcern','categories'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.Category.CategoryList.edit',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryList.edit',compact('shopconcern','categories'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryList::find($id);
-        return view('admin.Category.CategoryList.edit',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryList.edit',compact('shopconcern','categories'));
     }
 
     public function update(Request $request, $id)
@@ -56,6 +60,7 @@ class CategoryListController extends Controller
             $shopconcern->save();
         }
 
+        $shopconcern->category_id = $request->category_id;
         $shopconcern->title = $request->title;
         $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
@@ -89,6 +94,8 @@ class CategoryListController extends Controller
                 ->save(public_path().'/'.$banner_name);
             $shopconcern->image = $banner_name;
         }
+
+        $shopconcern->category_id = $request->category_id;
         $shopconcern->title = $request->title;
         $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;

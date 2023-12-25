@@ -15,7 +15,7 @@
           </div>
 
           <div class="section-body">
-            <a href="{{ route('admin.create-Category-banners') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
+            <a href="{{ route('admin.create-category-banners') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
             <div class="row mt-4">
                 <div class="col">
                   <div class="card">
@@ -53,7 +53,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.show-Category-banners',$service->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                            <a href="{{ route('admin.show-category-banners',$service->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                             <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $service->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
@@ -70,13 +70,13 @@
 
 <script>
     function deleteData(id){
-        $("#deleteForm").attr("action",'{{ url("admin/delete-Category-banners/") }}'+"/"+id)
+        $("#deleteForm").attr("action",'{{ url("admin/delete-category-banners/") }}'+"/"+id)
     }
     function changeStatus(id){
         $.ajax({
             type:"put",
             data: { _token : '{{ csrf_token() }}' },
-            url:"{{url('/admin/Category-banners-status')}}"+"/"+id,
+            url:"{{url('/admin/category-banners-status')}}"+"/"+id,
             success:function(response){
                 toastr.success(response)
             },

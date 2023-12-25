@@ -1,27 +1,27 @@
 @extends('admin.master_layout')
 @section('title')
-<title>{{__('Brand Banner')}}</title>
+<title>{{__('Category Shop Concern')}}</title>
 @endsection
 @section('admin-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('Brand Banner')}}</h1>
+            <h1>{{__('Category Shop Concern')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('Brand Banner')}}</div>
+              <div class="breadcrumb-item">{{__('Category Shop Concern')}}</div>
             </div>
           </div>
 ​
           <div class="section-body">
-          <a href="{{ route('admin.brand-banners.index') }}" class="btn btn-primary"><i class="fas fa-list"></i> {{__('Brand Banners')}}</a>
+          <a href="{{ route('admin.category-shop-concern.index') }}" class="btn btn-primary"><i class="fas fa-list"></i> {{__('Category Shop Concern')}}</a>
             <div class="row mt-4">
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
                         @if ($brandBanners)
-                            <form action="{{ route('admin.brand-banners.update',$brandBanners->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.category-shop-concern.update',$brandBanners->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-6">
@@ -38,10 +38,10 @@
                                     
                                     ​<div class="form-group col-12">
                                         <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
-                                        <select name="brand_id" class="form-control">
+                                        <select name="category_id" class="form-control">
                                             <option value="" disabled>Select Brand</option>
-                                            @foreach($brands as $p)
-                                            <option {{$p->id == $brandBanners->brand_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
+                                            @foreach($categories as $p)
+                                            <option {{$p->id == $brandBanners->category_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -70,7 +70,7 @@
                                 </div>
                             </form>
                         @else
-                            <form action="{{ route('admin.brand-banners.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.category-shop-concern.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-6">
@@ -80,9 +80,9 @@
                                     
                                     ​<div class="form-group col-12">
                                         <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
-                                        <select name="brand_id" class="form-control">
+                                        <select name="category_id" class="form-control">
                                             <option value="" disabled>Select Brand</option>
-                                            @foreach($brands as $p)
+                                            @foreach($categories as $p)
                                             <option value="{{$p->id}}">{{$p->name}}</option>
                                             @endforeach
                                         </select>

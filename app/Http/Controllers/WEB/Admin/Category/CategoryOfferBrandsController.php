@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\WEB\Admin\Category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Image;
 
@@ -19,18 +20,21 @@ class CategoryOfferBrandsController extends Controller
     public function index()
     {
         $shopconcern = CategoryOfferBrands::get();
-        return view('admin.Category.CategoryOfferBrands.index',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryOfferBrands.index',compact('shopconcern','categories'));
     }
 
     public function create(){
         $shopconcern = null;
-        return view('admin.Category.CategoryOfferBrands.edit',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryOfferBrands.edit',compact('shopconcern','categories'));
     }
 
     public function show($id)
     {
         $shopconcern = CategoryOfferBrands::find($id);
-        return view('admin.Category.CategoryOfferBrands.edit',compact('shopconcern'));
+        $categories = Category::where(['status' => 1])->select('id','name','slug')->get();
+        return view('admin.Category.CategoryOfferBrands.edit',compact('shopconcern','categories'));
     }
 
     public function update(Request $request, $id)
@@ -57,6 +61,7 @@ class CategoryOfferBrandsController extends Controller
             $shopconcern->save();
         }
 
+        $shopconcern->category_id = $request->category_id;
         $shopconcern->title = $request->title;
         $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
@@ -90,6 +95,8 @@ class CategoryOfferBrandsController extends Controller
                 ->save(public_path().'/'.$banner_name);
             $shopconcern->image = $banner_name;
         }
+        
+        $shopconcern->category_id = $request->category_id;
         $shopconcern->title = $request->title;
         $shopconcern->description = $request->description;
         $shopconcern->link = $request->link;
