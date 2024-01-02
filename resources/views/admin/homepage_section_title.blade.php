@@ -32,7 +32,7 @@
                                             <tr>
                                                 <td width="50%">{{ $value->key }}</td>
                                                 <td width="50%">
-                                                    <input type="text" class="form-control" name="customs[]"  value="{{ $value->custom }}" required>
+                                                    <input type="text" class="form-control" name="customs[]"  value="{{ $value->custom }}">
 
                                                     <input type="hidden" name="defaults[]"  value="{{ $value->default }}" required>
 

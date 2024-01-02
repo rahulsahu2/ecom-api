@@ -1,4 +1,17 @@
 <?php
+use App\Http\Controllers\WEB\Admin\LuxeRange\LuxBestSellersController;
+use App\Http\Controllers\WEB\Admin\LuxeRange\LuxSection5Controller;
+use App\Http\Controllers\WEB\Admin\LuxeRange\LuxShopByConcernController;
+use App\Http\Controllers\WEB\Admin\LuxeRange\LuxShopByTypeController;
+use App\Http\Controllers\WEB\Admin\LuxeRange\LuxSliderController;
+use App\Http\Controllers\WEB\Admin\LuxeRange\LuxTopPicksController;
+use App\Http\Controllers\WEB\Admin\LuxeRange\LuxTrendingNowController;
+use App\Http\Controllers\WEB\Admin\Offer\OfferBestBrandsController;
+use App\Http\Controllers\WEB\Admin\Offer\OfferBestInBeautyController;
+use App\Http\Controllers\WEB\Admin\Offer\OfferBestOfferController;
+use App\Http\Controllers\WEB\Admin\Offer\OfferBestSellersController;
+use App\Http\Controllers\WEB\Admin\Offer\OfferShopByCategoriesController;
+use App\Http\Controllers\WEB\Admin\Offer\OfferSliderController;
 use App\Http\Controllers\WEB\Admin\BestOfferForYouController;
 use App\Http\Controllers\WEB\Admin\BestDiscountProductsController;
 use App\Http\Controllers\WEB\Admin\BestSellerBannerController;
@@ -695,6 +708,149 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
         Route::put('category-best-sellers-main/{id}', 'changeMain')->name('category-best-sellers.main');
     });
 
+    Route::controller(LuxBestSellersController::class)->group(function () {
+        Route::get('lux-best-sellers', 'index')->name('lux-best-sellers.index');
+        Route::get('create-lux-best-sellers', 'create')->name('create-lux-best-sellers');
+        Route::get('create-lux-best-sellers/{id}', 'show')->name('show-lux-best-sellers');
+        Route::post('store-lux-best-sellers', 'store')->name('lux-best-sellers.store');
+        Route::post('update-lux-best-sellers/{id}', 'update')->name('lux-best-sellers.update');
+        Route::delete('delete-lux-best-sellers/{id}', 'destroy')->name('lux-best-sellers.delete');
+        Route::put('lux-best-sellers-status/{id}', 'changeStatus')->name('lux-best-sellers.status');
+        Route::put('lux-best-sellers-main/{id}', 'changeMain')->name('lux-best-sellers.main');
+    });
+
+    Route::controller(LuxSection5Controller::class)->group(function () {
+        Route::get('lux-section5', 'index')->name('lux-section5.index');
+        Route::get('create-lux-section5', 'create')->name('create-lux-section5');
+        Route::get('create-lux-section5/{id}', 'show')->name('show-lux-section5');
+        Route::post('store-lux-section5', 'store')->name('lux-section5.store');
+        Route::post('update-lux-section5/{id}', 'update')->name('lux-section5.update');
+        Route::delete('delete-lux-section5/{id}', 'destroy')->name('lux-section5.delete');
+        Route::put('lux-section5-status/{id}', 'changeStatus')->name('lux-section5.status');
+        Route::put('lux-section5-main/{id}', 'changeMain')->name('lux-section5.main');
+    });
+
+    Route::controller(LuxShopByConcernController::class)->group(function () {
+        Route::get('lux-shop-by-concern', 'index')->name('lux-shop-by-concern.index');
+        Route::get('create-lux-shop-by-concern', 'create')->name('create-lux-shop-by-concern');
+        Route::get('create-lux-shop-by-concern/{id}', 'show')->name('show-lux-shop-by-concern');
+        Route::post('store-lux-shop-by-concern', 'store')->name('lux-shop-by-concern.store');
+        Route::post('update-lux-shop-by-concern/{id}', 'update')->name('lux-shop-by-concern.update');
+        Route::delete('delete-lux-shop-by-concern/{id}', 'destroy')->name('lux-shop-by-concern.delete');
+        Route::put('lux-shop-by-concern-status/{id}', 'changeStatus')->name('lux-shop-by-concern.status');
+        Route::put('lux-shop-by-concern-main/{id}', 'changeMain')->name('lux-shop-by-concern.main');
+    });
+
+    Route::controller(LuxShopByTypeController::class)->group(function () {
+        Route::get('lux-shop-by-type', 'index')->name('lux-shop-by-type.index');
+        Route::get('create-lux-shop-by-type', 'create')->name('create-lux-shop-by-type');
+        Route::get('create-lux-shop-by-type/{id}', 'show')->name('show-lux-shop-by-type');
+        Route::post('store-lux-shop-by-type', 'store')->name('lux-shop-by-type.store');
+        Route::post('update-lux-shop-by-type/{id}', 'update')->name('lux-shop-by-type.update');
+        Route::delete('delete-lux-shop-by-type/{id}', 'destroy')->name('lux-shop-by-type.delete');
+        Route::put('lux-shop-by-type-status/{id}', 'changeStatus')->name('lux-shop-by-type.status');
+        Route::put('lux-shop-by-type-main/{id}', 'changeMain')->name('lux-shop-by-type.main');
+    });
+
+    Route::controller(LuxTrendingNowController::class)->group(function () {
+        Route::get('lux-trending-now', 'index')->name('lux-trending-now.index');
+        Route::get('create-lux-trending-now', 'create')->name('create-lux-trending-now');
+        Route::get('create-lux-trending-now/{id}', 'show')->name('show-lux-trending-now');
+        Route::post('store-lux-trending-now', 'store')->name('lux-trending-now.store');
+        Route::post('update-lux-trending-now/{id}', 'update')->name('lux-trending-now.update');
+        Route::delete('delete-lux-trending-now/{id}', 'destroy')->name('lux-trending-now.delete');
+        Route::put('lux-trending-now-status/{id}', 'changeStatus')->name('lux-trending-now.status');
+        Route::put('lux-trending-now-main/{id}', 'changeMain')->name('lux-trending-now.main');
+    });
+
+    Route::controller(LuxSliderController::class)->group(function () {
+        Route::get('lux-slider', 'index')->name('lux-slider.index');
+        Route::get('create-lux-slider', 'create')->name('create-lux-slider');
+        Route::get('create-lux-slider/{id}', 'show')->name('show-lux-slider');
+        Route::post('store-lux-slider', 'store')->name('lux-slider.store');
+        Route::post('update-lux-slider/{id}', 'update')->name('lux-slider.update');
+        Route::delete('delete-lux-slider/{id}', 'destroy')->name('lux-slider.delete');
+        Route::put('lux-slider-status/{id}', 'changeStatus')->name('lux-slider.status');
+        Route::put('lux-slider-main/{id}', 'changeMain')->name('lux-slider.main');
+    });
+
+    Route::controller(LuxTopPicksController::class)->group(function () {
+        Route::get('lux-top-picks', 'index')->name('lux-top-picks.index');
+        Route::get('create-lux-top-picks', 'create')->name('create-lux-top-picks');
+        Route::get('create-lux-top-picks/{id}', 'show')->name('show-lux-top-picks');
+        Route::post('store-lux-top-picks', 'store')->name('lux-top-picks.store');
+        Route::post('update-lux-top-picks/{id}', 'update')->name('lux-top-picks.update');
+        Route::delete('delete-lux-top-picks/{id}', 'destroy')->name('lux-top-picks.delete');
+        Route::put('lux-top-picks-status/{id}', 'changeStatus')->name('lux-top-picks.status');
+        Route::put('lux-top-picks-main/{id}', 'changeMain')->name('lux-top-picks.main');
+    });
+
+    Route::controller(OfferBestBrandsController::class)->group(function () {
+        Route::get('offer-best-brands', 'index')->name('offer-best-brands.index');
+        Route::get('create-offer-best-brands', 'create')->name('create-offer-best-brands');
+        Route::get('create-offer-best-brands/{id}', 'show')->name('show-offer-best-brands');
+        Route::post('store-offer-best-brands', 'store')->name('offer-best-brands.store');
+        Route::post('update-offer-best-brands/{id}', 'update')->name('offer-best-brands.update');
+        Route::delete('delete-offer-best-brands/{id}', 'destroy')->name('offer-best-brands.delete');
+        Route::put('offer-best-brands-status/{id}', 'changeStatus')->name('offer-best-brands.status');
+        Route::put('offer-best-brands-main/{id}', 'changeMain')->name('offer-best-brands.main');
+    });
+
+    Route::controller(OfferBestInBeautyController::class)->group(function () {
+        Route::get('offer-best-in-beauty', 'index')->name('offer-best-in-beauty.index');
+        Route::get('create-offer-best-in-beauty', 'create')->name('create-offer-best-in-beauty');
+        Route::get('create-offer-best-in-beauty/{id}', 'show')->name('show-offer-best-in-beauty');
+        Route::post('store-offer-best-in-beauty', 'store')->name('offer-best-in-beauty.store');
+        Route::post('update-offer-best-in-beauty/{id}', 'update')->name('offer-best-in-beauty.update');
+        Route::delete('delete-offer-best-in-beauty/{id}', 'destroy')->name('offer-best-in-beauty.delete');
+        Route::put('offer-best-in-beauty-status/{id}', 'changeStatus')->name('offer-best-in-beauty.status');
+        Route::put('offer-best-in-beauty-main/{id}', 'changeMain')->name('offer-best-in-beauty.main');
+    });
+
+    Route::controller(OfferBestOfferController::class)->group(function () {
+        Route::get('offer-best-offer', 'index')->name('offer-best-offer.index');
+        Route::get('create-offer-best-offer', 'create')->name('create-offer-best-offer');
+        Route::get('create-offer-best-offer/{id}', 'show')->name('show-offer-best-offer');
+        Route::post('store-offer-best-offer', 'store')->name('offer-best-offer.store');
+        Route::post('update-offer-best-offer/{id}', 'update')->name('offer-best-offer.update');
+        Route::delete('delete-offer-best-offer/{id}', 'destroy')->name('offer-best-offer.delete');
+        Route::put('offer-best-offer-status/{id}', 'changeStatus')->name('offer-best-offer.status');
+        Route::put('offer-best-offer-main/{id}', 'changeMain')->name('offer-best-offer.main');
+    });
+
+    Route::controller(OfferBestSellersController::class)->group(function () {
+        Route::get('offer-best-sellers', 'index')->name('offer-best-sellers.index');
+        Route::get('create-offer-best-sellers', 'create')->name('create-offer-best-sellers');
+        Route::get('create-offer-best-sellers/{id}', 'show')->name('show-offer-best-sellers');
+        Route::post('store-offer-best-sellers', 'store')->name('offer-best-sellers.store');
+        Route::post('update-offer-best-sellers/{id}', 'update')->name('offer-best-sellers.update');
+        Route::delete('delete-offer-best-sellers/{id}', 'destroy')->name('offer-best-sellers.delete');
+        Route::put('offer-best-sellers-status/{id}', 'changeStatus')->name('offer-best-sellers.status');
+        Route::put('offer-best-sellers-main/{id}', 'changeMain')->name('offer-best-sellers.main');
+    });
+
+    Route::controller(OfferShopByCategoriesController::class)->group(function () {
+        Route::get('offer-shop-by-categories', 'index')->name('offer-shop-by-categories.index');
+        Route::get('create-offer-shop-by-categories', 'create')->name('create-offer-shop-by-categories');
+        Route::get('create-offer-shop-by-categories/{id}', 'show')->name('show-offer-shop-by-categories');
+        Route::post('store-offer-shop-by-categories', 'store')->name('offer-shop-by-categories.store');
+        Route::post('update-offer-shop-by-categories/{id}', 'update')->name('offer-shop-by-categories.update');
+        Route::delete('delete-offer-shop-by-categories/{id}', 'destroy')->name('offer-shop-by-categories.delete');
+        Route::put('offer-shop-by-categories-status/{id}', 'changeStatus')->name('offer-shop-by-categories.status');
+        Route::put('offer-shop-by-categories-main/{id}', 'changeMain')->name('offer-shop-by-categories.main');
+    });
+
+    Route::controller(OfferSliderController::class)->group(function () {
+        Route::get('offer-slider', 'index')->name('offer-slider.index');
+        Route::get('create-offer-slider', 'create')->name('create-offer-slider');
+        Route::get('create-offer-slider/{id}', 'show')->name('show-offer-slider');
+        Route::post('store-offer-slider', 'store')->name('offer-slider.store');
+        Route::post('update-offer-slider/{id}', 'update')->name('offer-slider.update');
+        Route::delete('delete-offer-slider/{id}', 'destroy')->name('offer-slider.delete');
+        Route::put('offer-slider-status/{id}', 'changeStatus')->name('offer-slider.status');
+        Route::put('offer-slider-main/{id}', 'changeMain')->name('offer-slider.main');
+    });
+
     Route::resource('service', ServiceController::class);
     Route::put('service-status/{id}', [ServiceController::class,'changeStatus'])->name('service.status');
 
@@ -969,6 +1125,12 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
     Route::get('category-section-title', [HomePageController::class, 'category_section_content'])->name('categorypage-section-title');
     Route::post('update-category-section-title', [HomePageController::class, 'update_category_section_content'])->name('update-categorypage-section-title');
+
+    Route::get('luxpage-section-title', [HomePageController::class, 'lux_section_content'])->name('luxpage-section-title');
+    Route::post('update-luxpage-section-title', [HomePageController::class, 'update_lux_section_content'])->name('update-luxpage-section-title');
+
+    Route::get('offer-section-title', [HomePageController::class, 'offer_section_content'])->name('offerpage-section-title');
+    Route::post('update-offer-section-title', [HomePageController::class, 'update_offer_section_content'])->name('update-offerpage-section-title');
 
 
 

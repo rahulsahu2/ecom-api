@@ -143,6 +143,9 @@ Route::group([], function () {
     Route::get('/brand-details/{slug}', [HomeController::class, 'BrandDetails'])->name('brand-details');
     Route::get('/category-details/{slug}', [HomeController::class, 'CategoryDetails'])->name('category-details');
 
+    Route::get('/offer-details', [HomeController::class, 'OfferDetails'])->name('offer-details');
+    Route::get('/luxe-details', [HomeController::class, 'LuxeDetails'])->name('luxe-details');
+
     Route::get('/sellers', [HomeController::class, 'seller'])->name('sellers');
     Route::get('/sellers/{shop_name}', [HomeController::class, 'sellerDetail'])->name('seller-detail');
     Route::get('/product', [HomeController::class, 'product'])->name('product');

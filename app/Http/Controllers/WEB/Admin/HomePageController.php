@@ -45,6 +45,70 @@ class HomePageController extends Controller
         return view('admin.categorypage_section_title', compact('sections'));
     }
 
+    public function lux_section_content(){
+
+        $setting = Setting::first();
+        $sections = json_decode($setting->lux_section_title);
+        return view('admin.luxpage_section_title', compact('sections'));
+    }
+
+    public function offer_section_content(){
+
+        $setting = Setting::first();
+        $sections = json_decode($setting->offer_section_title);
+        return view('admin.offerpage_section_title', compact('sections'));
+    }
+
+    public function update_luxpage_section_content(Request $request){
+
+        $sections = array();
+        foreach($request->customs as $index => $custom){
+            $item = (object) array(
+                'key' => $request->keys[$index],
+                'default' => $request->defaults[$index],
+                'custom' => $request->customs[$index],
+            );
+
+            $sections[] = $item;
+        }
+
+        $sections = json_encode($sections);
+
+        $setting = Setting::first();
+        $setting->lux_section_title = $sections;
+        $setting->save();
+
+
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
+    }
+
+    public function update_offerpage_section_content(Request $request){
+
+        $sections = array();
+        foreach($request->customs as $index => $custom){
+            $item = (object) array(
+                'key' => $request->keys[$index],
+                'default' => $request->defaults[$index],
+                'custom' => $request->customs[$index],
+            );
+
+            $sections[] = $item;
+        }
+
+        $sections = json_encode($sections);
+
+        $setting = Setting::first();
+        $setting->offer_section_title = $sections;
+        $setting->save();
+
+
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
+    }
+
     public function update_homepage_section_content(Request $request){
 
         $sections = array();

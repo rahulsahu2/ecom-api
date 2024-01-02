@@ -22,6 +22,19 @@ use App\Models\CategoryShopConcern;
 use App\Models\CategoryTrending;
 use App\Models\featuredProducts;
 use App\Models\InfluencerPicks;
+use App\Models\lux_range\lux_BestSellers;
+use App\Models\lux_range\lux_Section5;
+use App\Models\lux_range\lux_ShopByConcern;
+use App\Models\lux_range\lux_shopByType;
+use App\Models\lux_range\lux_slider;
+use App\Models\lux_range\lux_TopPicks;
+use App\Models\lux_range\lux_TrendingNow;
+use App\Models\Offer\offer_BestBrands;
+use App\Models\Offer\offer_BestInBeauty;
+use App\Models\Offer\offer_BestOffer;
+use App\Models\Offer\offer_BestSellers;
+use App\Models\Offer\offer_ShopByCategories;
+use App\Models\Offer\offer_Slider;
 use App\Models\ProductDescription;
 use App\Models\ProductIngredient;
 use App\Models\Section8;
@@ -418,7 +431,7 @@ class HomeController extends Controller
             $categorySubCategories = SubCategory::where(['status'=> 1,'category_id'=>$category->id])->get();
             $categoryofferBrands = CategoryOfferBrands::where(['isactive'=> 1,'category_id'=>$category->id])->get();
             $shopConcern = CategoryShopConcern::where(['isactive'=> 1,'category_id'=>$category->id])->get();
-            $categoryBestSeller = CategoryBestSellers::where(['isactive'=> 1,'category_id'=>$category->id])->get();
+            $categoryBestSeller = CategoryBestSellers::where(['isactive'=> 1,'category_id'=>$category->id])->with('product')->get();
             $trendingNow = CategoryTrending::where(['isactive'=> 1,'category_id'=>$category->id])->get();
             $categoryOffers = CategoryList::where(['isactive'=> 1,'category_id'=>$category->id])->get();
         }
@@ -438,7 +451,63 @@ class HomeController extends Controller
         );
     }
 
+    public function LuxeDetails(){
+        $flag = false;
+        $setting = Setting::first();
+        $section_title = json_decode($setting->lux_section_title);
+        
+        $slider = lux_slider::where(['isactive'=> 1])->get() ?? [];
+        $shopByType = lux_shopByType::where(['isactive'=> 1])->get() ?? [];
+        $topPicks = lux_TopPicks::where(['isactive'=> 1])->get() ?? [];
+        $shopConcern = lux_ShopByConcern::where(['isactive'=> 1])->get() ?? [];
+        $Section5 = lux_Section5::where(['isactive'=> 1])->get() ?? [];
+        $trendingNow = lux_TrendingNow::where(['isactive'=> 1])->get() ?? [];
+        $bestSellers = lux_BestSellers::where(['isactive'=> 1])->get() ?? [];
 
+        $flag = true;
+
+        return response()->json(
+            [
+                'status' => $flag, 
+                'pageTitle' => $section_title,
+                'slider' => $slider,
+                'shopByType'=> $shopByType,
+                'topPicks'=> $topPicks,
+                'shopConcern'=> $shopConcern,
+                'section5'=> $Section5,
+                'trendingNow'=> $trendingNow,
+                'bestSellers'=> $bestSellers,
+            ]
+        );
+    }
+
+    public function OfferDetails(){
+        $flag = false;
+        $setting = Setting::first();
+        $section_title = json_decode($setting->offer_section_title);
+
+        $slider = offer_Slider::where(['isactive'=> 1])->get() ?? [];
+        $bestInBeauty = offer_BestInBeauty::where(['isactive'=> 1])->get() ?? [];
+        $shopByCategories = offer_ShopByCategories::where(['isactive'=> 1])->get() ?? [];
+        $bestOffer = offer_BestOffer::where(['isactive'=> 1])->get() ?? [];
+        $bestBrands = offer_BestBrands::where(['isactive'=> 1])->get() ?? [];
+        $bestSellers = offer_BestSellers::where(['isactive'=> 1])->get() ?? [];
+
+        $flag = true;
+
+        return response()->json(
+            [
+                'status' => $flag, 
+                'pageTitle' => $section_title,
+                'slider' => $slider,
+                'bestInBeauty' => $bestInBeauty,
+                'opByCategories' => $shopByCategories,
+                'bestOffer' => $bestOffer,
+                'bestBrands' => $bestBrands,
+                'bestSellers'=> $bestSellers,
+            ]
+        );
+    }
 
     public function subCategory($id){
 
@@ -1726,11 +1795,13 @@ class HomeController extends Controller
 
         $product = Product::with('category','brand','activeVariants.activeVariantItems','avgReview')->where(['status' => 1, 'slug' => $slug])->first();
 
+        $isfound = false;
         if(!$product){
 
             $notification = trans('user_validation.Something went wrong');
-            return response()->json(['message' => $notification],403);
+            return response()->json(['message' => $notification,'isFound'=>$isfound]);
         }
+        $isfound = true;
 
         $paginateQty = CustomPagination::whereId('5')->first()->qty;
 
@@ -1803,6 +1874,7 @@ class HomeController extends Controller
         }
 
         return response()->json([
+            'isFound' => $isfound,
 
             'product' => $product,
 

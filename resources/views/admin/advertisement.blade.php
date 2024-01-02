@@ -7,10 +7,10 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('admin.Advertisement')}}</h1>
+           <h1>{{__('Manage Banners')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('admin.Advertisement')}}</div>
+              <div class="breadcrumb-item">{{__('Manage Banners')}}</div>
             </div>
           </div>
 
@@ -28,46 +28,6 @@
                                     <li class="nav-item border rounded mb-1">
                                         <a class="nav-link" id="one-column-banner-tab" data-toggle="tab" href="#oneColumnBanner" role="tab" aria-controls="oneColumnBanner" aria-selected="true">{{__('admin.Slider Sidebar Banner Two')}}</a>
                                     </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="two-column-banner-first" data-toggle="tab" href="#twoColumnBannerFirst" role="tab" aria-controls="twoColumnBannerFirst" aria-selected="true">{{__('admin.Popular Category Sidebar Banner')}}</a>
-                                    </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="two-column-banner-second" data-toggle="tab" href="#twoColumnBannerSecond" role="tab" aria-controls="twoColumnBannerSecond" aria-selected="true">{{__('admin.Homepage Two Column First Banner')}}</a>
-                                    </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="two-column-banner-third" data-toggle="tab" href="#twoColumnBannerThird" role="tab" aria-controls="twoColumnBannerThird" aria-selected="true">{{__('admin.Homepage Two Column Second Banner')}}</a>
-                                    </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="shop-page" data-toggle="tab" href="#shopPage" role="tab" aria-controls="shopPage" aria-selected="true">{{__('admin.Homepage Single Banner One')}}</a>
-                                    </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="product-details" data-toggle="tab" href="#productDetails" role="tab" aria-controls="productDetails" aria-selected="true">{{__('admin.Homepage Single Banner Two')}}</a>
-                                    </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="cart-bottom-banner" data-toggle="tab" href="#cartBottomBanner" role="tab" aria-controls="cartBottomBanner" aria-selected="true">{{__('admin.Mobile App Banner')}}</a>
-                                    </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="campaign-page" data-toggle="tab" href="#campaignPage" role="tab" aria-controls="campaignPage" aria-selected="true">{{__('admin.Shop Page Center Banner')}}</a>
-                                    </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="shoppage-sidebar-page" data-toggle="tab" href="#shopPageSidebarBanner" role="tab" aria-controls="shopPageSidebarBanner" aria-selected="true">{{__('admin.Shop Page Sidebar Banner')}}</a>
-                                    </li>
-
-                                    <li class="nav-item border rounded mb-1">
-                                        <a class="nav-link" id="megamanu-banner" data-toggle="tab" href="#megaMenuBanner" role="tab" aria-controls="megaMenuBanner" aria-selected="true">{{__('admin.Mega Menu Banner')}}</a>
-                                    </li>
-
-
-
-
                                 </ul>
                             </div>
                             <div class="col-12 col-sm-12 col-md-8">
