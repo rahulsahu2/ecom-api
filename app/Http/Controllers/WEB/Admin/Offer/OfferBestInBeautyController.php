@@ -116,6 +116,6 @@ class OfferBestInBeautyController extends Controller
 
         $notification = trans('admin_validation.Delete Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->route('admin.product-description.index')->with($notification);
+        return redirect()->back()->with($notification);
     }
 }

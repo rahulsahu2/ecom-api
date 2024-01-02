@@ -35,16 +35,6 @@
                                         <label for="">{{__('admin.New Image')}}</label>
                                         <input type="file" name="image" class="form-control-file">
                                     </div>
-                                    
-                                    ​<div class="form-group col-12">
-                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
-                                        <select name="category_id" class="form-control">
-                                            <option value="" disabled>Select Brand</option>
-                                            @foreach($categories as $p)
-                                            <option {{$p->id == $brandBanners->category_id ? 'selected' : ''}}  value="{{$p->id}}">{{$p->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
 ​
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
@@ -81,16 +71,6 @@
                                     <div class="form-group col-6">
                                         <label for="">{{__('admin.New Image')}}</label>
                                         <input type="file" name="image" class="form-control-file">
-                                    </div>
-                                    
-                                    ​<div class="form-group col-12">
-                                        <label>{{__('Brand Name')}} <span class="text-danger">*</span></label>
-                                        <select name="category_id" class="form-control">
-                                            <option value="" disabled>Select Brand</option>
-                                            @foreach($categories as $p)
-                                            <option value="{{$p->id}}">{{$p->name}}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
 ​
                                     <div class="form-group col-12">

@@ -1124,7 +1124,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::post('update-brand-section-title', [HomePageController::class, 'update_brand_section_content'])->name('update-brandpage-section-title');
 
     Route::get('category-section-title', [HomePageController::class, 'category_section_content'])->name('categorypage-section-title');
-    Route::post('update-category-section-title', [HomePageController::class, 'update_category_section_content'])->name('update-categorypage-section-title');
+    Route::post('update-category-section-title', [HomePageController::class, 'update_categorry_section_content'])->name('update-categorypage-section-title');
 
     Route::get('luxpage-section-title', [HomePageController::class, 'lux_section_content'])->name('luxpage-section-title');
     Route::post('update-luxpage-section-title', [HomePageController::class, 'update_lux_section_content'])->name('update-luxpage-section-title');

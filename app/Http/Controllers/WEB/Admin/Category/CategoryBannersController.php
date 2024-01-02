@@ -124,7 +124,7 @@ class CategoryBannersController extends Controller
 
         $notification = trans('admin_validation.Delete Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->route('admin.product-description.index')->with($notification);
+        return redirect()->route('admin.Category.CategoryBanners.index')->with($notification);
     }
 
 }

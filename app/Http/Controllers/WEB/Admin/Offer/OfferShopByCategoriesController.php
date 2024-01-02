@@ -4,8 +4,8 @@ namespace App\Http\Controllers\WEB\Admin\Offer;
 
 use App\Models\Offer\offer_ShopByCategories;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Storeoffer_ShopByCategoriesRequest;
-use App\Http\Requests\Updateoffer_ShopByCategoriesRequest;
+use Illuminate\Http\Request;
+use Image;
 
 class OfferShopByCategoriesController extends Controller
 {
@@ -117,6 +117,6 @@ class OfferShopByCategoriesController extends Controller
 
         $notification = trans('admin_validation.Delete Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->route('admin.product-description.index')->with($notification);
+        return redirect()->back()->with($notification);
     }
 }

@@ -21,7 +21,7 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('admin.update-homepage-section-title') }}" method="post">
+                                <form action="{{ route('admin.update-offerpage-section-title') }}" method="post">
                                     @csrf
                                     <table class="table table-bordered">
                                         <tr>
